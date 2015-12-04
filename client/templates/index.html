@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" ng-app="application">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RPi Jukebox</title>
+  <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/foundation.js"></script>
+  <script src="./assets/js/templates.js"></script>
+  <script src="./assets/js/routes.js"></script>
+  <script src="../assets/js/app.js"></script>
+</head>
+<body>
+<div class="grid-frame vertical">
+  <div class="grid-content" style="padding: 0;">
+
+    <!-- title bar: Centered logo for mobile, left logo for desktop-->
+    <div class="show-for-large">
+      <div class="primary title-bar">
+        <div class="center">SEXY SEARCH BOX</div>
+      <span class="left title" style="font-weight: normal;">
+          <span class="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
+      </span>
+      </div>
+    </div>
+    <div class="show-for-small hide-for-large">
+      <div class="primary title-bar">
+        <div class="center title" style="font-weight: normal">
+          <span class="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
+        </div>
+        <span class="left "><a zf-toggle="sub-nav">Playlists</a></span>
+        <span class="right"><a ui-sref="settings">Queue</a></span>
+      </div>
+    </div>
+    <span class="grid-block">
+      <p class="panel">
+        <strong class="show-for-small">This text is shown only on a small screen.</strong>
+        <strong class="show-for-medium">This text is shown on medium screens and up.</strong>
+        <strong class="show-for-medium-only">This text is shown only on a medium screen.</strong>
+        <strong class="show-for-large">This text is shown on large screens and up.</strong>
+        <strong class="show-for-large-only">This text is shown only on a large screen.</strong>
+        <strong class="show-for-xlarge-up">This text is shown on xlarge screens and up.</strong>
+        <strong class="show-for-xlarge-only">This text is shown only on an xlarge screen.</strong>
+        <strong class="show-for-xxlarge-up">This text is shown on xxlarge screens and up.</strong>
+      </p>
+    </span>
+  </div>
+</body>
+</html>

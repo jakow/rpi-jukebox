@@ -1,2 +1,10 @@
 @import "settings";
 @import "foundation";
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+
+.logo {
+  font-family: 'Lobster';
+  font-size: 3em;
+  color: white;
+  padding: 0em 0.5em;
+}

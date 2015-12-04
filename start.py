@@ -7,7 +7,7 @@ queue = RPJqueue.RPJQueue()
 player = RPJplayer.RPJPlayerMplayer(queue)
 downloader = RPJdownloader.RPJDownloader()
 
-app = Flask('RPJukebox')
+app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/templates')
 
 # informs the frontend about current queue. Browser will
 @app.route('/json_queue')
@@ -72,6 +72,9 @@ def resume():
 def download_progress():
     return json.jsonify(downloader.report_progress())
 
+@app.route('/bower_components/<path:path>')
+def send_bower_components(path):
+    return send_from_directory('bower_components', path)
 
 if __name__  == '__main__':
     app.debug = True
