@@ -28,7 +28,8 @@ var paths = {
   // Sass will check these folders for files when you use @import.
   sass: [
     'client/assets/scss',
-    'bower_components/foundation-apps/scss'
+    'bower_components/foundation-apps/scss',
+    'bower_components/foundation-sites/scss'
   ],
   // These files include Foundation for Apps and its dependencies
   foundationJS: [
