@@ -29,7 +29,7 @@
 //  24. Tabs
 //  25. Title Bar
 
-@import "helpers/functions";
+@import "../../../bower_components/foundation-apps/scss/helpers/functions";
 
 // 1. CSS Exports
 // - - - - - - - - - - - - - - -
@@ -99,7 +99,7 @@
 
 // Application Colors
  $primary-color: #2c3e50;
-// $secondary-color: #f1f1f1;
+ $secondary-color: #BC1142;
 // $alert-color: #F04124;
 // $info-color: #A0D3E8;
 // $success-color: #43AC6A;
@@ -114,7 +114,7 @@
 // $global-rounded: 1000px;
 
 // We use this for default spacing
-// $global-padding: 1rem;
+$global-padding: 1rem;
 // $global-spacing: rem-calc(15);
 
 // 3. Breakpoints
@@ -595,7 +595,7 @@ $breakpoints: (
 // $titlebar-background: #eee;
 // $titlebar-color: #000;
 // $titlebar-border: 1px solid #ccc;
-// $titlebar-padding: $global-padding;
+$titlebar-padding: ($global-padding) / 2;
 // $titlebar-item-classes: (
 //   center: 'center',
 //   left: 'left',

@@ -1,12 +1,44 @@
 @import "settings";
-@import "foundation";
+@import "../../../bower_components/foundation-apps/scss/foundation";
 @import url(https://fonts.googleapis.com/css?family=Lobster);
+@import "../vendor/font-awesome-4.5.0/scss/font-awesome";
+
+$raspberry-color: #BC1142;
 
 .logo {
   font-family: 'Lobster';
   font-size: 3em;
   color: white;
-  padding: 0em 0.5em;
+  padding: 0em 0em;
 }
+
+.rounded-right-button {
+  // Extend the base selector to get core styles
+  @extend %button;
+  // Use the size mixin to set a size
+  @include button-size(
+    $size: medium, // tiny, small, medium, or large
+    $expand: false
+  );
+  // Use the style mixin to set visual styles
+  @include button-style(
+    $background: $raspberry-color, // Background color
+    $background-hover: auto, // Background color on hover. Use "auto" to generate automatically
+    $color: #000, // Text color
+    $style: solid, // Can be solid or hollow
+    $radius: 0px 19px 19px 0px
+  );
+}
+
+.prefix-radius-search {
+  border-top-left-radius: 19px !important;
+  border-bottom-left-radius: 19px !important;
+}
+
+#song-search {
+  margin: 0.5em;
+}
+
+
 
 
