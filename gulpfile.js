@@ -45,7 +45,8 @@ var paths = {
   ],
   // These files are for your app's JavaScript
   appJS: [
-    'client/assets/js/app.js'
+    'client/assets/js/app.js',
+    'client/assets/js/ytsearch.js'
   ]
 }
 
@@ -161,7 +162,7 @@ gulp.task('build', function(cb) {
 });
 
 // Default task: builds your app, starts a server, and recompiles assets when they change
-gulp.task('default', ['server'], function () {
+gulp.task('default', ['build'], function () {
   // Watch Sass
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass']);
 

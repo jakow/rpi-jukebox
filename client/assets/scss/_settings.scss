@@ -246,7 +246,7 @@ $breakpoints: (
 // $button-style: solid;
 // $button-background: $primary-color;
 // $button-color: auto;
-// $button-radius: 0;
+ $button-radius: 19px;
 // $button-sizes: (
 //   tiny: 0.7,
 //   small: 0.8,
@@ -316,7 +316,7 @@ $breakpoints: (
 
 // $btngroup-background: $primary-color;
 // $btngroup-color: #fff;
-// $btngroup-radius: $button-radius;
+ $btngroup-radius: $button-radius;
 
 // 11. Card
 // - - - - - - - - - - - - - - -
@@ -590,7 +590,7 @@ $breakpoints: (
 // 25. Title Bar
 // - - - - - - - - - - - - - - -
 
-// $titlebar-center-width: 50%;
+$titlebar-center-width: 40%;
 // $titlebar-side-width: (100% - $titlebar-center-width) / 2;
 // $titlebar-background: #eee;
 // $titlebar-color: #000;

@@ -5,11 +5,24 @@
 
 $raspberry-color: #BC1142;
 
-.logo {
+body {
+  background-color: $dark-color;
+}
+#logo {
   font-family: 'Lobster';
   font-size: 3em;
   color: white;
   padding: 0em 0em;
+  font-weight: normal;
+}
+
+#logo-mobile {
+  font-family: 'Lobster';
+  font-size: 2.5em;
+  color: white;
+  padding: 0em 0em;
+  font-weight: normal;
+
 }
 
 .rounded-right-button {
@@ -25,20 +38,31 @@ $raspberry-color: #BC1142;
     $background: $raspberry-color, // Background color
     $background-hover: auto, // Background color on hover. Use "auto" to generate automatically
     $color: #000, // Text color
-    $style: solid, // Can be solid or hollow
-    $radius: 0px 19px 19px 0px
+    $style: solid // Can be solid or hollow
+
   );
 }
 
-.prefix-radius-search {
-  border-top-left-radius: 19px !important;
-  border-bottom-left-radius: 19px !important;
+
+.song-search {
+  margin: 0.5em !important;
 }
 
-#song-search {
-  margin: 0.5em;
+#mobile-search {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.25em;;
+  margin-bottom: 0.25em;
+  width: 80%;
 }
 
+#mobile-title-bar {
+  border-bottom: 1px solid $dark-color;
+  padding: 0px;
+}
 
-
+.title-bar-button {
+  margin: 0px;
+  border-radius: 0px;
+}
 

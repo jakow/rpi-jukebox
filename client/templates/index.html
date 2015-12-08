@@ -9,39 +9,53 @@
   <script src="./assets/js/templates.js"></script>
   <script src="./assets/js/routes.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="https://apis.google.com/js/client.js?onload=youtubeInit"></script>
 </head>
 <body>
+<zf-offcanvas zf-swipe-close="" id="mobile-menu" position="left" class="dark">
+</zf-offcanvas>
+<zf-offcanvas zf-swipe-close="" id="mobile-player" position="right" class="dark">
+
+</zf-offcanvas>
+
 <div class="grid-frame vertical">
-  <div class="grid-content" style="padding: 0;">
 
     <!-- title bar: Centered logo for mobile, left logo for desktop-->
     <div class="show-for-large">
       <div class="primary title-bar">
         <div class="center">
           <label>
-            <span class="inline-label" id="song-search">
-          <input type="search" class=prefix-radius" placeholder="Search for songs">
-          <a href="#" class="rounded-right-button secondary"><i class="fa fa-search"></i></a>
+            <span class="inline-label button-group song-search">
+          <input type="search" placeholder="Search for songs">
+          <a href="#" class="button secondary"><i class="fa fa-search fa-lg"></i></a>
           </span>
           </label>
         </div>
-      <span class="left title" style="font-weight: normal;">
-          <span class="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
-      </span>
+        <span class="left title" ">
+        <span id="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
+        </span>
       </div>
     </div>
     <div class="show-for-small hide-for-large">
-      <div class="primary title-bar">
-        <div class="center title" style="font-weight: normal">
-          <span class="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
+      <div class="primary title-bar" id="mobile-title-bar">
+        <div class="center title">
+          <span id="logo-mobile"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
         </div>
-        <span class="left "><a zf-toggle="sub-nav">Playlists</a></span>
-        <span class="right"><a ui-sref="settings">Queue</a></span>
+        <span class="left"><a class="button primary title-bar-button" zf-toggle="mobile-menu"><i class="fa fa-bars fa-2x"></i></a></span>
+        <span class="right"><a zf-toggle="mobile-player" class="button primary title-bar-button" ui-sref="settings"><i class="fa fa-play-circle fa-2x"></i></a></span>
+      </div>
+      <div class="menu-bar primary">
+        <label id="mobile-search">
+            <span class="inline-label button-group song-search">
+          <input type="search" placeholder="Search for songs">
+          <a href="#" class="button secondary"><i class="fa fa-search fa-lg"></i></a>
+          </span>
+        </label>
       </div>
     </div>
-    <span class="grid-block">
-    </span>
-  </div>
+    <div class="grid-block gray" id="test"><p>test</p>
+    </div>
+</div>
 </div>
 </body>
 </html>
