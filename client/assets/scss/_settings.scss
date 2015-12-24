@@ -105,9 +105,9 @@
 // $success-color: #43AC6A;
 // $warning-color: #F08A24;
  $dark-color: #232323;
-// $gray: #dfdfdf;
-// $gray-dark: darken($gray, 8);
-// $gray-light: lighten($gray, 8);
+ $gray: #dcdcdc;
+ $gray-dark: darken($gray, 32);
+ $gray-light: lighten($gray, 10);
 
 // We use these to make sure border radius matches unless we want it different.
 // $global-radius: 4px;
@@ -379,21 +379,21 @@ $breakpoints: (
 // $inlinelabel-border: $input-border;
 
 // Range slider
-// $slider-background: #ddd;
-// $slider-height: 1rem;
-// $slider-radius: 0px;
-// $slider-thumb-height: 1.5rem;
-// $slider-thumb-color: $primary-color;
-// $slider-thumb-radius: 0px;
+ $slider-background: #aaa;
+ $slider-height: 0.8rem;
+ $slider-radius: 8px; //make sure it is roooounnd
+ $slider-thumb-height: 1.2rem;
+ $slider-thumb-color: $secondary-color;
+ $slider-thumb-radius: 100px;
 
 // Progress and meter
-// $meter-height: 1.5rem;
-// $meter-background: #ccc;
-// $meter-fill: $primary-color;
+ $meter-height: 0.8rem;
+// $meter-background: $gray-dark;
+ $meter-fill: $gray-light;
 // $meter-fill-high: $success-color;
 // $meter-fill-medium: #e7cf00;
 // $meter-fill-low: $alert-color;
-// $meter-radius: 0;
+ $meter-radius: 100px;
 
 // 14. Iconic
 // - - - - - - - - - - - - - - -

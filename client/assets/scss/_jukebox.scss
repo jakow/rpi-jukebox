@@ -1,0 +1,120 @@
+$raspberry-color: #BC1142;
+@import "settings";
+body {
+  background-color: $dark-color;
+}
+
+#logo {
+  font-family: 'Lobster';
+  font-size: 3em;
+  color: white;
+  padding: 0em 0em;
+  font-weight: normal;
+}
+
+#logo-mobile {
+  font-family: 'Lobster';
+  font-size: 2.5em;
+  color: white;
+  padding: 0em 0em;
+  font-weight: normal;
+
+}
+
+.rounded-right-button {
+  // Extend the base selector to get core styles
+  @extend %button;
+  // Use the size mixin to set a size
+  @include button-size(
+    $size: medium, // tiny, small, medium, or large
+    $expand: false
+  );
+  // Use the style mixin to set visual styles
+  @include button-style(
+    $background: $raspberry-color, // Background color
+    $background-hover: auto, // Background color on hover. Use "auto" to generate automatically
+    $color: #000, // Text color
+    $style: solid // Can be solid or hollow
+
+  );
+}
+
+.song-search {
+  margin: 0.5em !important;
+}
+
+#mobile-search {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.25em;;
+  margin-bottom: 0.25em;
+  width: 80%;
+}
+
+#title-bar-desktop {
+  border-bottom: 0px;
+}
+
+#title-bar-mobile {
+  border-bottom: 1px solid $dark-color;
+  padding: 0px;
+}
+
+.title-bar-button {
+  margin: 0px;
+  border-radius: 0px;
+}
+
+#playback-desktop {
+  background-color: $primary-color;
+  height: 64px;
+}
+
+.seekbar, .volume-slider {
+  display: inline-block;
+  width: 100%;
+}
+
+.noui-center {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.auto-center {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#menu-desktop {
+  background-color: $dark-color;
+}
+
+#main-view {
+  background-color: $gray;
+}
+
+#playlist-desktop {
+  background-color: $dark-color;
+  width: 400px;
+}
+
+
+#playback-control {
+  width: 400px;
+}
+
+.playback-button {
+  // Extend the base selector to get core styles
+  @extend %button;
+  margin: 0px;
+  color: $gray;
+  &:hover {
+    color: $gray-light;
+  }
+
+  &:focus {
+    color: $gray;
+  }
+}

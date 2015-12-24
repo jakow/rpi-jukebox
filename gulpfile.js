@@ -28,7 +28,7 @@ var paths = {
   // Sass will check these folders for files when you use @import.
   sass: [
     'client/assets/scss',
-    'bower_components/foundation-apps/scss'
+    'bower_components/foundation-apps/scss',
   ],
   // These files include Foundation for Apps and its dependencies
   foundationJS: [
@@ -45,8 +45,11 @@ var paths = {
   ],
   // These files are for your app's JavaScript
   appJS: [
-    'client/assets/js/app.js',
-    'client/assets/js/ytsearch.js'
+    //nouislider with angular wrapper
+    'bower_components/nouislider/distribute/nouislider.js',
+    'bower_components/nouislider-angular/nouislider.js',
+    'client/assets/js/ytsearch.js',
+    'client/assets/js/app.js'
   ]
 }
 

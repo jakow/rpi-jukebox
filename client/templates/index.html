@@ -20,42 +20,90 @@
 
 <div class="grid-frame vertical">
 
-    <!-- title bar: Centered logo for mobile, left logo for desktop-->
-    <div class="show-for-large">
-      <div class="primary title-bar">
-        <div class="center">
-          <label>
-            <span class="inline-label button-group song-search">
-          <input type="search" placeholder="Search for songs">
-          <a href="#" class="button secondary"><i class="fa fa-search fa-lg"></i></a>
-          </span>
-          </label>
-        </div>
-        <span class="left title" ">
-        <span id="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
-        </span>
-      </div>
-    </div>
-    <div class="show-for-small hide-for-large">
-      <div class="primary title-bar" id="mobile-title-bar">
-        <div class="center title">
-          <span id="logo-mobile"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
-        </div>
-        <span class="left"><a class="button primary title-bar-button" zf-toggle="mobile-menu"><i class="fa fa-bars fa-2x"></i></a></span>
-        <span class="right"><a zf-toggle="mobile-player" class="button primary title-bar-button" ui-sref="settings"><i class="fa fa-play-circle fa-2x"></i></a></span>
-      </div>
-      <div class="menu-bar primary">
-        <label id="mobile-search">
+  <!-- title bar: Centered logo for mobile, left logo for desktop-->
+  <div class="show-for-large">
+    <div class="primary title-bar" id="title-bar-desktop">
+      <div class="center">
+        <label>
             <span class="inline-label button-group song-search">
           <input type="search" placeholder="Search for songs">
           <a href="#" class="button secondary"><i class="fa fa-search fa-lg"></i></a>
           </span>
         </label>
       </div>
+      <span class="left title" ">
+      <span id="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
+      </span>
     </div>
-    <div class="grid-block gray" id="test"><p>test</p>
+  </div>
+  <div class="show-for-small hide-for-large">
+    <div class="primary title-bar" id="title-bar-mobile">
+      <div class="center title">
+        <span id="logo-mobile"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
+      </div>
+      <span class="left"><a class="button primary title-bar-button" zf-toggle="mobile-menu"><i
+        class="fa fa-bars fa-2x"></i></a></span>
+      <span class="right"><a zf-toggle="mobile-player" class="button primary title-bar-button" ui-sref="settings"><i
+        class="fa fa-play-circle fa-2x"></i></a></span>
     </div>
-</div>
+    <div class="menu-bar primary">
+      <label id="mobile-search">
+            <span class="inline-label button-group song-search">
+          <input type="search" placeholder="Search for songs">
+          <a href="#" class="button secondary"><i class="fa fa-search fa-lg"></i></a>
+          </span>
+      </label>
+    </div>
+  </div>
+
+  <div class="grid-block">
+    <div class="medium-3 large-2 columns hide-for-small show-for-large" style="background-color: #232323">
+      <div class="grid-content" id="menu-desktop">
+        <p style="color:white">test</p>
+      </div>
+    </div>
+    <div class="grid-block">
+      <div class="grid-content main-view">
+        <div ng-view></div>
+      </div>
+    </div>
+    <div class="hide-for-small show-for-large" id="playlist-desktop"></div>
+  </div>
+
+  <div class="grid-block shrink hide-for-small show-for-large" id="playback-desktop" ng-controller="PlaybackCtrl">
+    <div class="medium-3 large-2 columns"></div>
+    <div class="grid-block">
+      <div class="grid-content noui-center">
+        <div ya-no-ui-slider="seekbarOptions" class="seekbar"></div>
+      </div>
+    </div>
+
+
+      <div class="grid-block shrink" id="playback-control">
+        <div class="grid-block shrink">
+          <div class="grid-content auto-center">
+            <a class="playback-button button-backward" href="#"><i class="fa fa-backward fa-2x"></i></a>
+            <a class="playback-button button-play" href="#"><i class="fa fa-play fa-2x"></i></a>
+            <a class="playback-button button-forward" href="#"><i class="fa fa-forward fa-2x"></i></a>
+          </div>
+        </div>
+        <div class="grid-block volume-control">
+          <div class="grid-block shrink auto-center">
+            <a class="playback-button button-mute" href="#">
+              <i class="fa fa-lg fa-volume-up"></i>
+              <i class="fa fa-lg fa-volume-off" style="display: none"></i>
+            </a>
+          </div>
+          <div class="grid-block">
+            <div class="grid-content noui-center" style="padding-left:0px">
+              <div ya-no-ui-slider="volumeControlOptions" class="volume-slider"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
 </div>
 </body>
 </html>
