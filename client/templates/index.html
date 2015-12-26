@@ -1,3 +1,4 @@
+{% raw %}
 <!doctype html>
 <html lang="en" ng-app="application">
 <head>
@@ -63,11 +64,26 @@
       </div>
     </div>
     <div class="grid-block">
-      <div class="grid-content main-view">
-        <div ng-view></div>
+      <div ng-view></div>
+    </div>
+    <div class="grid-block shrink hide-for-small show-for-large">
+      <div class="grid-block vertical" id="playlist-container-desktop">
+        <div class="grid-block playlist" id="playlist-desktop">test</div>
+        <div class="grid-block shrink now-playing">
+          <div class="grid-block shrink">
+          <div class="music-symbol">
+            <i class="fa fa-3x fa-fw fa-center fa-music"></i>
+          </div>
+            <div class="grid-block">
+              <div class="grid-content">
+                <div class="song-name">Never Gonna Give You Up</div>
+                <div class="song-title">RickAstleyVEVO</div>
+              </div>
+            </div>
+        </div>
+        </div>
       </div>
     </div>
-    <div class="hide-for-small show-for-large" id="playlist-desktop"></div>
   </div>
 
   <div class="grid-block shrink hide-for-small show-for-large" id="playback-desktop" ng-controller="PlaybackCtrl">
@@ -79,31 +95,33 @@
     </div>
 
 
-      <div class="grid-block shrink" id="playback-control">
-        <div class="grid-block shrink">
-          <div class="grid-content auto-center">
-            <a class="playback-button button-backward" href="#"><i class="fa fa-backward fa-2x"></i></a>
-            <a class="playback-button button-play" href="#"><i class="fa fa-play fa-2x"></i></a>
-            <a class="playback-button button-forward" href="#"><i class="fa fa-forward fa-2x"></i></a>
-          </div>
-        </div>
-        <div class="grid-block volume-control">
-          <div class="grid-block shrink auto-center">
-            <a class="playback-button button-mute" href="#">
-              <i class="fa fa-lg fa-volume-up"></i>
-              <i class="fa fa-lg fa-volume-off" style="display: none"></i>
-            </a>
-          </div>
-          <div class="grid-block">
-            <div class="grid-content noui-center" style="padding-left:0px">
-              <div ya-no-ui-slider="volumeControlOptions" class="volume-slider"></div>
-            </div>
-          </div>
+    <div class="grid-block shrink" id="playback-control">
+      <div class="grid-block shrink pl-ctl-buttons">
+        <div class="auto-center">
+          <a class="playback-button button-backward" href="#"><i class="fa fa-fw fa-backward fa-2x"></i></a>
+          <a class="playback-button button-play" href="" ng-click="play()">
+            <i class="fa fa-fw fa-play fa-2x" ng-hide="playing"></i>
+            <i class="fa fa-fw fa-pause fa-2x" ng-show="playing"></i>
+          </a>
+          <a class="playback-button button-forward" href=""><i class="fa fa-fw fa-forward fa-2x"></i></a>
         </div>
       </div>
+      <div class="grid-block volume-control auto-center">
+        <a class="playback-button button-mute" href="#">
+          <i class="fa fa-fw fa-lg fa-volume-up"></i>
+          <i class="fa fa-fw fa-lg fa-volume-off" style="display: none"></i>
+        </a>
+
+        <div class="grid-content noui-center">
+          <div ya-no-ui-slider="volumeControlOptions" class="volume-slider"></div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 
 </div>
 </body>
 </html>
+{% endraw %}

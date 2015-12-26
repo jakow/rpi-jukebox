@@ -1857,10 +1857,10 @@ progress::-webkit-progress-bar {
   background: #ccc;
   border-radius: 100px; }
 progress::-webkit-progress-value {
-  background: #f6f6f6;
+  background: #ededed;
   border-radius: 100px; }
 progress::-moz-progress-bar {
-  background: #f6f6f6;
+  background: #ededed;
   border-radius: 100px; }
 progress.high::-webkit-progress-value {
   background: #43AC6A; }
@@ -4748,7 +4748,7 @@ meter {
     background: transparent;
     flex-flow: column nowrap; }
   .tabs .tab-item {
-    background: #f6f6f6;
+    background: #ededed;
     padding: 1rem;
     line-height: 1;
     margin: 0;
@@ -4756,12 +4756,12 @@ meter {
     cursor: pointer;
     color: #000; }
     .tabs .tab-item.is-active {
-      background: #eeeeee;
+      background: #e5e5e5;
       color: #000; }
       .tabs .tab-item.is-active:hover {
-        background: #e9e9e9; }
+        background: #e1e1e1; }
     .tabs .tab-item:hover {
-      background: #e9e9e9; }
+      background: #e1e1e1; }
 
 .tab-contents {
   padding: 1rem; }
@@ -4777,18 +4777,18 @@ meter {
   The trusy accordion allows you to create a series of vertical tabs.
 */
 .accordion {
-  border: 1px solid #8a8a8a; }
+  border: 1px solid #818181; }
 
 .accordion-title {
   padding: 1rem;
-  background: #f6f6f6;
+  background: #ededed;
   color: #000;
   line-height: 1;
   cursor: pointer; }
   .accordion-title:hover {
-    background: #e9e9e9; }
+    background: #e1e1e1; }
   .is-active > .accordion-title {
-    background: #eeeeee;
+    background: #e5e5e5;
     color: #000; }
 
 .accordion-content {
@@ -7440,7 +7440,7 @@ blockquote p {
 
 .noUi-handle {
   position: relative;
-  z-index: 1; }
+  z-index: 99; }
 
 .noUi-stacking .noUi-handle {
   /* This class is applied to the lower origin when
@@ -7470,7 +7470,7 @@ blockquote p {
   width: 20px;
   height: 20px;
   left: -10px;
-  top: -3px; }
+  top: -4px; }
 
 .noUi-vertical {
   width: 18px; }
@@ -7484,19 +7484,23 @@ blockquote p {
 /* Styling;
  */
 .noUi-background {
-  background: #dcdcdc; }
-  .noUi-background:hover {
-    background: #f6f6f6; }
+  background: #d3d3d3;
+  transition: background 200ms; }
+  .noUi-background:hover, .noUi-background:focus {
+    background: #ededed; }
 
 .noUi-connect {
-  background: #f6f6f6;
+  background: #ededed;
   box-shadow: inset 0 0 3px rgba(51, 51, 51, 0.45);
   -webkit-transition: background 450ms;
   transition: background 450ms; }
 
 .noUi-origin {
   border-radius: 8px;
-  background-color: #8a8a8a; }
+  background-color: #818181;
+  transition: background-color 200ms; }
+  .noUi-origin:hover, .noUi-origin:active {
+    background-color: #969696; }
 
 .noUi-target {
   border-radius: 8px;
@@ -7628,26 +7632,42 @@ body {
   background-color: #2c3e50;
   height: 64px; }
 
-.seekbar {
-  margin-top: 24px;
+.seekbar, .volume-slider {
+  display: inline-block;
   width: 100%; }
+
+.noui-center {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: 10px;
+  padding-bottom: 10px; }
+
+.auto-center {
+  margin-top: auto;
+  margin-bottom: auto; }
 
 #menu-desktop {
   background-color: #232323; }
 
 #main-view {
-  background-color: #dcdcdc; }
+  background-color: #d3d3d3; }
 
 #playlist-desktop {
   background-color: #232323;
   width: 400px; }
 
-#playback-buttons {
+#playback-control {
   width: 400px; }
 
 .playback-button {
-  color: #dcdcdc; }
+  margin: 0px;
+  color: #d3d3d3; }
   .playback-button:hover {
-    color: white; }
+    color: #ededed; }
+  .playback-button:focus {
+    color: #d3d3d3; }
+
+.button-mute {
+  padding-right: 0; }
 
 /*# sourceMappingURL=app.css.map */

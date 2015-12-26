@@ -3,7 +3,8 @@
  */
 
 
-playerController.controller('PlayerButtonsCtrl',['$scope', '$http',
+app.controller('PlayerButtonsCtrl',['$scope', '$http',
   function($scope, $http) {
 
   }])
+

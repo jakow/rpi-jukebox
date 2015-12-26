@@ -95,11 +95,14 @@ body {
   background-color: $gray;
 }
 
-#playlist-desktop {
-  background-color: $dark-color;
+#playlist-container-desktop {
   width: 400px;
 }
 
+#playlist-desktop {
+  background-color: $gray;
+  border-left: 1px solid $gray-dark;
+}
 
 #playback-control {
   width: 400px;
@@ -117,4 +120,19 @@ body {
   &:focus {
     color: $gray;
   }
+}
+
+.music-symbol {
+  width: 5em;
+  height: 5em;
+  background-color: darken($dark-color, 5);
+  border-radius: 0;
+  line-height: 80px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.fa-center {
+  line-height: inherit;
 }

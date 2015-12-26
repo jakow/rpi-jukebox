@@ -33,7 +33,7 @@
 }
 .noUi-handle {
 	position: relative;
-	z-index: 1;
+	z-index: 99;
 }
 .noUi-stacking .noUi-handle {
 /* This class is applied to the lower origin when
@@ -81,8 +81,12 @@
  */
 .noUi-background {
 	background: $gray;
+  transition: background 200ms;
   &:hover, &:focus {
     background: $gray-light;
+    .noUi-origin {
+       background-color: lighten($gray-dark, 8);
+    }
   }
 }
 .noUi-connect {
@@ -94,6 +98,10 @@
 .noUi-origin {
 	border-radius: 8px;
   background-color: $gray-dark;
+  transition: background-color 200ms;
+  /*&:hover, &:active {
+  background-color: lighten($gray-dark, 8);
+  }*/
 }
 .noUi-target {
 	border-radius: 8px;
