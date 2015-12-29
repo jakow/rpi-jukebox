@@ -38,17 +38,57 @@
 
   /* my stuff */
 
-  /*Service for player control*/
 
-  /*player module*/
+  /*player module to detach foundation's js from player*/
+
+  /* player service is the service for playback control via XHR */
   var player = angular.module('player', ['ya.nouislider'])
-  .factory('PlayerServices', [function() {
+    .factory('playerService', ['$http', '$log', '$interval', function ($http, $log, $interval) {
+      /*create the player service object*/
+      var p = {};
 
-  }]);
+      /* helpers */
+      p.updateState = function (xhrResponse) {
+        p.state = xhrResponse.data;
+        $log.log(p.state);
+      }
+
+      p.logError = function (error) {
+        $log.log('Error: ' + error);
+      }
+
+      p.request = function (command) {
+        $log.log("Requested " + command);
+        $http.get(command).then(p.updateState, p.logError);
+      }
+
+      /* the autoRefresh promise object uses interval service will update state of the player every 5 seconds.
+       This should probably be reworked, so that state is updated on server-side events */
+      p.autoRefresh = $interval(function() {p.request('json_state');}, 10000, 5);
+      /*send commands to the player. Each command returns state that updates the local state */
+      p.stopRefresh = function() {
+        $interval.cancel(p.autoRefresh);
+      }
+
+      p.pauseResume = function () {
+        console.log('Requesting play/pause');
+        p.request('pause');
+      };
+      p.addToQueue = function (songData) {
+
+      }
+
+      return p;
+    }])
+    .run(function(playerService){
+
+    });  // eager instatiation of player service
 
 
   /*Player Controller for desktop seekbar, backward/play/forward buttons and volume control */
-  player.controller('PlaybackCtrl', ['$scope', function ($scope) {
+  player.controller('PlaybackCtrl', ['$scope', 'playerService', function ($scope, playerService) {
+    console.log('playback ctrl started');
+    $scope.playerState = playerService.state;
     $scope.seekbarOptions = {
       start: [0],
       range: {min: 0, max: 100}
@@ -58,13 +98,15 @@
       range: {min: 0, max: 100}
     }
 
-    $scope.playing = false; //true if playback is on, false if playback is off
+    $scope.$on('destroy', function() {
+      player.stopRefresh();
+    });
+    $scope.pauseResume = function() {
+      console.log('play button pressed');
+      playerService.pauseResume();
 
-    $scope.play = function play() {
-      $scope.playing = !($scope.playing); //toggle for testing
     }
   }]);
 })();
-
 
 

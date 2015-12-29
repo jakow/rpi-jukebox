@@ -22,3 +22,6 @@ class RPJQueue:
 
     def get_json_queue(self):
         return flask.json.jsonify(q=self.queue)
+
+    def flush(self):
+      self.queue = []

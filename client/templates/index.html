@@ -99,9 +99,9 @@
       <div class="grid-block shrink pl-ctl-buttons">
         <div class="auto-center">
           <a class="playback-button button-backward" href="#"><i class="fa fa-fw fa-backward fa-2x"></i></a>
-          <a class="playback-button button-play" href="" ng-click="play()">
-            <i class="fa fa-fw fa-play fa-2x" ng-hide="playing"></i>
-            <i class="fa fa-fw fa-pause fa-2x" ng-show="playing"></i>
+          <a class="playback-button button-play" href="" ng-click="pauseResume()">
+            <i class="fa fa-fw fa-play fa-2x" ng-hide="playerState.isPlaying"></i>
+            <i class="fa fa-fw fa-pause fa-2x" ng-show="playerState.isPlaying"></i>
           </a>
           <a class="playback-button button-forward" href=""><i class="fa fa-fw fa-forward fa-2x"></i></a>
         </div>

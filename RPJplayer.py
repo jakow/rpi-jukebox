@@ -10,68 +10,70 @@ import subprocess
 import select
 from mplayerWrapper import *
 
+
 def playback_ended():
-    print "Playback ended"
+  print "Playback ended"
+
 
 class RPJPlayerPyglet:
-    def __init__(self, queue):
-        self.queue = queue
-        self.player = pyglet.media.Player()
-        self.playerThread = threading.Thread()
-        self.now_playing = {}
-        self.enabled = False
-        self.autoplay = True
-        self.current_song
-        pyglet.options['audio'] = ('openal', 'pulseaudio')
+  def __init__(self, queue):
+    self.queue = queue
+    self.player = pyglet.media.Player()
+    self.playerThread = threading.Thread()
+    self.now_playing = {}
+    self.enabled = False
+    self.autoplay = True
+    self.current_song
+    pyglet.options['audio'] = ('openal', 'pulseaudio')
 
-    def play_next(self):
-        if self.player.playing:
-            self.player.pause()
-        print "Playing next"
-        song_data = self.queue.pop()
-        #self.player = pyglet.media.Player()  # new player needed after previous ends playing...
-        song = pyglet.media.load("songs/" + song_data['id'] + ".mp3", streaming=True)
-        self.player.queue(song)
-        self.player.play()
-        if self.autoplay:
-            # self.player.on_eos(self.play_next)
-            pass
+  def play_next(self):
+    if self.player.playing:
+      self.player.pause()
+    print "Playing next"
+    song_data = self.queue.pop()
+    # self.player = pyglet.media.Player()  # new player needed after previous ends playing...
+    song = pyglet.media.load("songs/" + song_data['id'] + ".mp3", streaming=True)
+    self.player.queue(song)
+    self.player.play()
+    if self.autoplay:
+      # self.player.on_eos(self.play_next)
+      pass
 
-    # function to play desired song, while discarding playlist.
-    def play(self, song):
-        s = pyglet.media.load("songs/" + song['id'] + ".mp3", streaming=True)
-        self.now_playing = song
-        # self.player.pitch = 1.5  # LOL
-        self.player.queue(s)
-        self.player.play()
-        if self.autoplay:
-            # self.player.on_eos(self.play_next)
-            pass
+  # function to play desired song, while discarding playlist.
+  def play(self, song):
+    s = pyglet.media.load("songs/" + song['id'] + ".mp3", streaming=True)
+    self.now_playing = song
+    # self.player.pitch = 1.5  # LOL
+    self.player.queue(s)
+    self.player.play()
+    if self.autoplay:
+      # self.player.on_eos(self.play_next)
+      pass
 
-    #function to resume
-    def resume(self):
-        if not self.player.playing:
-            self.player.play()
+  # function to resume
+  def resume(self):
+    if not self.player.playing:
+      self.player.play()
 
-    def pause(self):
-        if self.player.playing:
-            self.player.pause()
+  def pause(self):
+    if self.player.playing:
+      self.player.pause()
 
-    @property
-    def now_playing(self):
-        return self.now_playing
+  @property
+  def now_playing(self):
+    return self.now_playing
 
-    @property
-    def volume(self):
-        return self.player.volume
+  @property
+  def volume(self):
+    return self.player.volume
 
-    @volume.setter
-    def volume(self, value):
-        self.player.volume = value
+  @volume.setter
+  def volume(self, value):
+    self.player.volume = value
 
-    @property
-    def is_playing(self):
-        return self.player.playing
+  @property
+  def is_playing(self):
+    return self.player.playing
 
 
 # class RPJPlayerPygame:
@@ -134,18 +136,18 @@ class RPJPlayerMplayer:
 
     def __init__(self, queue):
         self.queue = queue
-        #self.playerThread = threading.Thread()
+        # self.playerThread = threading.Thread()
         self.nowPlaying = {}
         self.enabled = False
         self.autoplay = True
         self.mplayer = MPlayer()
-        self.mplayer.populate()
+        self.mplayer.populate()  # populates MPlayer class definitions
         self.volume = 100.0
         self.paused = True
 
     def play(self, song):
         self.mplayer.stop()
-        self.mplayer.command("loadfile", "songs/"+song['id']+".mp3")
+        self.mplayer.command("loadfile", "songs/" + song['id'] + ".mp3")
         self.nowPlaying = song
         self.mplayer.volume(self.volume)
         self.paused = False
@@ -167,45 +169,38 @@ class RPJPlayerMplayer:
             self.mplayer.volume(value)
 
     def resume(self):
-        if self.paused:
-            self.mplayer.pause()
+        if self.paused and self.is_file_loaded():
+            self.mplayer.pause()  # actually unpauses, lol
             self.paused = False
 
     def pause(self):
-        if self.is_file_loaded:
+        if self.is_file_loaded() and not self.paused:
             self.mplayer.pause()
             self.paused = True
 
     def now_playing(self):
         return self.nowPlaying
 
-
-    def is_file_loaded(self): # please rework.
+    def is_file_loaded(self):
         output = self.mplayer.get_property('filename')
-        if output:
-            if isinstance(output, basestring):
-                if output.find("ANS_filename") < 0:
-                    print output
-                    return True
+        # get filename property. If file is loaded, this property contains string starting with A
+        print output
+        if output:  # check if output is not empty
+            if isinstance(output, basestring):  # output can be a base string or a list
+                print output.find("ANS_filename") >= 0
+                return output.find("ANS_filename") >= 0
             else:
-                fname = [s for s in output if "ANS_filename" in s]
-                if fname:
+                # check if ANS_filename exists in an array output
+                if [s for s in output if "ANS_filename" in s]:
                     return True
-        return False
-
+        else:
+            return False
 
     def is_playing(self):
-        if self.paused or not self.is_file_loaded():
-            return False
-        else:
-            return True
-
-
-
+        return not self.paused
 
     def seek(self):
         pass
 
     def position(self):
         pass
-
