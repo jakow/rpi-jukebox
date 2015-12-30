@@ -4,12 +4,10 @@
 
 Built on Foundation for Apps, powered by Gulp, Angular, and libsass.
 
-If you're already an Angular developer, you may instead want to install the components into your own stack using Bower: `bower install foundation-apps`
-
 ## Requirements
 
 You'll need the following software installed:
-  - [MPlayer](http://www.mplayerhq.hu/design7/news.html) 
+  - [MPlayer](http://www.mplayerhq.hu) 
   - [Node.js](http://nodejs.org)
   - [Git](http://git-scm.com/downloads)
     - Windows users can also try [Git for Windows](http://git-for-windows.github.io/).
