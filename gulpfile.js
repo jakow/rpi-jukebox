@@ -164,8 +164,8 @@ gulp.task('build', function(cb) {
   sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', cb);
 });
 
-// Default task: builds your app, starts a server, and recompiles assets when they change
-gulp.task('default', ['build'], function () {
+// Watch task: builds your app, starts a server, and recompiles assets when they change
+gulp.task('watch', ['build'], function () {
   // Watch Sass
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass']);
 
