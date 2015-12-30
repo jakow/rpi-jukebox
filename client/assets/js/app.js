@@ -89,6 +89,8 @@
   player.controller('PlaybackCtrl', ['$scope', 'playerService', function ($scope, playerService) {
     console.log('playback ctrl started');
     $scope.playerState = playerService.state;
+    playerService.request('json_state');
+    console.log($scope.playerState);
     $scope.seekbarOptions = {
       start: [0],
       range: {min: 0, max: 100}
@@ -104,7 +106,6 @@
     $scope.pauseResume = function() {
       console.log('play button pressed');
       playerService.pauseResume();
-
     }
   }]);
 })();

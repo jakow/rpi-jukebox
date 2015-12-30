@@ -143,14 +143,23 @@ class RPJPlayerMplayer:
         self.mplayer = MPlayer()
         self.mplayer.populate()  # populates MPlayer class definitions
         self.volume = 100.0
-        self.paused = True
+        self.playing = False
+
+    def __del__(self):
+        print 'killing MPlayer'
+        # clean up mplayer before quitting
+        self.mplayer.quit()
 
     def play(self, song):
         self.mplayer.stop()
-        self.mplayer.command("loadfile", "songs/" + song['id'] + ".mp3")
+        if isinstance(song, dict):  # if song object is given, assume it is in folder
+            self.mplayer.command("loadfile", "songs/" + song['id'] + ".mp3")
+        else:  # otherwise just play from path
+            print 'loading from file'
+            self.mplayer.command("loadfile", song)
         self.nowPlaying = song
-        self.mplayer.volume(self.volume)
-        self.paused = False
+        # self.mplayer.volume(self.volume)
+        self.playing = True
 
     def play_next(self):
         print "Playing next"
@@ -168,39 +177,67 @@ class RPJPlayerMplayer:
         if self.is_file_loaded:  # volume can only be set if something is playing
             self.mplayer.volume(value)
 
-    def resume(self):
-        if self.paused and self.is_file_loaded():
-            self.mplayer.pause()  # actually unpauses, lol
-            self.paused = False
-
     def pause(self):
-        if self.is_file_loaded() and not self.paused:
+        if self.is_file_loaded():
+            # print 'mplayer reports pause state: ' + str(self.mplayer.command('pausing_keep_force', 'get_property', 'pause'))
             self.mplayer.pause()
-            self.paused = True
+            self.playing = not self.playing  # toggle state
+        else:
+          self.playing = False
 
+    @property
     def now_playing(self):
         return self.nowPlaying
 
     def is_file_loaded(self):
         output = self.mplayer.get_property('filename')
         # get filename property. If file is loaded, this property contains string starting with A
-        print output
+        print 'get_property(filename): ' + str(output)
         if output:  # check if output is not empty
             if isinstance(output, basestring):  # output can be a base string or a list
-                print output.find("ANS_filename") >= 0
-                return output.find("ANS_filename") >= 0
+                # print 'property is string'
+                loaded = (output != 'PROPERTY_UNAVAILABLE')
             else:
+                # print 'property is list'
                 # check if ANS_filename exists in an array output
                 if [s for s in output if "ANS_filename" in s]:
-                    return True
+                    loaded = True
+                else:
+                    loaded = False
+            return loaded
         else:
             return False
 
-    def is_playing(self):
-        return not self.paused
+    @property
+    def playing(self):
+        return self.playing
 
     def seek(self):
         pass
 
     def position(self):
         pass
+
+
+
+if __name__ == '__main__':
+    from RPJqueue import RPJQueue
+    queue = RPJQueue()
+    player = RPJPlayerMplayer(queue)
+    time.sleep(5)
+    player.is_file_loaded()
+    player.is_file_loaded()
+    print ''
+    print 'Starting playback'
+    player.play('/home/jakub/Music/AWESOME.mp3')
+    time.sleep(10)
+    print 'is playing: ' + str(player.playing) + '\n'
+    print 'Now attempting to pause'
+    # print 'isloaded: ' + str(player.is_file_loaded())
+    player.pause()
+    print 'is playing: ' + str(player.playing) + '\n'
+    time.sleep(10)
+    print 'now resuming'
+    player.pause()
+    print 'is playing: ' + str(player.playing) + '\n'
+    time.sleep(10)

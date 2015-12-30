@@ -14,9 +14,9 @@ app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/te
 def json_state():
     # jsonify nowPlaying and the song queue to be displayed in the radio
     q = {
-         "isPlaying": player.is_playing(),
+         "isPlaying": player.playing,
          "volume": player.volume,
-         "nowPlaying": player.now_playing(),
+         "nowPlaying": player.now_playing,
          "queue": queue.get_queue()
          }
     return json.jsonify(q)
@@ -25,7 +25,7 @@ def json_state():
 
 @app.route('/')
 def start_page():
-    return render_template('index.html', files=None, playing=player.is_playing())
+    return render_template('index.html', files=None, playing=player.playing())
 
 @app.route('/play', methods=['GET'])
 def play():
@@ -53,17 +53,9 @@ def playlist_remove():
 
 @app.route('/pause')
 def pause():
-    if player.is_playing():
         player.pause()
-    else:
-        player.resume()
-    return json_state()
 
 
-@app.route('/resume')
-def resume():
-    player.resume()
-    return json_state()
 
 
 @app.route('/download_progress')
