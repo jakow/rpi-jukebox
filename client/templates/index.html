@@ -64,9 +64,8 @@
       </div>
     </div>
     <div class="grid-block">
-      <div ng-view></div>
     </div>
-    <div class="grid-block shrink hide-for-small show-for-large">
+    <div ng-controller="PlaylistCtrl" class="grid-block shrink hide-for-small show-for-large">
       <div class="grid-block vertical" id="playlist-container-desktop">
         <div class="grid-block playlist" id="playlist-desktop">test</div>
         <div class="grid-block shrink now-playing">
@@ -75,9 +74,9 @@
             <i class="fa fa-3x fa-fw fa-center fa-music"></i>
           </div>
             <div class="grid-block">
-              <div class="grid-content">
-                <div class="song-name">Never Gonna Give You Up</div>
-                <div class="song-title">RickAstleyVEVO</div>
+              <div class="grid-content now-playing auto-center">
+                <p ng-bind="nowPlaying.title" class="song-title"></p>
+                <p ng-bind="nowPlaying.uploader" class="song-author"></p>
               </div>
             </div>
         </div>
@@ -99,9 +98,9 @@
       <div class="grid-block shrink pl-ctl-buttons">
         <div class="auto-center">
           <a class="playback-button button-backward" href="#"><i class="fa fa-fw fa-backward fa-2x"></i></a>
-          <a class="playback-button button-play" href="" ng-click="pauseResume()">
-            <i class="fa fa-fw fa-play fa-2x" ng-hide="playerState.isPlaying"></i>
-            <i class="fa fa-fw fa-pause fa-2x" ng-show="playerState.isPlaying"></i>
+          <a class="playback-button button-play" href="" ng-click="pauseResume()" ng-model-options="{ debounce: 500 }">
+            <i class="fa fa-fw fa-play fa-2x" ng-hide="playing"></i>
+            <i class="fa fa-fw fa-pause fa-2x" ng-show="playing"></i>
           </a>
           <a class="playback-button button-forward" href=""><i class="fa fa-fw fa-forward fa-2x"></i></a>
         </div>

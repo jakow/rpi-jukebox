@@ -48,6 +48,7 @@
       var p = {};
 
       /* helpers */
+      p.state = {};
       p.updateState = function (xhrResponse) {
         p.state = xhrResponse.data;
         $log.log(p.state);
@@ -64,7 +65,7 @@
 
       /* the autoRefresh promise object uses interval service will update state of the player every 5 seconds.
        This should probably be reworked, so that state is updated on server-side events */
-      p.autoRefresh = $interval(function() {p.request('json_state');}, 10000, 5);
+      p.autoRefresh = $interval(function() {p.request('json_state');}, 5000, 0);
       /*send commands to the player. Each command returns state that updates the local state */
       p.stopRefresh = function() {
         $interval.cancel(p.autoRefresh);
@@ -81,16 +82,22 @@
       return p;
     }])
     .run(function(playerService){
-
+        playerService.request('json_state');
     });  // eager instatiation of player service
 
 
   /*Player Controller for desktop seekbar, backward/play/forward buttons and volume control */
   player.controller('PlaybackCtrl', ['$scope', 'playerService', function ($scope, playerService) {
-    console.log('playback ctrl started');
-    $scope.playerState = playerService.state;
-    playerService.request('json_state');
-    console.log($scope.playerState);
+
+    /* register watcher for service state */
+    $scope.playing = playerService.state.isPlaying;
+    $scope.$watch(
+      function() {return playerService.state},
+      function(newState) {
+        $scope.playing = newState.isPlaying;
+      },
+      false);
+
     $scope.seekbarOptions = {
       start: [0],
       range: {min: 0, max: 100}
@@ -101,12 +108,27 @@
     }
 
     $scope.$on('destroy', function() {
-      player.stopRefresh();
+      playerService.stopRefresh();
     });
     $scope.pauseResume = function() {
       console.log('play button pressed');
+      $scope.playing = !$scope.playing;
       playerService.pauseResume();
     }
+  }]);
+
+  player.controller('PlaylistCtrl', ['$scope', 'playerService', function($scope, playerService) {
+    $scope.nowPlaying = playerService.state.nowPlaying;
+    $scope.queue = playerService.state.queue;
+    $scope.$watch(
+      function() {return playerService.state},
+      function(newState) {
+        $scope.nowPlaying = newState.nowPlaying;
+        $scope.queue = newState.queue;
+      },
+      false);
+
+
   }]);
 })();
 

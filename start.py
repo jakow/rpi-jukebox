@@ -25,7 +25,7 @@ def json_state():
 
 @app.route('/')
 def start_page():
-    return render_template('index.html', files=None, playing=player.playing())
+    return render_template('index.html', files=None)
 
 @app.route('/play', methods=['GET'])
 def play():
@@ -53,7 +53,8 @@ def playlist_remove():
 
 @app.route('/pause')
 def pause():
-        player.pause()
+    player.pause()
+    return json_state()
 
 
 

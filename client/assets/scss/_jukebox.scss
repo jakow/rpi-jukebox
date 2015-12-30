@@ -113,12 +113,8 @@ body {
   @extend %button;
   margin: 0px;
   color: $gray;
-  &:hover {
+  &:hover, &:focus {
     color: $gray-light;
-  }
-
-  &:focus {
-    color: $gray;
   }
 }
 
@@ -131,6 +127,26 @@ body {
   text-align: center;
   vertical-align: middle;
   display: inline-block;
+  color: $gray;
+}
+
+.now-playing {
+  background: $dark-color;
+  color: $gray-light;
+}
+
+.song-title {
+  margin-top: 8px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  font-size: 1.25em;
+}
+
+.song-author {
+  margin-bottom: 8px;
+  margin-top: 4px;
+  font-size: 1em;
+  font-style: italic;
 }
 
 .fa-center {

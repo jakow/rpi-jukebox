@@ -178,12 +178,9 @@ class RPJPlayerMplayer:
             self.mplayer.volume(value)
 
     def pause(self):
-        if self.is_file_loaded():
             # print 'mplayer reports pause state: ' + str(self.mplayer.command('pausing_keep_force', 'get_property', 'pause'))
             self.mplayer.pause()
             self.playing = not self.playing  # toggle state
-        else:
-          self.playing = False
 
     @property
     def now_playing(self):
@@ -204,6 +201,7 @@ class RPJPlayerMplayer:
                     loaded = True
                 else:
                     loaded = False
+            print 'Loaded: ' + str(loaded)
             return loaded
         else:
             return False

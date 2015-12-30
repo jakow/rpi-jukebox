@@ -24,14 +24,19 @@ class RPJDownloader:
         self.progressLock =threading.Lock()
         self.ydl.add_progress_hook(self.update_progress)
         self.progress = {}
-        self.downloading = {}
+        self.now_downloading = {}
 
     def report_progress(self):
         with self.progressLock:
-            return self.progress
+          progress = {
+            "nowDonwloading": self.now_downloading,
+            "progress": self.progress,
+            "remaining": self.downloadList
+          }
 
     def background_download(self, video, **kwargs):
-        self.downloadList.append(video)
+        with self.progressLock:
+            self.downloadList.append(video)
         if not self.backgroundThread.is_alive():
             self.backgroundThread = threading.Thread(target=self.background_download_daemon, kwargs=kwargs)
             self.backgroundThread.start()
@@ -41,6 +46,8 @@ class RPJDownloader:
         self.downloaded = []
         while self.downloadList:
             video = self.downloadList.pop(0)
+            with self.progressLock:  # update the currently downloaded file
+                self.now_downloading = video
             result = self.ydl.extract_info(video, download=True)
             if 'entries' in result:
                 # Can be a playlist or a list of videos
@@ -49,9 +56,9 @@ class RPJDownloader:
                 file_info = result
             print "Downloading " + file_info['title']
             with self.progressLock:
-                self.downloading = file_info
+                self.now_downloading = file_info
             self.downloaded.append(file_info)
-            
+
         # f exists, call a callback function, which will execute after the download has completed
         if 'onDownloaded' in kwargs:  # check if we are doing anything
             callback = kwargs['onDownloaded']

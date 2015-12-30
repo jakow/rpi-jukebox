@@ -9,7 +9,8 @@ Built on Foundation for Apps, powered by Gulp, Angular, and libsass.
 You'll need the following software installed:
   - Python 2.7.3
   - [Flask](http://flask.pocoo.org/)
-  - [MPlayer](http://www.mplayerhq.hu) 
+  - [MPlayer](http://www.mplayerhq.hu)
+  - [YoutubeDL](https://github.com/rg3/youtube-dl)
   - [Node.js](http://nodejs.org)
   - [Git](http://git-scm.com/downloads)
     - Windows users can also try [Git for Windows](http://git-for-windows.github.io/).

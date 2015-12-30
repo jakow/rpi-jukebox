@@ -7488,6 +7488,8 @@ blockquote p {
   transition: background 200ms; }
   .noUi-background:hover, .noUi-background:focus {
     background: #ededed; }
+    .noUi-background:hover .noUi-origin, .noUi-background:focus .noUi-origin {
+      background-color: #969696; }
 
 .noUi-connect {
   background: #ededed;
@@ -7498,9 +7500,10 @@ blockquote p {
 .noUi-origin {
   border-radius: 8px;
   background-color: #818181;
-  transition: background-color 200ms; }
-  .noUi-origin:hover, .noUi-origin:active {
-    background-color: #969696; }
+  transition: background-color 200ms;
+  /*&:hover, &:active {
+  background-color: lighten($gray-dark, 8);
+  }*/ }
 
 .noUi-target {
   border-radius: 8px;
@@ -7652,9 +7655,12 @@ body {
 #main-view {
   background-color: #d3d3d3; }
 
-#playlist-desktop {
-  background-color: #232323;
+#playlist-container-desktop {
   width: 400px; }
+
+#playlist-desktop {
+  background-color: #d3d3d3;
+  border-left: 1px solid #818181; }
 
 #playback-control {
   width: 400px; }
@@ -7662,12 +7668,37 @@ body {
 .playback-button {
   margin: 0px;
   color: #d3d3d3; }
-  .playback-button:hover {
+  .playback-button:hover, .playback-button:focus {
     color: #ededed; }
-  .playback-button:focus {
-    color: #d3d3d3; }
 
-.button-mute {
-  padding-right: 0; }
+.music-symbol {
+  width: 5em;
+  height: 5em;
+  background-color: #161616;
+  border-radius: 0;
+  line-height: 80px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  color: #d3d3d3; }
+
+.now-playing {
+  background: #232323;
+  color: #ededed; }
+
+.song-title {
+  margin-top: 8px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  font-size: 1.25em; }
+
+.song-author {
+  margin-bottom: 8px;
+  margin-top: 4px;
+  font-size: 1em;
+  font-style: italic; }
+
+.fa-center {
+  line-height: inherit; }
 
 /*# sourceMappingURL=app.css.map */
