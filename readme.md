@@ -7,6 +7,7 @@ Built on Foundation for Apps, powered by Gulp, Angular, and libsass.
 ## Requirements
 
 You'll need the following software installed:
+  - Python 2.7.3
   - [MPlayer](http://www.mplayerhq.hu) 
   - [Node.js](http://nodejs.org)
   - [Git](http://git-scm.com/downloads)
@@ -15,3 +16,7 @@ You'll need the following software installed:
     - Depending on how Node is configured on your machine, you may need to run `sudo npm install -g gulp bower` instead, if you get an error with the first command.
 
 ## Get Started
+After pulling repository:
+  - run `bower install` to install dependencies
+  - run `gulp default` to compile partials to build folder
+  - run `start.py` to start a local server
