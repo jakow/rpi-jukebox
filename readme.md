@@ -18,6 +18,6 @@ You'll need the following software installed:
 
 ## Get Started
 After pulling the repo:
-  - run `bower install` to install dependencies
+  - run `npm install` to install dependencies
   - run `gulp default` to compile partials to build folder and watch for changes
   - run `start.py` to start a local server
