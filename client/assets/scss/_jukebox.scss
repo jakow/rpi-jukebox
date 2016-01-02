@@ -95,17 +95,14 @@ body {
   background-color: $gray;
 }
 
-#playlist-container-desktop {
-  width: 400px;
-}
-
-#playlist-desktop {
-  background-color: $gray;
+#queue-container-desktop {
+  width: 25em;
+  background-color: white;
   border-left: 1px solid $gray-dark;
 }
 
 #playback-control {
-  width: 400px;
+  width: 25em;
 }
 
 .playback-button {
@@ -152,3 +149,42 @@ body {
 .fa-center {
   line-height: inherit;
 }
+
+.marquee > * {
+  /* Starting position */
+  -webkit-transform: translateX(30%);
+  transform: translateX(30%);
+  /* Apply animation to this element */
+  -webkit-animation: horizontally 8s linear infinite alternate;
+  animation: horizontally 8s linear infinite alternate;
+}
+
+/* Move it (define the animation) */
+
+@-webkit-keyframes horizontally {
+  0% {
+    -webkit-transform: translateX(30%);
+  }
+  100% {
+    -webkit-transform: translateX(-30%);
+  }
+}
+
+@keyframes horizontally {
+  0% {
+    /* Browser bug fix */
+    -webkit-transform: translateX(30%);
+    /* Browser bug fix */
+    transform: translateX(30%);
+  }
+  100% {
+    /* Browser bug fix */
+    -webkit-transform: translateX(-30%);
+    /* Browser bug fix */
+    transform: translateX(-30%);
+  }
+}
+
+
+
+

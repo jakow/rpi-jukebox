@@ -112,12 +112,12 @@
     });
     $scope.pauseResume = function() {
       console.log('play button pressed');
-      $scope.playing = !$scope.playing;
+      //$scope.playing = !$scope.playing;
       playerService.pauseResume();
     }
   }]);
 
-  player.controller('PlaylistCtrl', ['$scope', 'playerService', function($scope, playerService) {
+  player.controller('QueueCtrl', ['$scope', 'playerService', function($scope, playerService) {
     $scope.nowPlaying = playerService.state.nowPlaying;
     $scope.queue = playerService.state.queue;
     $scope.$watch(
@@ -127,6 +127,8 @@
         $scope.queue = newState.queue;
       },
       false);
+    //$http.get('assets/test/sampleQueue.json').then(function(response) { $scope.queue = response}, function() {});
+
 
 
   }]);

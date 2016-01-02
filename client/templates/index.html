@@ -32,7 +32,7 @@
           </span>
         </label>
       </div>
-      <span class="left title" ">
+      <span class="left title">
       <span id="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
       </span>
     </div>
@@ -63,23 +63,42 @@
         <p style="color:white">test</p>
       </div>
     </div>
-    <div class="grid-block">
+    <div class="grid-block" id="main-view">
     </div>
-    <div ng-controller="PlaylistCtrl" class="grid-block shrink hide-for-small show-for-large">
-      <div class="grid-block vertical" id="playlist-container-desktop">
-        <div class="grid-block playlist" id="playlist-desktop">test</div>
+    <div  class="grid-block shrink hide-for-small show-for-large">
+      <div ng-controller="QueueCtrl" class="grid-block vertical" id="queue-container-desktop">
+        <div class="grid-block queue">
+          <ol>
+            <li class="grid-block">
+              <div class="queue-thumbnail grid-block">th</div>
+              <div class="grid-block">
+                <div class="grid-content">
+                  <p>Title</p>
+                  <p>Author</p>
+                </div>
+              </div>
+              <div class="grid-block">
+                <i class="fa fa-times"></i>
+              </div>
+            </li>
+          </ol>
+        </div>
         <div class="grid-block shrink now-playing">
-          <div class="grid-block shrink">
-          <div class="music-symbol">
-            <i class="fa fa-3x fa-fw fa-center fa-music"></i>
-          </div>
-            <div class="grid-block">
-              <div class="grid-content now-playing auto-center">
-                <p ng-bind="nowPlaying.title" class="song-title"></p>
-                <p ng-bind="nowPlaying.uploader" class="song-author"></p>
+          <div class="grid-block shrink ">
+            <div class="music-symbol">
+              <i class="fa fa-3x fa-fw fa-center fa-music"></i>
+            </div>
+            <div class="auto-center">
+              <div class="song-info">
+                <div class="marquee">
+                  <h4 ng-bind="nowPlaying.title" class="song-title"></h4>
+                </div>
+                <div>
+                  <h5 ng-bind="nowPlaying.uploader" class="song-author"></h5>
+                </div>
               </div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>
@@ -105,7 +124,7 @@
           <a class="playback-button button-forward" href=""><i class="fa fa-fw fa-forward fa-2x"></i></a>
         </div>
       </div>
-      <div class="grid-block volume-control auto-center">
+      <div class="grid-block auto-center" id="volume-control-desktop">
         <a class="playback-button button-mute" href="#">
           <i class="fa fa-fw fa-lg fa-volume-up"></i>
           <i class="fa fa-fw fa-lg fa-volume-off" style="display: none"></i>

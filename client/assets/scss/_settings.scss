@@ -92,7 +92,7 @@
 // We use these to control various global styles
 // $body-background: #fff;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+ $body-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: $font-weight-normal;
 // $body-font-style: normal;
 // $body-antialiased: true;
@@ -106,7 +106,7 @@
 // $warning-color: #F08A24;
  $dark-color: #232323;
  $gray: #d3d3d3;
- $gray-dark: darken($gray, 32);
+ $gray-dark: darken($gray, 24);
  $gray-light: lighten($gray, 10);
 
 // We use these to make sure border radius matches unless we want it different.
@@ -136,7 +136,7 @@ $breakpoints: (
 // - - - - - - - - - - - - - - -
 
 // We use these to control header font styles
-// $header-font-family: $body-font-family;
+ $header-font-family: "Raleway", $body-font-family;
 // $header-font-weight: $font-weight-normal;
 // $header-font-style: $font-weight-normal;
 // $header-font-color: #222;

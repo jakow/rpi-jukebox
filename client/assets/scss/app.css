@@ -6,6 +6,8 @@
  *    user zoom.
  */
 @import url(https://fonts.googleapis.com/css?family=Lobster);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 html {
   font-family: sans-serif;
   /* 1 */
@@ -387,7 +389,7 @@ body {
   color: #222;
   padding: 0;
   margin: 0;
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   line-height: 1;
@@ -4777,7 +4779,7 @@ meter {
   The trusy accordion allows you to create a series of vertical tabs.
 */
 .accordion {
-  border: 1px solid #818181; }
+  border: 1px solid #969696; }
 
 .accordion-title {
   padding: 1rem;
@@ -4865,7 +4867,7 @@ p {
 
 /* Default header styles */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   color: #222;
@@ -7489,7 +7491,7 @@ blockquote p {
   .noUi-background:hover, .noUi-background:focus {
     background: #ededed; }
     .noUi-background:hover .noUi-origin, .noUi-background:focus .noUi-origin {
-      background-color: #969696; }
+      background-color: #aaaaaa; }
 
 .noUi-connect {
   background: #ededed;
@@ -7499,7 +7501,7 @@ blockquote p {
 
 .noUi-origin {
   border-radius: 8px;
-  background-color: #818181;
+  background-color: #969696;
   transition: background-color 200ms;
   /*&:hover, &:active {
   background-color: lighten($gray-dark, 8);
@@ -7655,15 +7657,13 @@ body {
 #main-view {
   background-color: #d3d3d3; }
 
-#playlist-container-desktop {
-  width: 400px; }
-
-#playlist-desktop {
-  background-color: #d3d3d3;
-  border-left: 1px solid #818181; }
+#queue-container-desktop {
+  width: 25em;
+  background-color: white;
+  border-left: 1px solid #969696; }
 
 #playback-control {
-  width: 400px; }
+  width: 25em; }
 
 .playback-button {
   margin: 0px;
@@ -7700,5 +7700,31 @@ body {
 
 .fa-center {
   line-height: inherit; }
+
+.marquee > * {
+  /* Starting position */
+  -webkit-transform: translateX(30%);
+  transform: translateX(30%);
+  /* Apply animation to this element */
+  -webkit-animation: horizontally 8s linear infinite alternate;
+  animation: horizontally 8s linear infinite alternate; }
+
+/* Move it (define the animation) */
+@-webkit-keyframes horizontally {
+  0% {
+    -webkit-transform: translateX(30%); }
+  100% {
+    -webkit-transform: translateX(-30%); } }
+@keyframes horizontally {
+  0% {
+    /* Browser bug fix */
+    -webkit-transform: translateX(30%);
+    /* Browser bug fix */
+    transform: translateX(30%); }
+  100% {
+    /* Browser bug fix */
+    -webkit-transform: translateX(-30%);
+    /* Browser bug fix */
+    transform: translateX(-30%); } }
 
 /*# sourceMappingURL=app.css.map */
