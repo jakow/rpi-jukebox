@@ -219,13 +219,6 @@ $thumbnail-width: 6em;
 }
 
 .queue-thumb {
-  @include grid-block(
-    $size: shrink, // Can be expand, shrink, or a number of columns
-    $orientation: horizontal, // Set to vertical for a vertical grid
-    $wrap: false, // Set to true to make columns wrap if they get too wide
-    $align: left, // Can be left, right, center, justify, or spaced
-    $order: 0 // Can be any positive number
-  );
   width: $thumbnail-width;
   overflow: hidden;
   height: $thumbnail-width * 1080/1920;
@@ -241,32 +234,19 @@ $thumbnail-width: 6em;
 }
 
 .queue-desc {
-  @include grid-block(
-    $size: expand, // Can be expand, shrink, or a number of columns
-    $orientation: horizontal, // Set to vertical for a vertical grid
-    $wrap: false, // Set to true to make columns wrap if they get too wide
-    $align: left, // Can be left, right, center, justify, or spaced
-    $order: 0 // Can be any positive number
-  );
+
   div {
     margin: 0em 1em;
-    overflow-x: hidden;
-    white-space: nowrap;
+    //overflow-x: hidden;
+    //white-space: nowrap;
+    font-size: 0.8em;
   }
-  overflow-x: hidden;
-  font-size: 0.8em;
-  white-space: nowrap;
-  width: 25em - $thumbnail-width + 2.5em;
+
+  //white-space: nowrap;
+  //width: 25em - $thumbnail-width - 2em;
 }
 
 .queue-optn {
-  @include grid-block(
-    $size: shrink, // Can be expand, shrink, or a number of columns
-    $orientation: horizontal, // Set to vertical for a vertical grid
-    $wrap: false, // Set to true to make columns wrap if they get too wide
-    $align: right, // Can be left, right, center, justify, or spaced
-    $order: 0 // Can be any positive number
-  );
   margin-top: auto;
   margin-bottom: auto;
 

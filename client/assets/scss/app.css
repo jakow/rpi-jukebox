@@ -7762,21 +7762,6 @@ body {
   background-color: #ededed; }
 
 .queue-thumb {
-  display: flex;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  backface-visibility: hidden;
-  flex: 0 0 auto;
-  flex-flow: row wrap;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
-  order: 0;
-  height: auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   width: 6em;
   overflow: hidden;
   height: 3.375em;
@@ -7789,47 +7774,11 @@ body {
     position: relative;
     top: -0.5625em; }
 
-.queue-desc {
-  display: flex;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  backface-visibility: hidden;
-  flex: 1 1 auto;
-  flex-flow: row wrap;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
-  order: 0;
-  height: auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  overflow-x: hidden;
-  font-size: 0.8em;
-  white-space: nowrap;
-  width: 21.5em; }
-  .queue-desc div {
-    margin: 0em 1em;
-    overflow-x: hidden;
-    white-space: nowrap; }
+.queue-desc div {
+  margin: 0em 1em;
+  font-size: 0.8em; }
 
 .queue-optn {
-  display: flex;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  backface-visibility: hidden;
-  flex: 0 0 auto;
-  flex-flow: row wrap;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-end;
-  order: 0;
-  height: auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   margin-top: auto;
   margin-bottom: auto; }
 
