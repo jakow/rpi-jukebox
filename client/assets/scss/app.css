@@ -7686,17 +7686,25 @@ body {
   background: #232323;
   color: #ededed; }
 
+.song-info {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 18em;
+  margin: 0 1em; }
+
 .song-title {
   margin-top: 8px;
   margin-bottom: 4px;
   overflow: hidden;
-  font-size: 1.25em; }
+  font-size: 1.25em;
+  color: #d3d3d3; }
 
 .song-author {
   margin-bottom: 8px;
   margin-top: 4px;
   font-size: 1em;
-  font-style: italic; }
+  font-style: italic;
+  font-color: #969696; }
 
 .fa-center {
   line-height: inherit; }
@@ -7726,5 +7734,103 @@ body {
     -webkit-transform: translateX(-30%);
     /* Browser bug fix */
     transform: translateX(-30%); } }
+.queue ol, .queue ul {
+  margin: 0;
+  padding: 0; }
+
+.queue-item {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  backface-visibility: hidden;
+  flex: 1 1 auto;
+  flex-flow: row wrap;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  order: 0;
+  height: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  padding: 0.5em;
+  border-bottom: 1px solid #d3d3d3;
+  height: 4.5em; }
+
+.queue-item:hover {
+  background-color: #ededed; }
+
+.queue-thumb {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  backface-visibility: hidden;
+  flex: 0 0 auto;
+  flex-flow: row wrap;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  order: 0;
+  height: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  width: 6em;
+  overflow: hidden;
+  height: 3.375em;
+  margin: 0 auto; }
+  .queue-thumb img {
+    margin: 0;
+    padding: 0;
+    width: 6em;
+    height: 4.5em;
+    position: relative;
+    top: -0.5625em; }
+
+.queue-desc {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  backface-visibility: hidden;
+  flex: 1 1 auto;
+  flex-flow: row wrap;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  order: 0;
+  height: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-x: hidden;
+  font-size: 0.8em;
+  white-space: nowrap;
+  width: 21.5em; }
+  .queue-desc div {
+    margin: 0em 1em;
+    overflow-x: hidden;
+    white-space: nowrap; }
+
+.queue-optn {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  backface-visibility: hidden;
+  flex: 0 0 auto;
+  flex-flow: row wrap;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-end;
+  order: 0;
+  height: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  margin-top: auto;
+  margin-bottom: auto; }
 
 /*# sourceMappingURL=app.css.map */

@@ -132,11 +132,18 @@ body {
   color: $gray-light;
 }
 
+.song-info {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 18em;
+  margin: 0 1em;
+}
 .song-title {
   margin-top: 8px;
   margin-bottom: 4px;
   overflow: hidden;
   font-size: 1.25em;
+  color: $gray;
 }
 
 .song-author {
@@ -144,6 +151,7 @@ body {
   margin-top: 4px;
   font-size: 1em;
   font-style: italic;
+  font-color: $gray-dark;
 }
 
 .fa-center {
@@ -183,6 +191,85 @@ body {
     /* Browser bug fix */
     transform: translateX(-30%);
   }
+}
+
+.queue {
+  ol, ul {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+$thumbnail-width: 6em;
+.queue-item {
+  @include grid-block(
+    $size: expand, // Can be expand, shrink, or a number of columns
+    $orientation: horizontal, // Set to vertical for a vertical grid
+    $wrap: false, // Set to true to make columns wrap if they get too wide
+    $align: left, // Can be left, right, center, justify, or spaced
+    $order: 0 // Can be any positive number
+  );
+  padding: 0.5em;
+  border-bottom: 1px solid $gray;
+  height: 4.5em;
+}
+
+.queue-item:hover {
+  background-color: $gray-light;
+}
+
+.queue-thumb {
+  @include grid-block(
+    $size: shrink, // Can be expand, shrink, or a number of columns
+    $orientation: horizontal, // Set to vertical for a vertical grid
+    $wrap: false, // Set to true to make columns wrap if they get too wide
+    $align: left, // Can be left, right, center, justify, or spaced
+    $order: 0 // Can be any positive number
+  );
+  width: $thumbnail-width;
+  overflow: hidden;
+  height: $thumbnail-width * 1080/1920;
+  margin: 0 auto;
+  img {
+    margin: 0;
+    padding: 0;
+    width: $thumbnail-width;
+    height: $thumbnail-width*0.75;
+    position: relative;
+    top: 0.5*($thumbnail-width * (1080/1920)- $thumbnail-width * 0.75);
+  }
+}
+
+.queue-desc {
+  @include grid-block(
+    $size: expand, // Can be expand, shrink, or a number of columns
+    $orientation: horizontal, // Set to vertical for a vertical grid
+    $wrap: false, // Set to true to make columns wrap if they get too wide
+    $align: left, // Can be left, right, center, justify, or spaced
+    $order: 0 // Can be any positive number
+  );
+  div {
+    margin: 0em 1em;
+    overflow-x: hidden;
+    white-space: nowrap;
+  }
+  overflow-x: hidden;
+  font-size: 0.8em;
+  white-space: nowrap;
+  width: 25em - $thumbnail-width + 2.5em;
+}
+
+.queue-optn {
+  @include grid-block(
+    $size: shrink, // Can be expand, shrink, or a number of columns
+    $orientation: horizontal, // Set to vertical for a vertical grid
+    $wrap: false, // Set to true to make columns wrap if they get too wide
+    $align: right, // Can be left, right, center, justify, or spaced
+    $order: 0 // Can be any positive number
+  );
+  margin-top: auto;
+  margin-bottom: auto;
+
 }
 
 
