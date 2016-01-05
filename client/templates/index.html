@@ -71,16 +71,18 @@
           <ol class="grid-block">
             <li class="queue-item">
               <div class="queue-thumb grid-block shrink">
-                <img src="//i.ytimg.com/vi/QtXby3twMmI/default.jpg"/>
+                <img src="https://i.ytimg.com/vi/QtXby3twMmI/mqdefault.jpg"/>
               </div>
-              <div class="queue-desc grid-block">
+              <div class="queue-desc grid-content auto-center">
                 <div>
                   <span>Coldplay - Adventure Of A Lifetime (Official video)</span>
-
+                </div>
+                <div>
+                  <span>ColdplayVEVO</span>
                 </div>
               </div>
               <div class="queue-optn grid-block shrink">
-                <i class="fa fa-times"></i>
+                <a><i class="fa fa-times"></i></a>
               </div>
 
             </li>
@@ -121,7 +123,7 @@
       <div class="grid-block shrink pl-ctl-buttons">
         <div class="auto-center">
           <a class="playback-button button-backward" href="#"><i class="fa fa-fw fa-backward fa-2x"></i></a>
-          <a class="playback-button button-play" href="" ng-click="pauseResume()" ng-model-options="{ debounce: 500 }">
+          <a class="playback-button button-play" href="" ng-click="pause()" ng-model-options="{ debounce: 500 }">
             <i class="fa fa-fw fa-play fa-2x" ng-hide="playing"></i>
             <i class="fa fa-fw fa-pause fa-2x" ng-show="playing"></i>
           </a>

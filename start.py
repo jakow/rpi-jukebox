@@ -22,10 +22,10 @@ def json_state():
     return json.jsonify(state)
 
 
-
 @app.route('/')
 def start_page():
     return render_template('index.html', files=None)
+
 
 @app.route('/play', methods=['GET'])
 def play():
@@ -44,6 +44,7 @@ def queue_add():
     return json_state()
 
 
+
 @app.route('/queue_remove', methods=['GET'])
 def queue_remove():
     video_id = request.args['videoId']
@@ -54,8 +55,7 @@ def queue_remove():
 @app.route('/pause')
 def pause():
     player.pause()
-    return json_state()
-
+    return json.jsonify({"playing": player.playing})
 
 
 

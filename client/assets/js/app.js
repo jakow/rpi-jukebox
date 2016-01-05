@@ -58,23 +58,35 @@
         $log.log('Error: ' + error);
       }
 
-      p.request = function (command) {
-        $log.log("Requested " + command);
-        $http.get(command).then(p.updateState, p.logError);
+      p.refresh = function () {
+        $log.log("Refreshing");
+        $http.get('json_state').then(p.updateState, p.logError);
       }
 
       /* the autoRefresh promise object uses interval service will update state of the player every 5 seconds.
        This should probably be reworked, so that state is updated on server-side events */
-      p.autoRefresh = $interval(function() {p.request('json_state');}, 5000, 0);
+      p.autoRefresh = $interval(p.refresh, 5000, 0);
       /*send commands to the player. Each command returns state that updates the local state */
       p.stopRefresh = function() {
         $interval.cancel(p.autoRefresh);
       }
 
-      p.pauseResume = function () {
+      p.request = function(req) {
+        return $http.get(req).then(
+          function(response) { //success callback
+          /* if successfully fetched, transform the xhrResponse to just return data */
+          //p.updateState(response); //slows things down a bit
+          return response.data;
+        },
+        function(error) { //error callback
+          return error;  //just return error to be processed
+        });
+      }
+
+      p.pause = function () {
         console.log('Requesting play/pause');
-        p.request('pause');
-      };
+        return p.request('pause');
+      }
       p.addToQueue = function (songData) {
 
       }
@@ -82,7 +94,7 @@
       return p;
     }])
     .run(function(playerService){
-        playerService.request('json_state');
+        playerService.refresh();
     });  // eager instatiation of player service
 
 
@@ -110,10 +122,14 @@
     $scope.$on('destroy', function() {
       playerService.stopRefresh();
     });
-    $scope.pauseResume = function() {
-      console.log('play button pressed');
+    $scope.pause = function() {
+      $scope.playing = !$scope.playing;
+
       //$scope.playing = !$scope.playing;
-      playerService.pauseResume();
+      playerService.pause().then(function(response) {
+        $scope.playing = response.playing;
+        console.log('paused/unpaused successfully');
+      })
     }
   }]);
 

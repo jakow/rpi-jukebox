@@ -20,6 +20,10 @@ class RPJQueue:
         #if it exists, it will be removed. Otherwise nothing happens
         self.queue = [song for song in self.queue if not (song.get('id') != video_id)]
 
+    @property
+    def empty(self):
+        return not self.queue
+
     def get_json_queue(self):
         return flask.json.jsonify(q=self.queue)
 

@@ -31,6 +31,7 @@ class MPlayer(object):
                 [self.exe_name, '-slave', '-quiet', '-idle'],
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, bufsize=1)
         self._readlines()
+        self.flushed = False
 
     def _readlines(self):
         ret = []
@@ -50,7 +51,6 @@ class MPlayer(object):
         if name == 'quit':
             return
         return self._readlines()
-
     @classmethod
     def populate(kls):
         """ Populates this class by introspecting mplayer executable """
@@ -94,6 +94,16 @@ class MPlayer(object):
             exec(func_str)
 
             setattr(MPlayer, cmd_name, _populated_fn)
+
+    # flushes STDOUT pipe so that the output from property reads is clean
+    def flush_pipe(self):
+        # flush stdout by performing dummy reads
+        looping = True
+        while looping:
+            # dummy pipe read
+            pipe = self.command('pausing_keep_force', 'get_property', 'filename')
+            if (pipe[0].find('ANS_filename') >= 0) or (pipe[0].find('ANS_ERROR') >= 0):
+                looping = False
 
 if __name__  == '__main__':
     MPlayer.populate() # MAGIC

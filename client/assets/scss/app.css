@@ -7757,9 +7757,13 @@ body {
   padding: 0.5em;
   border-bottom: 1px solid #d3d3d3;
   height: 4.5em; }
+  .queue-item .queue-optn {
+    visibility: hidden; }
 
 .queue-item:hover {
   background-color: #ededed; }
+  .queue-item:hover .queue-optn {
+    visibility: visible; }
 
 .queue-thumb {
   width: 6em;
@@ -7769,13 +7773,12 @@ body {
   .queue-thumb img {
     margin: 0;
     padding: 0;
-    width: 6em;
-    height: 4.5em;
-    position: relative;
-    top: -0.5625em; }
+    width: 6em; }
 
 .queue-desc div {
-  margin: 0em 1em;
+  display: block;
+  overflow-x: hidden;
+  white-space: nowrap;
   font-size: 0.8em; }
 
 .queue-optn {

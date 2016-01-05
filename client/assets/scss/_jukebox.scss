@@ -212,10 +212,16 @@ $thumbnail-width: 6em;
   padding: 0.5em;
   border-bottom: 1px solid $gray;
   height: 4.5em;
+  .queue-optn {
+    visibility: hidden;
+  }
 }
 
 .queue-item:hover {
   background-color: $gray-light;
+  .queue-optn {
+    visibility: visible;
+  }
 }
 
 .queue-thumb {
@@ -227,18 +233,20 @@ $thumbnail-width: 6em;
     margin: 0;
     padding: 0;
     width: $thumbnail-width;
-    height: $thumbnail-width*0.75;
-    position: relative;
-    top: 0.5*($thumbnail-width * (1080/1920)- $thumbnail-width * 0.75);
+    //height: $thumbnail-width*0.75; //hack for 4:3 imgs
+    //position: relative;
+    //top: 0.5*($thumbnail-width * (1080/1920)- $thumbnail-width * 0.75);
+
   }
 }
 
 .queue-desc {
 
   div {
-    margin: 0em 1em;
-    //overflow-x: hidden;
-    //white-space: nowrap;
+    display: block;
+    //margin: 0em 1em;
+    overflow-x: hidden;
+    white-space: nowrap;
     font-size: 0.8em;
   }
 

@@ -1,80 +1,8 @@
 from __future__ import unicode_literals
-
-__author__ = 'jakub'
-import threading
-import os
-import pygame
-import time
-import pyglet
-import subprocess
-import select
 from mplayerWrapper import *
-
-
-def playback_ended():
-  print "Playback ended"
-
-
-class RPJPlayerPyglet:
-  def __init__(self, queue):
-    self.queue = queue
-    self.player = pyglet.media.Player()
-    self.playerThread = threading.Thread()
-    self.now_playing = {}
-    self.enabled = False
-    self.autoplay = True
-    self.current_song
-    pyglet.options['audio'] = ('openal', 'pulseaudio')
-
-  def play_next(self):
-    if self.player.playing:
-      self.player.pause()
-    print "Playing next"
-    song_data = self.queue.pop()
-    # self.player = pyglet.media.Player()  # new player needed after previous ends playing...
-    song = pyglet.media.load("songs/" + song_data['id'] + ".mp3", streaming=True)
-    self.player.queue(song)
-    self.player.play()
-    if self.autoplay:
-      # self.player.on_eos(self.play_next)
-      pass
-
-  # function to play desired song, while discarding playlist.
-  def play(self, song):
-    s = pyglet.media.load("songs/" + song['id'] + ".mp3", streaming=True)
-    self.now_playing = song
-    # self.player.pitch = 1.5  # LOL
-    self.player.queue(s)
-    self.player.play()
-    if self.autoplay:
-      # self.player.on_eos(self.play_next)
-      pass
-
-  # function to resume
-  def resume(self):
-    if not self.player.playing:
-      self.player.play()
-
-  def pause(self):
-    if self.player.playing:
-      self.player.pause()
-
-  @property
-  def now_playing(self):
-    return self.now_playing
-
-  @property
-  def volume(self):
-    return self.player.volume
-
-  @volume.setter
-  def volume(self, value):
-    self.player.volume = value
-
-  @property
-  def is_playing(self):
-    return self.player.playing
-
+import mplayer, asyncore, time, threading
+from mplayer.async import AsyncPlayer
+__author__ = 'Jakub'
 
 # class RPJPlayerPygame:
 #     def __init__(self, queue):
@@ -132,8 +60,6 @@ class RPJPlayerPyglet:
 
 
 class RPJPlayerMplayer:
-    exe_name = 'mplayer' if os.sep == '/' else 'mplayer.exe'
-
     def __init__(self, queue):
         self.queue = queue
         # self.playerThread = threading.Thread()
@@ -144,6 +70,7 @@ class RPJPlayerMplayer:
         self.mplayer.populate()  # populates MPlayer class definitions
         self.volume = 100.0
         self.playing = False
+        self.eof_handler = {}
 
     def __del__(self):
         print 'killing MPlayer'
@@ -154,18 +81,29 @@ class RPJPlayerMplayer:
         self.mplayer.stop()
         if isinstance(song, dict):  # if song object is given, assume it is in folder
             self.mplayer.command("loadfile", "songs/" + song['id'] + ".mp3")
+            self.nowPlaying = song
         else:  # otherwise just play from path
             print 'loading from file'
             self.mplayer.command("loadfile", song)
-        self.nowPlaying = song
-        # self.mplayer.volume(self.volume)
+        self.mplayer.volume(self.volume)
         self.playing = True
+        while not self.is_eof():
+            time.sleep(1)
+        self.eof_event()
 
-    def play_next(self):
-        print "Playing next"
-        song_data = self.queue.pop()
-        # self.player =  # new player needed after previous ends playing...
-        self.play(song_data)
+    # EOF events
+    def on_eof(self, handler, *args):
+        if args:
+            self.eof_handler = {'handler': handler, 'args': args}
+        else:
+            self.eof_handler = {'handler': handler}
+
+    def eof_event(self):
+        print 'end of playback'
+        if 'args' in self.eof_handler:  # if args are empty
+            self.eof_handler['handler'](self.eof_handler['args'])
+        else:
+            self.eof_handler['handler']()
 
     @property
     def volume(self):
@@ -190,7 +128,7 @@ class RPJPlayerMplayer:
         return self.nowPlaying
 
     def is_file_loaded(self):
-        output = self.mplayer.get_property('filename')
+        output = self.mplayer.command('pausing_keep_force', 'get_property', 'filename')
         # get filename property. If file is loaded, this property contains string starting with A
         print 'get_property(filename): ' + str(output)
         if output:  # check if output is not empty
@@ -213,32 +151,152 @@ class RPJPlayerMplayer:
     def playing(self):
         return self.playing
 
-    def seek(self):
-        pass
+    def seek(self, value, type):
+        if type == 'percentage':
+            self.mplayer.command('pausing_keep_force', 'seek', 1)
+        elif type == 'absolute':
+            self.mplayer.command('pausing_keep_force', 'seek', 2)
 
-    def position(self):
-        pass
+    def is_eof(self):
+        self.mplayer.flush_pipe()
+        pipe = self.mplayer.command('pausing_keep_force', 'get_property', 'percent_pos')[0]
+        return pipe.find('percent') < 0
+
+    def get_position(self):
+        self._parse_property('po')
+
+    def _parse_property(self, property):
+        raw = self.mplayer.command('pausing_keep_force', 'get_property', property)
+        print 'get_property(filename): ' + str(raw)
+        prop = "ANS_"+ property
+        if raw:  # check if raw output is not empty
+            if isinstance(raw, basestring):  # output can be a base string or a list
+                if raw.find(prop) >= 0:
+                    return raw[len(prop):]
+                else:
+                  print 'error reading property'
+                  return "PROPERTY_UNAVAILABLE"
+            else:  # if not string then list
+                # check if ANS_filename exists in an array output
+                find_prop = next((s for s in raw if prop in raw), "PROPERTY_UNAVAILABLE")
+                return find_prop
+
+
+class RPJPlayer:
+    """ RPJ wrapper for Mplayer Python wrapper
+"""
+    def __init__(self, queue):
+        #set up mplayer
+        self.player = AsyncPlayer(autospawn=False)
+        self.player.args = ['-really-quiet', '-msglevel', 'global=6']
+
+        #set up event handlers
+        self.playback_finish_handler = None
+        self.playback_skip_handler = None
+        self.playback_stop_handler = None
+        self.player.stdout.connect(self._playback_end_event)
+
+        self.player.spawn()
+        # now set up state variables
+        self.queue = queue # use queue object to fetch next
+        self.nowPlaying = {}
+
+        #finally start asyncore loop on a background thread
+        self.backgroundThread = threading.Thread(target=self._background_daemon)
+        self.backgroundThread.start()
+
+    def __del__(self):
+        print 'quitting mplayer'
+        self.player.quit()
+
+    # Play function. Will emit on_eof event when playback is finished
+    def play(self, song):
+        if isinstance(song, dict): # check if a song dict is given
+            path = 'songs/' + song['id'] + '.mp3'
+        else:
+            path = 'songs/' + song + '.mp3'
+
+        self.player.loadfile(path)
+
+    def on_playback_finish(self, handler):
+        self.playback_finish_handler = handler
+
+    def on_playback_skip(self, handler):
+        self.playback_skip_handler = handler
+
+    def on_playback_stop(self, handler):
+        self.playback_stop_handler = handler
+
+    def quit(self):
+        self.player.quit()
+
+####### PRIVATE FUNCTIONS ##########################3333
+    def _background_daemon(self):
+        print 'starting daemon'
+        asyncore.loop()
+        print 'stopping daemon'
+
+    def _playback_end_event(self, data):
+        if data.startswith('EOF code: '):
+            print data
+            code = int(data[len('EOF code: '):])
+            if code == 1:
+                self.playback_finish_handler()
+            elif code == 2:
+                self.playback_skip_handler()
+            elif code == 4:
+              self.playback_stop_handler()
+
+# if __name__ == '__main__':
+#     def done():
+#         print 'Done playing!'
+#     from RPJqueue import RPJQueue
+#     queue = RPJQueue()
+#     player = RPJPlayerMplayer(queue)
+#     player.is_file_loaded()
+#     player.is_file_loaded()
+#     print ''
+#     print 'Starting playback'
+#     player.on_eof(done)
+#     player.play('/home/jakub/Programming/rpi-jukebox/songs/w9QfN-ODGWM.mp3')
+#
+    #
+    # time.sleep(10)
+    # print 'is playing: ' + str(player.playing) + '\n'
+    # print 'Now attempting to pause'
+    # # print 'isloaded: ' + str(player.is_file_loaded())
+    # player.pause()
+    # print 'is playing: ' + str(player.playing) + '\n'
+    # time.sleep(5)
+    # print 'now resuming'
+    # player.pause()
+    # print 'is playing: ' + str(player.playing) + '\n'
+    # time.sleep(5)
+    # print 'seeking'
+    # player.foo()
+    # time.sleep(3)
+    # print 'is EOF? ' + str(player.is_EOF())
+    # print 'looping'
+    # for x in xrange(20):
+    #     print 'playing: ' + str(player.bar())
+    #     time.sleep(1)
+    # print "EOF: " + str(player.is_EOF())
+    #
+    #
+    #
+
 
 
 
 if __name__ == '__main__':
-    from RPJqueue import RPJQueue
-    queue = RPJQueue()
-    player = RPJPlayerMplayer(queue)
-    time.sleep(5)
-    player.is_file_loaded()
-    player.is_file_loaded()
-    print ''
-    print 'Starting playback'
-    player.play('/home/jakub/Music/AWESOME.mp3')
-    time.sleep(10)
-    print 'is playing: ' + str(player.playing) + '\n'
-    print 'Now attempting to pause'
-    # print 'isloaded: ' + str(player.is_file_loaded())
-    player.pause()
-    print 'is playing: ' + str(player.playing) + '\n'
-    time.sleep(10)
-    print 'now resuming'
-    player.pause()
-    print 'is playing: ' + str(player.playing) + '\n'
-    time.sleep(10)
+    import RPJqueue
+    queue = RPJqueue.RPJQueue()
+    p = RPJPlayer(queue)
+
+    def printeof():
+        print 'EOF!'
+
+    p.on_playback_finish(printeof)
+    p.play('w9QfN-ODGWM')
+    time.sleep(3)
+    p.quit()

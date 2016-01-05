@@ -65,7 +65,7 @@ class RPJDownloader:
             if 'param' in kwargs:
                 param = kwargs['param']
                 print 'on download ' + callback.__name__ + '(' + param.__name__ + ')'
-                return callback(param)
+                return callback(file_info, param)
             else:
                 print 'on download ' + callback.__name__ + '(last_downloaded_file)'
                 return callback(file_info)
