@@ -4,7 +4,7 @@ import RPJplayer
 import RPJqueue
 import os
 queue = RPJqueue.RPJQueue()
-player = RPJplayer.RPJPlayerMplayer(queue)
+player = RPJplayer.RPJPlayer(queue)
 downloader = RPJdownloader.RPJDownloader()
 
 app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/templates')

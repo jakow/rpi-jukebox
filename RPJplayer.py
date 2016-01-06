@@ -187,7 +187,7 @@ class RPJPlayer:
 """
     def __init__(self, queue):
         #set up mplayer
-        self.player = AsyncPlayer(autospawn=False)
+        self.player = mplayer.Player(autospawn=False)
         self.player.args = ['-really-quiet', '-msglevel', 'global=6']
 
         #set up event handlers
@@ -200,10 +200,8 @@ class RPJPlayer:
         # now set up state variables
         self.queue = queue # use queue object to fetch next
         self.nowPlaying = {}
+        self.playing = False
 
-        #finally start asyncore loop on a background thread
-        self.backgroundThread = threading.Thread(target=self._background_daemon)
-        self.backgroundThread.start()
 
     def __del__(self):
         print 'quitting mplayer'
@@ -217,6 +215,25 @@ class RPJPlayer:
             path = 'songs/' + song + '.mp3'
 
         self.player.loadfile(path)
+        if self.player.filename is not None:
+            self.playing = True
+
+    def play_next(self):
+        if not self.queue.empty:
+            self.play(self.queue.pop())
+
+    @property
+    def percent_pos(self):
+        return self.player.percent_pos
+
+    @percent_pos.setter
+    def percent_pos(self, value):
+        self.player.percent_pos = value
+
+    def pause(self):
+        if self.player.filename is not None:
+            self.player.pause()  # pause/unpause
+            self.playing = not self.playing  # toggle state
 
     def on_playback_finish(self, handler):
         self.playback_finish_handler = handler
@@ -228,24 +245,31 @@ class RPJPlayer:
         self.playback_stop_handler = handler
 
     def quit(self):
+
         self.player.quit()
 
 ####### PRIVATE FUNCTIONS ##########################3333
-    def _background_daemon(self):
-        print 'starting daemon'
-        asyncore.loop()
-        print 'stopping daemon'
 
     def _playback_end_event(self, data):
         if data.startswith('EOF code: '):
             print data
+            self.playing = False
             code = int(data[len('EOF code: '):])
             if code == 1:
-                self.playback_finish_handler()
+                print 'RPJPlayer: playback finished'
+                handler = self.playback_finish_handler
             elif code == 2:
-                self.playback_skip_handler()
+                print 'RPJPlayer: playback skipped'
+                handler = self.playback_skip_handler
             elif code == 4:
-              self.playback_stop_handler()
+                print 'RPJPlayer: playback stopped'
+                handler = self.playback_stop_handler
+            else:
+                handler = None
+
+            if handler is not None:
+                handler()
+
 
 # if __name__ == '__main__':
 #     def done():
@@ -296,7 +320,9 @@ if __name__ == '__main__':
     def printeof():
         print 'EOF!'
 
+
     p.on_playback_finish(printeof)
     p.play('w9QfN-ODGWM')
+    p.percent_pos = 50
     time.sleep(3)
     p.quit()
