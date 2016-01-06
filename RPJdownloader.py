@@ -60,14 +60,14 @@ class RPJDownloader:
             self.downloaded.append(file_info)
 
         # f exists, call a callback function, which will execute after the download has completed
-        if 'onDownloaded' in kwargs:  # check if we are doing anything
-            callback = kwargs['onDownloaded']
+        if 'on_downloaded' in kwargs:  # check if we are doing anything
+            callback = kwargs['on_downloaded']
             if 'param' in kwargs:
                 param = kwargs['param']
                 print 'on download ' + callback.__name__ + '(' + param.__name__ + ')'
                 return callback(file_info, param)
             else:
-                print 'on download ' + callback.__name__ + '(last_downloaded_file)'
+                print 'on download ' + callback.__name__ + ' called with last downloaded file object'
                 return callback(file_info)
         else:
             return None

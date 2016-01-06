@@ -182,26 +182,26 @@ class RPJPlayerMplayer:
                 return find_prop
 
 
-class RPJPlayer:
-    """ RPJ wrapper for Mplayer Python wrapper
-"""
+class RPJPlayer(object):
+    """ RPJ wrapper for Mplayer Python wrapper """
     def __init__(self, queue):
-        #set up mplayer
+        # set up mplayer
         self.player = mplayer.Player(autospawn=False)
         self.player.args = ['-really-quiet', '-msglevel', 'global=6']
 
-        #set up event handlers
+        # set up event handlers
         self.playback_finish_handler = None
         self.playback_skip_handler = None
         self.playback_stop_handler = None
         self.player.stdout.connect(self._playback_end_event)
 
-        self.player.spawn()
         # now set up state variables
         self.queue = queue # use queue object to fetch next
         self.nowPlaying = {}
         self.playing = False
 
+        # then spawn mplayer
+        self.player.spawn()
 
     def __del__(self):
         print 'quitting mplayer'
@@ -217,10 +217,19 @@ class RPJPlayer:
         self.player.loadfile(path)
         if self.player.filename is not None:
             self.playing = True
+            self.nowPlaying = song
 
     def play_next(self):
         if not self.queue.empty:
             self.play(self.queue.pop())
+
+    def pause(self):
+        if self.player.filename is not None:
+            self.player.pause()  # pause/unpause
+            self.playing = not self.playing  # toggle state
+
+    def stop(self):
+        self.player.stop()
 
     @property
     def percent_pos(self):
@@ -230,10 +239,13 @@ class RPJPlayer:
     def percent_pos(self, value):
         self.player.percent_pos = value
 
-    def pause(self):
-        if self.player.filename is not None:
-            self.player.pause()  # pause/unpause
-            self.playing = not self.playing  # toggle state
+    @property
+    def volume(self):
+        return self.player.volume
+
+    @volume.setter
+    def volume(self, value):
+        self.player.volume = value
 
     def on_playback_finish(self, handler):
         self.playback_finish_handler = handler
@@ -323,6 +335,6 @@ if __name__ == '__main__':
 
     p.on_playback_finish(printeof)
     p.play('w9QfN-ODGWM')
-    p.percent_pos = 50
+    print p.percent_pos
     time.sleep(3)
     p.quit()

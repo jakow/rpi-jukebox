@@ -30,7 +30,7 @@ def start_page():
 @app.route('/play', methods=['GET'])
 def play():
     link = "http://www.youtube.com/watch?v=" + request.args['videoId']
-    downloader.background_download(link, onDownloaded=player.play)
+    downloader.background_download(link, on_downloaded=player.play)
     return json_state()
     # return render_template('radio.html', msg="Your download has started. Music will be playing shortly.")
 
@@ -40,7 +40,8 @@ def queue_add():
     # to avoid downloading an existing files, implement SQL database
     video_id = request.args['videoId']
     link = "http://www.youtube.com/watch?v=" + video_id
-    downloader.background_download(link, callback=queue.add)
+    callback = player.play if queue.empty else queue.add
+    downloader.background_download(link, callback=callback)
     return json_state()
 
 
