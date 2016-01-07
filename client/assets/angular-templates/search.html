@@ -1,7 +1,8 @@
 ---
 name: search
-url: /search
+url: /search?query
+controller: searchCtrl
 ---
-<div class="grid-block">
-<div class="grid-content">Search!</div>
+<div class="grid-block" ng-controller="searchCtrl">
+<div class="grid-content">Search: {{query}}</div>
 </div>

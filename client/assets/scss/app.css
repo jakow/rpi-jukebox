@@ -7588,7 +7588,7 @@ body {
 
 #logo-mobile {
   font-family: 'Lobster';
-  font-size: 2.5em;
+  font-size: 2em;
   color: white;
   padding: 0em 0em;
   font-weight: normal; }
@@ -7687,29 +7687,33 @@ body {
   display: inline-block;
   color: #d3d3d3; }
 
-.now-playing {
+.now-playing-wrapper {
   background: #232323;
   color: #ededed; }
 
-.song-info {
-  white-space: nowrap;
-  overflow: hidden;
-  width: 18em;
-  margin: 0 1em; }
-
 .song-title {
-  margin-top: 8px;
-  margin-bottom: 4px;
-  overflow: hidden;
-  font-size: 1.25em;
-  color: #d3d3d3; }
+  font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
 
-.song-author {
-  margin-bottom: 8px;
-  margin-top: 4px;
-  font-size: 1em;
-  font-style: italic;
-  color: #969696; }
+.song-uploader {
+  font-size: 0.8em; }
+
+.now-playing {
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 1em;
+  display: block; }
+  .now-playing .song-title {
+    white-space: nowrap;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-size: 1.25em;
+    color: #d3d3d3; }
+  .now-playing .song-uploader {
+    margin-bottom: 8px;
+    margin-top: 4px;
+    font-size: 1em;
+    font-style: italic;
+    color: #969696; }
 
 .fa-center {
   line-height: inherit; }
@@ -7739,65 +7743,174 @@ body {
     -webkit-transform: translateX(-70%);
     /* Browser bug fix */
     transform: translateX(-70%); } }
-.queue ol, .queue ul {
-  margin: 0;
-  padding: 0; }
+.queue {
+  /*@include block-list-container(
+    $font-size: 1rem, // Base font size for entire list
+    $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
+  );*/ }
+  .queue ol, .queue ul {
+    list-style: none;
+    margin: 0 -1em;
+    padding: 0; }
+  .queue.with-icons li > a, .queue.with-icons li > span, .queue.with-icons li > label {
+    padding-left: 2.8rem; }
+  .queue.with-icons li img, .queue.with-icons li .iconic {
+    position: absolute;
+    top: 0.26rem;
+    left: 0.26rem;
+    width: 2.08rem;
+    height: 2.08rem;
+    border-radius: 8px;
+    pointer-events: none; }
+  .queue li {
+    /*@include block-list-item(
+      $color: $dark-color,
+      $color-hover: black,
+      $color-disabled: $gray-dark,
+      $background: white,
+      $background-hover: $gray-light,
+      $border: 1px solid $gray,
+      $padding: 0.5em
+    );*/
+    border-bottom: 1px solid #d3d3d3; }
+    .queue li > div {
+      padding: 0.5em 1em; }
+    .queue li .queue-item, .queue li .queue-desc {
+      display: flex;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      backface-visibility: hidden;
+      flex: 1 1 auto;
+      flex-flow: row wrap;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      order: 0;
+      height: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar; }
+    .queue li .queue-thumb, .queue li .queue-optn {
+      display: flex;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      backface-visibility: hidden;
+      flex: 0 0 auto;
+      flex-flow: row wrap;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      order: 0;
+      height: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar; }
+    .queue li .queue-thumb img {
+      width: 6em;
+      height: 3.375em; }
+    .queue li .queue-desc {
+      margin: 0em 0.5em;
+      overflow: hidden;
+      white-space: nowrap; }
+      .queue li .queue-desc > div {
+        display: block; }
+    .queue li .queue-optn {
+      margin: auto 0; }
+      .queue li .queue-optn a {
+        display: block; }
+  .queue header {
+    margin-top: 1em;
+    color: #d3d3d3;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    margin-left: 1rem;
+    font-size: 1rem;
+    cursor: default;
+    text-transform: uppercase;
+    font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
+  .queue .block-list-label {
+    display: inline-block;
+    float: right;
+    padding: 0;
+    color: #999;
+    pointer-events: none; }
+    .queue .block-list-label.left {
+      margin-left: 1rem;
+      float: none; }
+
+/*
 
 .queue-item {
-  display: flex;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  backface-visibility: hidden;
-  flex: 1 1 auto;
-  flex-flow: row wrap;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
-  order: 0;
-  height: auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
+  !*@include grid-block(
+    $size: expand, // Can be expand, shrink, or a number of columns
+    $orientation: horizontal, // Set to vertical for a vertical grid
+    $wrap: false, // Set to true to make columns wrap if they get too wide
+    $align: left, // Can be left, right, center, justify, or spaced
+    $order: 0 // Can be any positive number
+  );*!
   padding: 0.5em;
-  border-bottom: 1px solid #d3d3d3;
-  height: 4.5em; }
-  .queue-item .queue-optn {
-    visibility: hidden; }
+  border-bottom: 1px solid $gray;
+  height: 4.5em;
+  .queue-optn {
+    visibility: hidden;
+  }
+  display: block;
+}
 
 .queue-item:hover {
-  background-color: #ededed; }
-  .queue-item:hover .queue-optn {
-    visibility: visible; }
+  background-color: $gray-light;
+  .queue-optn {
+    visibility: visible;
+  }
+}
 
 .queue-thumb {
-  width: 6em;
+  width: $thumbnail-width;
   overflow: hidden;
-  height: 3.375em;
-  margin: 0 auto; }
-  .queue-thumb img {
+  height: $thumbnail-width * 1080/1920;
+  //margin: 0 auto;
+  img {
     margin: 0;
     padding: 0;
-    width: 6em; }
+    width: $thumbnail-width;
+    //height: $thumbnail-width*0.75; //hack for 4:3 imgs
+    //position: relative;
+    //top: 0.5*($thumbnail-width * (1080/1920)- $thumbnail-width * 0.75);
+
+  }
+}
 
 .queue-desc {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
-  .queue-desc div {
+  font-family: $header-font-family;
+  div {
     display: block;
+    //margin: 0em 1em;
     overflow-x: hidden;
-    white-space: nowrap; }
-  .queue-desc h6 {
-    margin: 0 0.25em; }
+    white-space: nowrap;
+  }
+  h6 {
+    margin: 0 0.25em;
+  }
+  //white-space: nowrap;
+  //width: 25em - $thumbnail-width - 2em;
+}
 
 .queue-desc p {
+
   font-style: italic;
   margin: 0 0.25em;
-  font-size: 0.8em; }
+  font-size: 0.8em;
+
+}
 
 .queue-optn {
   margin-top: auto;
-  margin-bottom: auto; }
+  margin-bottom: auto;
 
+}
+*/
 .menu-list {
   font-size: 1rem;
   margin-left: -1rem;
@@ -7947,5 +8060,8 @@ body {
   font-family: FontAwesome;
   content: '\f001';
   padding-right: 0.5em; }
+
+.menu-mobile {
+  margin: 1em 0em; }
 
 /*# sourceMappingURL=app.css.map */

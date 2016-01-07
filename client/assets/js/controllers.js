@@ -37,18 +37,20 @@
     }
   }]);
 
-  player.controller('QueueCtrl', ['$scope', 'playerService', function($scope, playerService) {
+  player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function($scope, playerService, $http) {
     $scope.nowPlaying = playerService.state.nowPlaying;
     $scope.queue = playerService.state.queue;
     $scope.$watch(
       function() {return playerService.state},
       function(newState) {
         $scope.nowPlaying = newState.nowPlaying;
-        $scope.queue = newState.queue;
+        //$scope.queue = newState.queue;
       },
       false);
-    //$http.get('assets/test/sampleQueue.json').then(function(response) { $scope.queue = response}, function() {});
-
+    $http.get('./assets/test/sampleData.json').then(function(response) { $scope.queue = response.data.queue});
 
 
   }]);
+
+  player.directive()
+

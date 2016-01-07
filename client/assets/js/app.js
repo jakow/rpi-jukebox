@@ -60,6 +60,9 @@
 
 
     ];
+  }])
+  .controller('searchCtrl',['$scope', '$stateParams', function($scope, $stateParams) {
+      $scope.query = $stateParams.query;
   }]);
 
 })();

@@ -14,7 +14,7 @@ body {
 
 #logo-mobile {
   font-family: 'Lobster';
-  font-size: 2.5em;
+  font-size: 2em;
   color: white;
   padding: 0em 0em;
   font-weight: normal;
@@ -132,32 +132,38 @@ body {
   color: $gray;
 }
 
-.now-playing {
+.now-playing-wrapper {
   background: $dark-color;
   color: $gray-light;
 }
 
-.song-info {
-  white-space: nowrap;
-  overflow: hidden;
-  width: 18em;
-  margin: 0 1em;
-}
-
 .song-title {
-  margin-top: 8px;
-  margin-bottom: 4px;
-  overflow: hidden;
-  font-size: 1.25em;
-  color: $gray;
+  font-family: $header-font-family;
 }
 
-.song-author {
-  margin-bottom: 8px;
-  margin-top: 4px;
-  font-size: 1em;
-  font-style: italic;
-  color: $gray-dark;
+.song-uploader {
+    font-size: 0.8em;
+}
+.now-playing {
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 1em;
+  display: block;
+  .song-title {
+    white-space: nowrap;
+    margin-top: 8px;
+    margin-bottom: 4px;
+
+    font-size: 1.25em;
+    color: $gray;
+  }
+  .song-uploader {
+    margin-bottom: 8px;
+    margin-top: 4px;
+    font-size: 1em;
+    font-style: italic;
+    color: $gray-dark;
+  }
 }
 
 .fa-center {
@@ -199,28 +205,120 @@ body {
   }
 }
 
+$thumbnail-width: 6em;
 .queue {
   ol, ul {
-    margin: 0;
+    list-style: none;
+    margin: 0 -1em;
     padding: 0;
+  }
+  // This gets you basic styles
+  /*@include block-list-container(
+    $font-size: 1rem, // Base font size for entire list
+    $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
+  );*/
+
+  // This adds support for icons
+  &.with-icons {
+    @include block-list-icons(
+      $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
+      $item-selector: 'li' // This should be whatever tag or class your block list uses for items
+    );
+  }
+  li {
+    /*@include block-list-item(
+      $color: $dark-color,
+      $color-hover: black,
+      $color-disabled: $gray-dark,
+      $background: white,
+      $background-hover: $gray-light,
+      $border: 1px solid $gray,
+      $padding: 0.5em
+    );*/
+    border-bottom: 1px solid $gray;
+    > div {
+      padding: 0.5em 1em;
+    }
+    .queue-item, .queue-desc {
+      @include grid-block(
+        $size: expand,
+        $orientation: horizontal,
+        $wrap: false,
+        $align: left,
+        $order: 0
+      );
+    }
+
+    .queue-thumb, .queue-optn {
+      @include grid-block(
+        $size: shrink,
+        $orientation: horizontal,
+        $wrap: false,
+        $align: left,
+        $order: 0
+      );
+    }
+
+    .queue-thumb {
+      img {
+        width: $thumbnail-width;
+        height: $thumbnail-width * 1080/1920;
+      }
+    }
+
+    .queue-desc {
+      margin: 0em 0.5em;
+      overflow: hidden;
+      white-space: nowrap;
+      > div {
+        display: block;
+      }
+    }
+
+    .queue-optn {
+      margin: auto 0;
+      a {
+        display: block;
+      }
+    }
+  }
+  // Define what tag or class your headers are with this mixin
+  header {
+    @include block-list-header(
+      $color: $gray, // Text color
+      $font-size: 1rem, // Font size
+      $uppercase: true, // If true, the text becomes all-caps
+      $offset: 1rem // Left-side offset for text
+    );
+    font-family: $header-font-family;
+  }
+  // Define the class for labels
+  .block-list-label {
+    @include block-list-label(
+      $color: #999, // Color of label
+      $left-class: 'left', // Define a modifier class for left-aligned labels
+      $left-padding: 1rem // Padding to add when a label is left-aligned
+    );
   }
 }
 
-$thumbnail-width: 6em;
+/*
+
 .queue-item {
-  @include grid-block(
+  !*@include grid-block(
     $size: expand, // Can be expand, shrink, or a number of columns
     $orientation: horizontal, // Set to vertical for a vertical grid
     $wrap: false, // Set to true to make columns wrap if they get too wide
     $align: left, // Can be left, right, center, justify, or spaced
     $order: 0 // Can be any positive number
-  );
+  );*!
   padding: 0.5em;
   border-bottom: 1px solid $gray;
   height: 4.5em;
   .queue-optn {
     visibility: hidden;
   }
+  display: block;
 }
 
 .queue-item:hover {
@@ -234,7 +332,7 @@ $thumbnail-width: 6em;
   width: $thumbnail-width;
   overflow: hidden;
   height: $thumbnail-width * 1080/1920;
-  margin: 0 auto;
+  //margin: 0 auto;
   img {
     margin: 0;
     padding: 0;
@@ -274,6 +372,7 @@ $thumbnail-width: 6em;
   margin-bottom: auto;
 
 }
+*/
 
 .menu-list {
   // This gets you basic styles
@@ -374,4 +473,8 @@ $thumbnail-width: 6em;
   font-family: FontAwesome;
   content: '\f001';
   padding-right: 0.5em;
+}
+
+.menu-mobile {
+  margin: 1em 0em;
 }

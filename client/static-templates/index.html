@@ -14,6 +14,23 @@
 </head>
 <body>
 <zf-offcanvas zf-swipe-close="" id="mobile-menu" position="left" class="dark">
+  <div ng-controller="menuCtrl" clas="grid-block">
+    <section class="menu-list menu-mobile">
+      <ul>
+        <li ng-repeat="menuItem in menu" ui-sref-active="menu-active"><a class="{{menuItem.iconClass}}"
+                                                                         ui-sref="{{menuItem.route}}">{{menuItem.text}}</a>
+        </li>
+      </ul>
+    </section>
+    <section class="menu-list menu-mobile">
+      <header>Playlists</header>
+      <ul>
+        <li ng-repeat="playlist in playlists" ui-sref-active-eq="menu-active"><a ui-sref="{{'playlist/'+playlist.id}}"
+                                                                                 class="{playlist.iconClass">{{playlist.name}}</a>
+        </li>
+      </ul>
+    </section>
+  </div>
 </zf-offcanvas>
 <zf-offcanvas zf-swipe-close="" id="mobile-player" position="right" class="dark">
 
@@ -58,63 +75,72 @@
   </div>
 
   <div class="grid-block">
-    <div class="medium-3 large-2 columns hide-for-small show-for-large" id="menu-desktop" ng-controller="menuCtrl">
+    <div class="grid-block medium-3 large-2 columns hide-for-small show-for-large" id="menu-desktop"
+         ng-controller="menuCtrl">
       <div class="grid-content">
         <section class="menu-list">
           <ul>
-            <li ng-repeat="menuItem in menu" ui-sref-active="menu-active"><a class="{{menuItem.iconClass}}" ui-sref="{{menuItem.route}}">{{menuItem.text}}</a></li>
+            <li ng-repeat="menuItem in menu" ui-sref-active="menu-active"><a class="{{menuItem.iconClass}}"
+                                                                             ui-sref="{{menuItem.route}}">{{menuItem.text}}</a>
+            </li>
           </ul>
         </section>
         <section class="menu-list">
           <header>Playlists</header>
           <ul>
-            <li ng-repeat="playlist in playlists" ui-sref-active="menu-active"><a ui-sref="playlist/{{playlist.id}}" class="{playlist.iconClass">{{playlist.name}}</a></li>
+            <li ng-repeat="playlist in playlists" ui-sref-active-eq="menu-active"><a ui-sref="playlist/{{playlist.id}}"
+                                                                                     class="{playlist.iconClass">{{playlist.name}}</a>
+            </li>
           </ul>
         </section>
       </div>
     </div>
     <ui-view class="grid-block" id="main-view">
     </ui-view>
-    <div class="grid-block shrink hide-for-small show-for-large">
+    <div class="grid-block shrink hide-for-small show-for-large medium-2 large-4">
       <div ng-controller="QueueCtrl" class="grid-block vertical" id="queue-container-desktop">
-        <div class="grid-block queue">
-          <ol class="grid-block">
-            <li class="queue-item">
-              <div class="queue-thumb grid-block shrink">
-                <img src="https://i.ytimg.com/vi/QtXby3twMmI/mqdefault.jpg"/>
-              </div>
-              <div class="queue-desc grid-content auto-center">
-                <div class="marquee">
-                  <h6>Coldplay - Adventure Of A Lifetime (Official video)</h6>
-                </div>
-                <div>
-                  <p>ColdplayVEVO</p>
-                </div>
-              </div>
-              <div class="queue-optn grid-block shrink">
-                <a><i class="fa fa-times"></i></a>
-              </div>
+        <div class="grid-block">
+          <div class="grid-content">
+            <section class="queue">
+              <ul>
+                <li ng-repeat="song in queue">
+                  <div class="queue-item">
+                    <div class="queue-thumb">
+                      <img ng-src="{{song.thumbnail}}">
+                    </div>
+                    <div class="queue-desc auto-center">
+                      <div class="marquee">
+                        <div class="song-title">{{song.title}}</div>
+                      </div>
+                      <div class="song-uploader">{{song.uploader}}</div>
+                    </div>
 
-            </li>
-
-          </ol>
+                    <div class="queue-optn">
+                      <a ng-href="#"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </div>
         </div>
-        <div class="grid-block shrink now-playing">
+        <div class="grid-block shrink now-playing-wrapper">
           <div class="grid-block shrink ">
             <div class="music-symbol">
               <i class="fa fa-3x fa-fw fa-center fa-music"></i>
             </div>
+          </div>
+          <div class="grid-block now-playing">
             <div class="auto-center">
-              <div class="song-info">
-                <div class="marquee">
-                  <h4 ng-bind="nowPlaying.title" class="song-title"></h4>
-                </div>
-                <div>
-                  <h5 ng-bind="nowPlaying.uploader" class="song-author"></h5>
-                </div>
+              <div class="marquee">
+                <h4 ng-bind="nowPlaying.title" class="song-title"></h4>
+              </div>
+              <div>
+                <h5 ng-bind="nowPlaying.uploader" class="song-uploader"></h5>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
