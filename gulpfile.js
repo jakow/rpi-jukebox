@@ -22,7 +22,7 @@ var isProduction = !!(argv.production);
 var paths = {
   assets: [
     './client/**/*.*',
-    '!./client/templates/**/*.*',
+    '!./client/assets/angular-templates/**/*.*',
     '!./client/assets/{scss,js}/**/*.*'
   ],
   // Sass will check these folders for files when you use @import.
@@ -62,7 +62,7 @@ gulp.task('clean', function(cb) {
   rimraf('./build', cb);
 });
 
-// Copies everything in the client folder except templates, Sass, and JS
+// Copies everything in the client folder except angular-templates, Sass, and JS
 gulp.task('copy', function() {
   return gulp.src(paths.assets, {
     base: './client/'
@@ -71,15 +71,19 @@ gulp.task('copy', function() {
   ;
 });
 
-// Copies your app's page templates and generates URLs for them
-gulp.task('copy:templates', function() {
-  return gulp.src('./client/templates/**/*.html')
+// Copies your app's page angular templates and generates URLs for them
+gulp.task('copy:angular-templates', function() {
+  return gulp.src('./client/assets/angular-templates/**/*.html')
     .pipe(router({
       path: 'build/assets/js/routes.js',
-      root: 'client'
+      root: './client'
     }))
-    .pipe(gulp.dest('./build/templates'))
+    .pipe(gulp.dest('./build/assets/angular-templates'))
   ;
+});
+
+gulp.task('copy:static-templates', function() {
+  return gulp.src('./client/static-templates/**/*.html').pipe(gulp.dest('./build/static-templates'));
 });
 
 // Compiles the Foundation for Apps directive partials into a single JavaScript file
@@ -162,10 +166,10 @@ gulp.task('server', ['build'], function() {
 
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {
-  sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', cb);
+  sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:static-templates', 'copy:angular-templates', cb);
 });
 
-// Watch task: builds your app, starts a server, and recompiles assets when they change
+// Watch task: builds the app and recompiles assets when they change
 gulp.task('watch', ['build'], function () {
   // Watch Sass
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass']);
@@ -174,8 +178,9 @@ gulp.task('watch', ['build'], function () {
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app']);
 
   // Watch static files
-  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy']);
+  gulp.watch(['./client/**/*.*', './client/static-templates/**/*.*' , '!./client/assets/angular-templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy']);
 
-  // Watch app templates
-  gulp.watch(['./client/templates/**/*.html'], ['copy:templates']);
+  // Watch app angular-templates
+  gulp.watch(['./client/assets/angular-templates/**/*.html'], ['copy:angular-templates']);
+
 });

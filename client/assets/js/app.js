@@ -37,12 +37,30 @@
     FastClick.attach(document.body);
   }
 
-  /* my stuff */
+  app.controller('menuCtrl', ['$scope', function($scope) {
+    $scope.menu = [
+      {
+        text: "Search",
+        iconClass: "search-icon",
+        route: "search"
+      },
+      {
+        text: "Settings",
+        iconClass: "settings-icon",
+        route: "settings"
+      }
+    ];
+
+    $scope.playlists = [
+      {
+        name: "Playlist 1",
+        iconClass: "note-icon",
+        id: "playlist1"
+      }
 
 
-  /*player module to detach foundation's js from player*/
-
-  /* player service is the service for playback control via XHR */
+    ];
+  }]);
 
 })();
 
@@ -105,6 +123,7 @@
     .factory('ytSearchService', ['$http', function($http) {
       var searchService = {}
     }]);
+
 
 
 

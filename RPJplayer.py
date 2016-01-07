@@ -224,8 +224,9 @@ class RPJPlayer(object):
             self.play(self.queue.pop())
 
     def pause(self):
-        self.player.pause()  # pause/unpause
-        self._paused = not self._paused  # toggle state
+        if self.player.filename is not None:  # pausing when there is no file loaded is meagningless
+            self.player.pause()  # pause/unpause
+            self._paused = not self._paused  # toggle state
 
     def stop(self):
         self.player.stop()

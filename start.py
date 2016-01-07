@@ -2,14 +2,14 @@ from flask import Flask, render_template, send_from_directory, request, json
 import RPJdownloader
 import RPJplayer
 import RPJqueue
-import os
+
 queue = RPJqueue.RPJQueue()
 player = RPJplayer.RPJPlayer(queue)
 downloader = RPJdownloader.RPJDownloader()
 
-app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/templates')
+app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/static-templates')
 
-# informs the frontend about current queue. Browser will
+
 @app.route('/json_state')
 def json_state():
     # jsonify nowPlaying and the song queue to be displayed in the radio

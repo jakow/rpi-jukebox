@@ -115,6 +115,11 @@ body {
   }
 }
 
+.button-mute {
+  position: relative;
+  left: 1em;
+}
+
 .music-symbol {
   width: 5em;
   height: 5em;
@@ -138,6 +143,7 @@ body {
   width: 18em;
   margin: 0 1em;
 }
+
 .song-title {
   margin-top: 8px;
   margin-bottom: 4px;
@@ -254,6 +260,7 @@ $thumbnail-width: 6em;
   //white-space: nowrap;
   //width: 25em - $thumbnail-width - 2em;
 }
+
 .queue-desc p {
 
   font-style: italic;
@@ -268,6 +275,103 @@ $thumbnail-width: 6em;
 
 }
 
+.menu-list {
+  // This gets you basic styles
+  @include block-list-container(
+    $font-size: 1rem, // Base font size for entire list
+    $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
+  );
+  margin-top: 1em;
+  marin-bottom: 1em;
+  // This adds support for text fields, dropdowns, and radio/check inputs
+  @include block-list-inputs(
+    $color: #000, // Foreground color
+    $background: $dark-color, // Background color
+    $background-hover: lighten($dark-color, 4), // Background color of elements on hover
+    $padding: 1rem //
+  );
+  // This adds support for icons
+  &.with-icons {
+    @include block-list-icons(
+      $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
+      $item-selector: 'li' // This should be whatever tag or class your block list uses for items
+    );
+  }
+  // Define what tag or class your list items are with this mixin
+  li {
+    @include block-list-item(
+      $color: $gray, // Color of items
+      $color-hover: $gray-light, // Color of items on hover
+      $color-disabled: $gray-dark, // Color of items when disabled
+      $background: transparent, // Background color
+      $background-hover: lighten($dark-color, 4), // Background color on hover
+      $border: none, // Top and bottom border of items
+      $padding: 0.5em 1em 0.5em 1.5em
+    );
+    a {
+      text-overflow: ellipsis;
+      max-width: inherit;
+    }
 
+    &.menu-active {
+      background-color: lighten($dark-color, 8);
+      &::before {
+        color: white;
+        content: ' ';
+        display: inline;
+        position: absolute;
+        left: 0;
+        background-color: $raspberry-color;
+        width: 3px;
+        height: 2em;
+      }
+    }
 
+    // Add styles for list items with chevrons
+    &.with-chevron {
+      @include block-list-chevron(
+        $color: #000, // Color of chevron
+        $padding: 1rem, // Insert the same padding as the block list item here
+        $label-class: 'block-list-label' // Insert the class you're using for labels
+      );
+    }
+  }
+  // Define what tag or class your headers are with this mixin
+  header {
+    @include block-list-header(
+      $color: $gray, // Text color
+      $font-size: 1rem, // Font size
+      $uppercase: true, // If true, the text becomes all-caps
+      $offset: 1rem // Left-side offset for text
+    );
+    font-family: $header-font-family;
+  }
+  // Define the class for labels
+  .block-list-label {
+    @include block-list-label(
+      $color: #999, // Color of label
+      $left-class: 'left', // Define a modifier class for left-aligned labels
+      $left-padding: 1rem // Padding to add when a label is left-aligned
+    );
+  }
+}
 
+.search-icon::before {
+  font-family: FontAwesome;
+  content: '\f002';
+  padding-right: 0.5em;
+
+}
+
+.settings-icon::before {
+  font-family: FontAwesome;
+  content: '\f013';
+  padding-right: 0.5em;
+
+}
+
+.note-icon::before {
+  font-family: FontAwesome;
+  content: '\f001';
+  padding-right: 0.5em;
+}

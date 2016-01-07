@@ -58,13 +58,23 @@
   </div>
 
   <div class="grid-block">
-    <div class="medium-3 large-2 columns hide-for-small show-for-large" style="background-color: #232323">
-      <div class="grid-content" id="menu-desktop">
-        <p style="color:white">test</p>
+    <div class="medium-3 large-2 columns hide-for-small show-for-large" id="menu-desktop" ng-controller="menuCtrl">
+      <div class="grid-content">
+        <section class="menu-list">
+          <ul>
+            <li ng-repeat="menuItem in menu" ui-sref-active="menu-active"><a class="{{menuItem.iconClass}}" ui-sref="{{menuItem.route}}">{{menuItem.text}}</a></li>
+          </ul>
+        </section>
+        <section class="menu-list">
+          <header>Playlists</header>
+          <ul>
+            <li ng-repeat="playlist in playlists" ui-sref-active="menu-active"><a ui-sref="playlist/{{playlist.id}}" class="{playlist.iconClass">{{playlist.name}}</a></li>
+          </ul>
+        </section>
       </div>
     </div>
-    <div class="grid-block" id="main-view">
-    </div>
+    <ui-view class="grid-block" id="main-view">
+    </ui-view>
     <div class="grid-block shrink hide-for-small show-for-large">
       <div ng-controller="QueueCtrl" class="grid-block vertical" id="queue-container-desktop">
         <div class="grid-block queue">
