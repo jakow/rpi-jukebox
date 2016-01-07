@@ -3,10 +3,12 @@
  */
 
   /*Player Controller for desktop seekbar, backward/play/forward buttons and volume control */
-  player.controller('PlaybackCtrl', ['$scope', 'playerService', function ($scope, playerService) {
+  player.controller('PlaybackCtrl', ['$scope', 'playerService', '$interval', function ($scope, playerService, $interval) {
 
     /* register watcher for service state */
     $scope.playing = playerService.state.isPlaying;
+    playerService.refresh();
+    this.autoRefresh = $interval(playerService.refresh, 5000, 0);
     $scope.$watch(
       function() {return playerService.state},
       function(newState) {
@@ -23,17 +25,21 @@
       range: {min: 0, max: 100}
     }
 
-    $scope.$on('destroy', function() {
+    $scope.$on('$destroy', function() {
       playerService.stopRefresh();
     });
-    $scope.pause = function() {
+    $scope.playPause = function() {
       $scope.playing = !$scope.playing;
 
       //$scope.playing = !$scope.playing;
-      playerService.pause().then(function(response) {
+      playerService.playPause().then(function(response) {
         $scope.playing = response.playing;
         console.log('paused/unpaused successfully');
       })
+    }
+
+    $scope.rewind = function() {
+        playerService.rewind();
     }
   }]);
 
@@ -52,5 +58,8 @@
 
   }]);
 
-  player.directive()
+  searchModule.controller('searchCtrl', ['ytSearchService', '$scope', '$stateParams', function (ytSearchService, $scope, $stateParams) {
+    if($stateParams.query )
+      $scope.query = $stateParams.query;
+    }])
 

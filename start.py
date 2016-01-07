@@ -9,7 +9,14 @@ downloader = RPJdownloader.RPJDownloader()
 
 app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/static-templates')
 
+# set up some default events for player
+def reload_last():
+    if queue.empty:
+        player.play(player.now_playing)
+        player.pause()
 
+player.on('playback_finish', reload_last)
+player.on('playback_finish', player.play_next)
 @app.route('/json_state')
 def json_state():
     # jsonify nowPlaying and the song queue to be displayed in the radio
@@ -34,6 +41,10 @@ def play():
     return json_state()
     # return render_template('radio.html', msg="Your download has started. Music will be playing shortly.")
 
+@app.route('/rewind', methods=['GET'])
+def rewind():
+    player.seek(0)
+    return json_state()
 
 @app.route('/queue_add', methods=['GET'])
 def queue_add():
@@ -53,9 +64,9 @@ def queue_remove():
     return json_state()
 
 
-@app.route('/pause')
-def pause():
-    player.pause()
+@app.route('/play_pause')
+def play_pause():
+    player.pause()  # pause/unpause
     return json.jsonify({"playing": player.is_playing})
 
 

@@ -10,7 +10,6 @@
   <script src="./assets/js/templates.js"></script>
   <script src="./assets/js/routes.js"></script>
   <script src="../assets/js/app.js"></script>
-  <script src="https://apis.google.com/js/client.js?onload=youtubeInit"></script>
 </head>
 <body>
 <zf-offcanvas zf-swipe-close="" id="mobile-menu" position="left" class="dark">
@@ -42,10 +41,10 @@
   <div class="show-for-large">
     <div class="primary title-bar" id="title-bar-desktop">
       <div class="center">
-        <label>
+        <label ng-controller="searchBarCtrl">
             <span class="inline-label button-group song-search">
-          <input type="search" placeholder="Search for songs">
-          <a href="#" class="button secondary"><i class="fa fa-search fa-lg"></i></a>
+          <input ng-model="query" type="search" placeholder="Search for songs">
+          <a class="button secondary"><i class="fa fa-search fa-lg"></i></a>
           </span>
         </label>
       </div>
@@ -108,11 +107,13 @@
                     <div class="queue-thumb">
                       <img ng-src="{{song.thumbnail}}">
                     </div>
-                    <div class="queue-desc auto-center">
-                      <div class="marquee">
-                        <div class="song-title">{{song.title}}</div>
+                    <div class="queue-desc">
+                      <div class="auto-center"> <!-- needs a wrapper -->
+                        <div class="marquee">
+                          <div class="song-title">{{song.title}}</div>
+                        </div>
+                        <div class="song-uploader">{{song.uploader}}</div>
                       </div>
-                      <div class="song-uploader">{{song.uploader}}</div>
                     </div>
 
                     <div class="queue-optn">
@@ -158,8 +159,8 @@
     <div class="grid-block shrink" id="playback-control">
       <div class="grid-block shrink pl-ctl-buttons">
         <div class="auto-center">
-          <a class="playback-button button-backward" href="#"><i class="fa fa-fw fa-backward fa-2x"></i></a>
-          <a class="playback-button button-play" href="" ng-click="pause()" ng-model-options="{ debounce: 500 }">
+          <a class="playback-button button-backward" href="#" ng-click="rewind()"><i class="fa fa-fw fa-backward fa-2x"></i></a>
+          <a class="playback-button button-play" href="" ng-click="playPause()" ng-model-options="{ debounce: 500 }">
             <i class="fa fa-fw fa-play fa-2x" ng-hide="playing"></i>
             <i class="fa fa-fw fa-pause fa-2x" ng-show="playing"></i>
           </a>

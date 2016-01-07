@@ -212,30 +212,14 @@ $thumbnail-width: 6em;
     margin: 0 -1em;
     padding: 0;
   }
-  // This gets you basic styles
-  /*@include block-list-container(
-    $font-size: 1rem, // Base font size for entire list
-    $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
-  );*/
-
-  // This adds support for icons
-  &.with-icons {
-    @include block-list-icons(
-      $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
-      $item-selector: 'li' // This should be whatever tag or class your block list uses for items
-    );
-  }
   li {
-    /*@include block-list-item(
-      $color: $dark-color,
-      $color-hover: black,
-      $color-disabled: $gray-dark,
-      $background: white,
-      $background-hover: $gray-light,
-      $border: 1px solid $gray,
-      $padding: 0.5em
-    );*/
     border-bottom: 1px solid $gray;
+    &:hover {
+      background-color: $gray-light;
+      .queue-optn {
+        display: block;
+      }
+    }
     > div {
       padding: 0.5em 1em;
     }
@@ -276,6 +260,7 @@ $thumbnail-width: 6em;
     }
 
     .queue-optn {
+      display: none;
       margin: auto 0;
       a {
         display: block;

@@ -190,9 +190,14 @@ class RPJPlayer(object):
         self.player.args = ['-really-quiet', '-msglevel', 'global=6']
 
         # set up event handlers
-        self.playback_finish_handler = None
-        self.playback_skip_handler = None
-        self.playback_stop_handler = None
+        self.playback_finish_handlers = []
+        self.playback_skip_handlers = []
+        self.playback_stop_handlers = []
+        self._event_handlers = {"playback_finish": [],
+                                "playback_skip": [],
+                                "playback_stop": []
+                                }
+
         self.player.stdout.connect(self._playback_end_event)
 
         # now set up state variables
@@ -252,22 +257,34 @@ class RPJPlayer(object):
     def now_playing(self):
         return self.nowPlaying
 
+
+    def seek(self, value, type='absolute'):
+        if type == 'percent':
+            self.player.percent_pos = value
+        elif type == 'absolute':
+            self.player.time_pos = value
+
+
     @property
     def is_playing(self):
         # playing: if not paused and there is a file loaded
         return (not self._paused) and (self.player.filename is not None)
 
-    def on_playback_finish(self, handler):
-        self.playback_finish_handler = handler
+    def on(self, event_name, handler):
+        if event_name in self._event_handlers:
+            self._event_handlers[event_name].append(handler)
 
-    def on_playback_skip(self, handler):
-        self.playback_skip_handler = handler
 
-    def on_playback_stop(self, handler):
-        self.playback_stop_handler = handler
+    def detach_handlers(self, event = 'all'):
+        if event == 'all':
+            self._event_handlers["playback_finish"] = []
+            self._event_handlers["playback_skip"] = []
+            self._event_handlers["playback_stop"] = []
+        elif event in self._event_handlers:
+            self._event_handlers[event] = []
+
 
     def quit(self):
-
         self.player.quit()
 
 ####### PRIVATE METHODS ##########################3333
@@ -279,18 +296,19 @@ class RPJPlayer(object):
             code = int(data[len('EOF code: '):])
             if code == 1:
                 print 'RPJPlayer: playback finished'
-                handler = self.playback_finish_handler
+                handlers = self._event_handlers['playback_finish']
             elif code == 2:
                 print 'RPJPlayer: playback skipped'
-                handler = self.playback_skip_handler
+                handlers = self._event_handlers['playback_skip']
             elif code == 4:
                 print 'RPJPlayer: playback stopped'
-                handler = self.playback_stop_handler
+                handlers = self._event_handlers['playback_stop']
             else:
-                handler = None
+                handlers = None
 
-            if handler is not None:
-                handler()
+            if handlers:
+                for handler in handlers:
+                    handler()
 
 
 if __name__ == '__main__':
@@ -301,7 +319,7 @@ if __name__ == '__main__':
     def printeof():
         print 'EOF!'
 
-    p.on_playback_finish(printeof)
+    p.on('playback_finish', printeof)
     p.play('w9QfN-ODGWM')
     print p.percent_pos
     time.sleep(3)
