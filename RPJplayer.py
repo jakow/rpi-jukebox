@@ -202,7 +202,7 @@ class RPJPlayer(object):
         self.vol = 100
         # then spawn mplayer
         self.player.spawn()
-        self.player.pause()
+        self.player.volume = self.vol
 
     def __del__(self):
         print 'quitting mplayer'
@@ -254,7 +254,7 @@ class RPJPlayer(object):
     @property
     def is_playing(self):
         # playing: if not paused and there is a file loaded
-        return not self._paused and self.player.filename is not None
+        return (not self._paused) and (self.player.filename is not None)
 
     def on_playback_finish(self, handler):
         self.playback_finish_handler = handler
