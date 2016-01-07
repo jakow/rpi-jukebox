@@ -49,7 +49,8 @@ var paths = {
     'bower_components/nouislider/distribute/nouislider.js',
     'bower_components/nouislider-angular/nouislider.js',
     'client/assets/js/ytsearch.js',
-    'client/assets/js/app.js'
+    'client/assets/js/app.js',
+    'client/assets/js/controllers.js'
   ]
 }
 
