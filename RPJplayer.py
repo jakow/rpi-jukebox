@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from mplayerWrapper import *
 import mplayer, asyncore, time, threading
-from mplayer.async import AsyncPlayer
+from mplayer import CmdPrefix
 __author__ = 'Jakub'
 
 # class RPJPlayerPygame:
@@ -198,10 +198,11 @@ class RPJPlayer(object):
         # now set up state variables
         self.queue = queue # use queue object to fetch next
         self.nowPlaying = {}
-        self.playing = False
-
+        self._paused = False
+        self.vol = 100
         # then spawn mplayer
         self.player.spawn()
+        self.player.pause()
 
     def __del__(self):
         print 'quitting mplayer'
@@ -213,20 +214,18 @@ class RPJPlayer(object):
             path = 'songs/' + song['id'] + '.mp3'
         else:
             path = 'songs/' + song + '.mp3'
-
         self.player.loadfile(path)
-        if self.player.filename is not None:
-            self.playing = True
-            self.nowPlaying = song
+        if self._paused:
+            self.pause()  # unpause
+        self.nowPlaying = song
 
     def play_next(self):
         if not self.queue.empty:
             self.play(self.queue.pop())
 
     def pause(self):
-        if self.player.filename is not None:
-            self.player.pause()  # pause/unpause
-            self.playing = not self.playing  # toggle state
+        self.player.pause()  # pause/unpause
+        self._paused = not self._paused  # toggle state
 
     def stop(self):
         self.player.stop()
@@ -241,11 +240,21 @@ class RPJPlayer(object):
 
     @property
     def volume(self):
-        return self.player.volume
+        return self.vol
 
     @volume.setter
     def volume(self, value):
         self.player.volume = value
+        self.vol = value
+
+    @property
+    def now_playing(self):
+        return self.nowPlaying
+
+    @property
+    def is_playing(self):
+        # playing: if not paused and there is a file loaded
+        return not self._paused and self.player.filename is not None
 
     def on_playback_finish(self, handler):
         self.playback_finish_handler = handler
@@ -260,7 +269,7 @@ class RPJPlayer(object):
 
         self.player.quit()
 
-####### PRIVATE FUNCTIONS ##########################3333
+####### PRIVATE METHODS ##########################3333
 
     def _playback_end_event(self, data):
         if data.startswith('EOF code: '):
@@ -283,47 +292,6 @@ class RPJPlayer(object):
                 handler()
 
 
-# if __name__ == '__main__':
-#     def done():
-#         print 'Done playing!'
-#     from RPJqueue import RPJQueue
-#     queue = RPJQueue()
-#     player = RPJPlayerMplayer(queue)
-#     player.is_file_loaded()
-#     player.is_file_loaded()
-#     print ''
-#     print 'Starting playback'
-#     player.on_eof(done)
-#     player.play('/home/jakub/Programming/rpi-jukebox/songs/w9QfN-ODGWM.mp3')
-#
-    #
-    # time.sleep(10)
-    # print 'is playing: ' + str(player.playing) + '\n'
-    # print 'Now attempting to pause'
-    # # print 'isloaded: ' + str(player.is_file_loaded())
-    # player.pause()
-    # print 'is playing: ' + str(player.playing) + '\n'
-    # time.sleep(5)
-    # print 'now resuming'
-    # player.pause()
-    # print 'is playing: ' + str(player.playing) + '\n'
-    # time.sleep(5)
-    # print 'seeking'
-    # player.foo()
-    # time.sleep(3)
-    # print 'is EOF? ' + str(player.is_EOF())
-    # print 'looping'
-    # for x in xrange(20):
-    #     print 'playing: ' + str(player.bar())
-    #     time.sleep(1)
-    # print "EOF: " + str(player.is_EOF())
-    #
-    #
-    #
-
-
-
-
 if __name__ == '__main__':
     import RPJqueue
     queue = RPJqueue.RPJQueue()
@@ -331,7 +299,6 @@ if __name__ == '__main__':
 
     def printeof():
         print 'EOF!'
-
 
     p.on_playback_finish(printeof)
     p.play('w9QfN-ODGWM')

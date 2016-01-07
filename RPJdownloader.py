@@ -31,7 +31,7 @@ class RPJDownloader:
           progress = {
             "nowDonwloading": self.now_downloading,
             "progress": self.progress,
-            "remaining": self.downloadList
+            "inQueue": self.downloadList
           }
 
     def background_download(self, video, **kwargs):

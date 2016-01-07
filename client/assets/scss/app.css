@@ -7472,7 +7472,8 @@ blockquote p {
   width: 20px;
   height: 20px;
   left: -10px;
-  top: -4px; }
+  top: -4px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.41); }
 
 .noUi-vertical {
   width: 18px; }
@@ -7704,7 +7705,7 @@ body {
   margin-top: 4px;
   font-size: 1em;
   font-style: italic;
-  font-color: #969696; }
+  color: #969696; }
 
 .fa-center {
   line-height: inherit; }
@@ -7722,7 +7723,7 @@ body {
   0% {
     -webkit-transform: translateX(30%); }
   100% {
-    -webkit-transform: translateX(-30%); } }
+    -webkit-transform: translateX(-70%); } }
 @keyframes horizontally {
   0% {
     /* Browser bug fix */
@@ -7731,9 +7732,9 @@ body {
     transform: translateX(30%); }
   100% {
     /* Browser bug fix */
-    -webkit-transform: translateX(-30%);
+    -webkit-transform: translateX(-70%);
     /* Browser bug fix */
-    transform: translateX(-30%); } }
+    transform: translateX(-70%); } }
 .queue ol, .queue ul {
   margin: 0;
   padding: 0; }
@@ -7775,10 +7776,18 @@ body {
     padding: 0;
     width: 6em; }
 
-.queue-desc div {
-  display: block;
-  overflow-x: hidden;
-  white-space: nowrap;
+.queue-desc {
+  font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
+  .queue-desc div {
+    display: block;
+    overflow-x: hidden;
+    white-space: nowrap; }
+  .queue-desc h6 {
+    margin: 0 0.25em; }
+
+.queue-desc p {
+  font-style: italic;
+  margin: 0 0.25em;
   font-size: 0.8em; }
 
 .queue-optn {
