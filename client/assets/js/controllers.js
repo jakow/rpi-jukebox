@@ -1,31 +1,32 @@
 /**
  * Created by jakub on 24/12/15.
  */
+
 app.controller('menuCtrl', ['$scope', function ($scope) {
 
-      $scope.menu = [
-        {
-          text: "Search",
-          iconClass: "search-icon",
-          route: "search"
-        },
-        {
-          text: "Settings",
-          iconClass: "settings-icon",
-          route: "settings"
-        }
-      ];
+  $scope.menu = [
+    {
+      text: "Search",
+      iconClass: "search-icon",
+      route: "search"
+    },
+    {
+      text: "Settings",
+      iconClass: "settings-icon",
+      route: "settings"
+    }
+  ];
 
-      $scope.playlists = [
-        {
-          name: "Playlist 1",
-          iconClass: "note-icon",
-          id: "playlist1"
-        }
+  $scope.playlists = [
+    {
+      name: "Playlist 1",
+      iconClass: "note-icon",
+      id: "playlist1"
+    }
 
 
-      ];
-    }])
+  ];
+}]);
 
 /*Player Controller for desktop seekbar, backward/play/forward buttons and volume control */
 player.controller('PlaybackCtrl', ['$scope', 'playerService', '$interval', function ($scope, playerService, $interval) {
@@ -89,21 +90,26 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
 
 }]);
 
-search.controller('searchCtrl', ['YtSearch', '$scope', '$stateParams', '$window', function (YtSearch, $scope, $stateParams, $window) {
+search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$window', function (rpjYoutube, $scope, $stateParams, $window) {
 
-    YtSearch.search({q: "epic sax guy"}).then(function (response) {
-      $scope.results = response;
-    });
-    $scope.changeQuery = function () {
-      YtSearch.search({q: "nyan cat"}).then(function (response) {
+    $scope.query = $stateParams.q;
+    $scope.search = function () {
+      console.log('Searching');
+      rpjYoutube.search({q: "epic sax guy"}).then(function (response) {
         $scope.results = response;
       });
-    }
+    };
+    $scope.changeQuery = function () {
+      rpjYoutube.search({q: "nyan cat"}).then(function (response) {
+        $scope.results = response;
+      });
+    };
+  setTimeout($scope.search, 1000);
   }])
   .controller('searchBarCtrl', ['$scope', '$state', '$log', '$window', function ($scope, $state, $log, $window) {
     $scope.search = function () {
       $log.log('SEARCHING!!')
     }
   }])
-;
+
 ;

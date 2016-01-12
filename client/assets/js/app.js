@@ -103,36 +103,36 @@ var player = angular.module('player', ['ya.nouislider'])
   }]);
 
 var search = angular.module('search', ['YtAPI'])
-  .factory('YtSearch', ['Youtube', function(Youtube) {
-    var YtSearch = {};
-
+  .factory('rpjYoutube', ['Youtube', '$window', function(Youtube, $window) {
+    var rpjYt = {};
     //persistent storage of last fetched result
-    YtSearch.results = {};
+    rpjYt.results = {};
+    rpjYt.ready = function() {return Youtube._gapiLoaded; }
 
-    YtSearch.search = function(query) {
-      YtSearch.decorateQuery(query);
+    rpjYt.search = function(query) {
+      rpjYt.decorateQuery(query);
       return Youtube.search(query).then(function(response) {
-        YtSearch.results = response; // save response to be used later
+        rpjYt.results = response; // save response to be used later
         return response;
       });
     };
 
      //store default search settings to be reused. In the future they will be xhr'd from server-side config file
-    YtSearch.defaultSettings = {
+    rpjYt.searchSettings = {
       part: 'snippet',
       maxResults: 10
     };
 
-    //decorate query with defaults
-    YtSearch.decorateQuery = function(query) {
-      for (var setting in YtSearch.defaultSettings) {
+    //decorate query with searchSettings that were not overriden
+    rpjYt.decorateQuery = function(query) {
+      for (var setting in rpjYt.searchSettings) {
         if (!query.hasOwnProperty(setting)) {
-          query[setting] = YtSearch.defaultSettings[setting];
+          query[setting] = rpjYt.searchSettings[setting];
         }
       }
     };
 
-    return YtSearch;
+    return rpjYt;
   }])
   ;
 
