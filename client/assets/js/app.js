@@ -115,7 +115,7 @@ var search = angular.module('search', ['YtAPI'])
     rpjYt.search = function (query) {
       rpjYt.decorateQuery(query);
       return Youtube.search(query).then(function (response) {
-        rpjYt.results = response; // save response to be used later
+        rpjYt.lastResult = response; // save response to be used later
         return response;
       });
     };

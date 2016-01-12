@@ -8045,4 +8045,11 @@ body {
 .menu-mobile {
   margin: 1em 0em; }
 
+.placeholder-text {
+  margin-left: auto;
+  margin-right: auto;
+  color: #969696;
+  font-style: italic;
+  text-align: center; }
+
 /*# sourceMappingURL=app.css.map */

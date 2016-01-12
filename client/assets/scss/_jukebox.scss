@@ -463,3 +463,11 @@ $thumbnail-width: 6em;
 .menu-mobile {
   margin: 1em 0em;
 }
+
+.placeholder-text {
+  margin-left: auto;
+  margin-right: auto;
+  color: $gray-dark;
+  font-style: italic;
+  text-align: center;
+}

@@ -91,17 +91,23 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
 }]);
 
 search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$window', function (rpjYoutube, $scope, $stateParams, $window) {
+    $scope.loading = true;
     $scope.search = function (query) {
-      console.log('Searching');
+      $scope.loading = true;
       rpjYoutube.search(query).then(function (response) {
         $scope.results = response;
+        $scope.loading = false;
       });
     };
+
 
     if (rpjYoutube.isEmptyQuery($stateParams))
       $scope.results = rpjYoutube.lastResult;
     else {
       $scope.query = $stateParams;
+      setTimeout(function () {
+        $scope.search($stateParams)
+      }, 1000);
     }
   }])
   .controller('searchBarCtrl', ['rpjYoutube', '$scope', '$state', '$log', '$window', function (rpjYoutube, $scope, $state, $log, $window) {

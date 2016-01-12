@@ -1,13 +1,18 @@
 ---
 name: search
-url: /search?q
+url: /search?q&pageToken
 controller: searchCtrl
 ---
 <div class="grid-block">
-<div class="grid-content">
-  <p>Search query: {{query}}</p>
-  <p>Search results: {{results}}</p>
-  <button type="button" ng-click="search()">Search</button>
->
+  <div class="grid-block vertical">
+    <div class="grid-block">
+      <div class="grid-content">
+        <img src="./assets/img/hourglass.gif">
+      </div>
+    </div>
+  </div>
 
+  <!--<div ng-hide="loading" class="grid-block auto-center">
+  <p class="placeholder-text">There are no results to be shown.</p>
+</div>-->
 </div>
