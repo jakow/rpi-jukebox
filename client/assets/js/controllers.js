@@ -96,21 +96,27 @@ search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$windo
       $scope.loading = true;
       console.log('Searching')
       rpjYoutube.search(query).then(function (response) {
-        $scope.results = response;
+        $scope.result = response.result;
         $scope.loading = false;
+        console.log('Search finished');
+        console.log($scope.result);
+        $scope.$apply(); //lags if apply is not called
       });
     };
-
+    $scope.resultsEmpty = function() {
+      return rpjYoutube.isEmptyQuery($scope.result);
+    }
 
     //State enter behaviour
-    if (rpjYoutube.isEmptyQuery($stateParams)) {
+    var query = $stateParams;
+    if (rpjYoutube.isEmptyQuery(query)) {
       console.log('Query empty');
-      $scope.results = rpjYoutube.lastResult;
+      $scope.result = rpjYoutube.lastResult;
     }
     else if (!rpjYoutube.ready()) {
-      console.log($stateParams);
-      $scope.query = $stateParams;
-      setTimeout(function () {
+      console.log(query);
+      $scope.loading = true;
+      setTimeout(function () { //wait for yt to be ready!
         $scope.search($stateParams)
       }, 1000);
 

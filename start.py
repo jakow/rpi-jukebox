@@ -10,12 +10,12 @@ downloader = RPJdownloader.RPJDownloader()
 app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/static-templates')
 
 # set up some default events for player
-def reload_last():
+def reload_last_if_empty():
     if queue.empty:
         player.play(player.now_playing)
         player.pause()
 
-player.on('playback_finish', reload_last)
+player.on('playback_finish', reload_last_if_empty)
 player.on('playback_finish', player.play_next)
 @app.route('/json_state')
 def json_state():
@@ -51,6 +51,7 @@ def queue_add():
     # to avoid downloading an existing files, implement SQL database
     video_id = request.args['videoId']
     link = "http://www.youtube.com/watch?v=" + video_id
+    # now decide if we're going to play or enqueue
     callback = player.play if queue.empty else queue.add
     downloader.background_download(link, callback=callback)
     return json_state()

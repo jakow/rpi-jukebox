@@ -5,7 +5,7 @@
  * 2. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
-@import url(https://fonts.googleapis.com/css?family=Lobster);
+@import url(https://fonts.googleapis.com/css?family=Lobster&subset=all);
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 html {
@@ -7628,9 +7628,6 @@ body {
       fill: #000;
       stroke: #000; }
 
-.song-search {
-  margin: 0.5em !important; }
-
 #mobile-search {
   margin-left: auto;
   margin-right: auto;
@@ -8065,13 +8062,19 @@ body {
   margin-right: auto;
   color: #969696;
   font-style: italic;
-  text-align: center; }
+  text-align: center;
+  z-index: -1; }
 
 .loader-img {
+  background: transparent;
+  width: 100%;
   text-align: center;
-  opacity: 1; }
+  opacity: 1;
+  position: absolute;
+  top: 50%;
+  margin-top: -80px; }
   .loader-img.loader-img.ng-hide {
     opacity: 0;
-    transition: all linear 0.25s; }
+    transition: all linear 0.3s; }
 
 /*# sourceMappingURL=app.css.map */

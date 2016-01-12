@@ -39,23 +39,6 @@
 </zf-offcanvas>
 
 <div class="grid-frame vertical">
-
-  <!-- title bar: Centered logo for mobile, left logo for desktop-->
-  <div class="show-for-large">
-    <div class="primary title-bar" id="title-bar-desktop">
-      <div class="center" ng-controller="searchBarCtrl">
-        <form ng-submit="search()">
-            <span class="inline-label button-group song-search">
-          <input ng-model="query" type="search" placeholder="Search for songs">
-          <a class="button secondary" ng-click="search()"><i class="fa fa-search fa-lg"></i></a>
-          </span>
-        </form>
-      </div>
-      <span class="left title">
-      <span id="logo"><a href="/"><span class="rpi">RPi</span><span class="jukebox">Jukebox</span></a></span>
-      </span>
-    </div>
-  </div>
   <div class="show-for-small hide-for-large">
     <div class="primary title-bar" id="title-bar-mobile">
       <div class="center title">
@@ -66,15 +49,23 @@
       <span class="right"><a zf-toggle="mobile-player" class="button primary title-bar-button" ui-sref="settings"><i
         class="fa fa-play-circle fa-2x"></i></a></span>
     </div>
-    <div class="menu-bar primary">
-      <label id="mobile-search">
-            <span class="inline-label button-group song-search">
-          <input type="search" placeholder="Search for songs">
-          <a href="#" class="button secondary"><i class="fa fa-search fa-lg"></i></a>
+  </div>
+  <div>
+    <div class="primary title-bar" id="title-bar-desktop">
+      <div class="center" ng-controller="searchBarCtrl">
+        <form ng-submit="search()">
+            <span class="inline-label button-group auto-center">
+          <input ng-model="query" type="search" placeholder="Search for songs">
+          <a class="button secondary" ng-click="search()"><i class="fa fa-search fa-lg"></i></a>
           </span>
-      </label>
+        </form>
+      </div>
+      <div class="hide-for-small show-for-large left title">
+        <span id="logo"><a href="/"><span class="rpi">RPi</span><span class="jukebox">Jukebox</span></a></span>
+      </div>
     </div>
   </div>
+
 
   <div class="grid-block">
     <div class="grid-block medium-3 large-2 columns hide-for-small show-for-large" id="menu-desktop"

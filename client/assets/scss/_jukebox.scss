@@ -60,7 +60,7 @@ body {
 }
 
 .song-search {
-  margin: 0.5em !important;
+
 }
 
 #mobile-search {
@@ -491,17 +491,23 @@ $thumbnail-width: 6em;
   color: $gray-dark;
   font-style: italic;
   text-align: center;
+  //position: absolute;
+
+  z-index: -1;
 }
 
 .loader-img {
+  background: transparent;
+  width:100%;
   text-align: center;
   opacity: 1;
+  position: absolute;
+  top: 50%;
+  margin-top: -80px;
   &.loader-img.ng-hide {
     opacity: 0;
-    transition: all linear 0.25s;
+    transition: all linear 0.3s;
   }
 }
 
-@keyframes in {
 
-}
