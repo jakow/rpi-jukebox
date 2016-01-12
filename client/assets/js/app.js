@@ -1,4 +1,4 @@
-(function () {
+//(function () {
   'use strict';
 
   var app = angular.module('application', [
@@ -14,59 +14,37 @@
       'ya.nouislider',
       'player',
       'search'
-    ])
+    ]);
+
+  ( function() {
+    app
     .config(config)
-    .run(run)
+      .run(run)
     ;
 
 
-  config.$inject = ['$urlRouterProvider', '$locationProvider'];
+    config.$inject = ['$urlRouterProvider', '$locationProvider'];
 
-  function config($urlProvider, $locationProvider) {
-    $urlProvider
-      .otherwise('/');
+    function config($urlProvider, $locationProvider) {
+      $urlProvider
+        .otherwise('/');
 
-    $locationProvider.html5Mode({
-      enabled: false,
-      requireBase: false
-    });
+      $locationProvider.html5Mode({
+        enabled: false,
+        requireBase: false
+      });
 
-    $locationProvider.hashPrefix('!');
-  }
+      $locationProvider.hashPrefix('!');
+    }
 
-  function run() {
-    FastClick.attach(document.body);
-  }
-
-  app.controller('menuCtrl', ['$scope', function ($scope) {
-      $scope.menu = [
-        {
-          text: "Search",
-          iconClass: "search-icon",
-          route: "search"
-        },
-        {
-          text: "Settings",
-          iconClass: "settings-icon",
-          route: "settings"
-        }
-      ];
-
-      $scope.playlists = [
-        {
-          name: "Playlist 1",
-          iconClass: "note-icon",
-          id: "playlist1"
-        }
+    function run() {
+      FastClick.attach(document.body);
+    }
 
 
-      ];
-    }])
+  })();
 
-
-
-
-})();
+//})();
 
 var player = angular.module('player', ['ya.nouislider'])
   .factory('playerService', ['$http', '$log', '$interval', function ($http, $log, $interval) {
@@ -126,7 +104,7 @@ var player = angular.module('player', ['ya.nouislider'])
 
 var search = angular.module('search', ['YtAPI'])
   .factory('YtSearch', ['Youtube', function(Youtube) {
-    var YTSearch = {};
+    var YtSearch = {};
 
     //persistent storage of last fetched result
     YtSearch.results = {};
@@ -147,14 +125,14 @@ var search = angular.module('search', ['YtAPI'])
 
     //decorate query with defaults
     YtSearch.decorateQuery = function(query) {
-      for (var setting in YTSearch.defaultSettings) {
+      for (var setting in YtSearch.defaultSettings) {
         if (!query.hasOwnProperty(setting)) {
-          query[setting] = YTSearch.defaultSettings[setting];
+          query[setting] = YtSearch.defaultSettings[setting];
         }
       }
     };
 
-    return YTSearch;
+    return YtSearch;
   }])
   ;
 
