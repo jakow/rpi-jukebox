@@ -1,4 +1,3 @@
-//(function () {
 'use strict';
 
 var app = angular.module('application', [
@@ -43,8 +42,6 @@ var app = angular.module('application', [
 
 
 })();
-
-//})();
 
 var player = angular.module('player', ['ya.nouislider'])
   .factory('playerService', ['$http', '$log', '$interval', function ($http, $log, $interval) {
@@ -121,7 +118,8 @@ var search = angular.module('search', ['YtAPI'])
     };
     rpjYt.isEmptyQuery = function (query) {
       for (var key in query) {
-        if (query.hasOwnProperty(key)) return false;
+        if (query.hasOwnProperty(key) && query[key] !==undefined)
+            return false;
       }
       return true;
     };

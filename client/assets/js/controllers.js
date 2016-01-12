@@ -91,9 +91,10 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
 }]);
 
 search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$window', function (rpjYoutube, $scope, $stateParams, $window) {
-    $scope.loading = true;
+    $scope.loading = false;
     $scope.search = function (query) {
       $scope.loading = true;
+      console.log('Searching')
       rpjYoutube.search(query).then(function (response) {
         $scope.results = response;
         $scope.loading = false;
@@ -101,13 +102,22 @@ search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$windo
     };
 
 
-    if (rpjYoutube.isEmptyQuery($stateParams))
+    //State enter behaviour
+    if (rpjYoutube.isEmptyQuery($stateParams)) {
+      console.log('Query empty');
       $scope.results = rpjYoutube.lastResult;
-    else {
+    }
+    else if (!rpjYoutube.ready()) {
+      console.log($stateParams);
       $scope.query = $stateParams;
       setTimeout(function () {
         $scope.search($stateParams)
       }, 1000);
+
+    }
+  else {
+      console.log('searching: ' + $stateParams);
+      $scope.search($stateParams);
     }
   }])
   .controller('searchBarCtrl', ['rpjYoutube', '$scope', '$state', '$log', '$window', function (rpjYoutube, $scope, $state, $log, $window) {

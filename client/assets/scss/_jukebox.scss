@@ -495,25 +495,13 @@ $thumbnail-width: 6em;
 
 .loader-img {
   text-align: center;
-  &.ng-hide-add {
-    @include fade(
-      $dir: in, // Specify in or out
-      $from: 0, // Should be an opacity value between 0 and 1
-      $to: 1, // Same as above
-      $duration: 2s,
-      $timing: easeIn,
-      $delay: 0.25s
-    );
+  opacity: 1;
+  &.loader-img.ng-hide {
+    opacity: 0;
+    transition: all linear 0.25s;
   }
-  &.ng-hide-remove {
+}
 
-    @include fade(
-      $dir: out, // Specify in or out
-      $from: 1, // Should be an opacity value between 0 and 1
-      $to: 0, // Same as above
-      $duration: 2s,
-      $timing: easeIn,
-      $delay: 0.25s
-    );
-  }
+@keyframes in {
+
 }
