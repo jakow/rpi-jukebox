@@ -1,8 +1,11 @@
 ---
 name: search
-url: /search?query
+url: /search?q
 controller: searchCtrl
 ---
 <div class="grid-block" ng-controller="searchCtrl">
-<div class="grid-content">Search: {{query}}</div>
+<div class="grid-content">
+  Search results: {{results}}
+<button type="button" ng-click="changeQuery()">Change Query</button></div>
+
 </div>

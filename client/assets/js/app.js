@@ -63,12 +63,7 @@
       ];
     }])
 
-    .controller('searchBarCtrl', ['$scope', '$state', '$log', function ($scope, $state, $log) {
-      $scope.search = function() {
-         $log.log('SEARCHING!!')
-      }
-    }])
-  ;
+
 
 
 })();
@@ -127,17 +122,41 @@ var player = angular.module('player', ['ya.nouislider'])
 
 
     return p;
-  }]);  // eager instatiation of player service
-
-var searchModule = angular.module('search', ['angular-google-gapi'])
-  .factory('ytSearchService', ['$http', '$log', 'GApi', function ($http, $log, GApi) {
-    var searchService = {};
-    searchService.query = ''
-    searchService.search = function(query) {
-      /* Search youtube, return a promise */
-    };
-    return searchService;
   }]);
+
+var search = angular.module('search', ['YtAPI'])
+  .factory('YtSearch', ['Youtube', function(Youtube) {
+    var YTSearch = {};
+
+    //persistent storage of last fetched result
+    YtSearch.results = {};
+
+    YtSearch.search = function(query) {
+      YtSearch.decorateQuery(query);
+      return Youtube.search(query).then(function(response) {
+        YtSearch.results = response; // save response to be used later
+        return response;
+      });
+    };
+
+     //store default search settings to be reused. In the future they will be xhr'd from server-side config file
+    YtSearch.defaultSettings = {
+      part: 'snippet',
+      maxResults: 10
+    };
+
+    //decorate query with defaults
+    YtSearch.decorateQuery = function(query) {
+      for (var setting in YTSearch.defaultSettings) {
+        if (!query.hasOwnProperty(setting)) {
+          query[setting] = YTSearch.defaultSettings[setting];
+        }
+      }
+    };
+
+    return YTSearch;
+  }])
+  ;
 
 
 
