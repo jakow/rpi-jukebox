@@ -91,25 +91,24 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
 }]);
 
 search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$window', function (rpjYoutube, $scope, $stateParams, $window) {
-
-    $scope.query = $stateParams.q;
-    $scope.search = function () {
+    $scope.search = function (query) {
       console.log('Searching');
-      rpjYoutube.search({q: "epic sax guy"}).then(function (response) {
+      rpjYoutube.search(query).then(function (response) {
         $scope.results = response;
       });
     };
-    $scope.changeQuery = function () {
-      rpjYoutube.search({q: "nyan cat"}).then(function (response) {
-        $scope.results = response;
-      });
-    };
-  setTimeout($scope.search, 1000);
-  }])
-  .controller('searchBarCtrl', ['$scope', '$state', '$log', '$window', function ($scope, $state, $log, $window) {
-    $scope.search = function () {
-      $log.log('SEARCHING!!')
+
+    if (rpjYoutube.isEmptyQuery($stateParams))
+      $scope.results = rpjYoutube.lastResult;
+    else {
+      $scope.query = $stateParams;
     }
   }])
-
+  .controller('searchBarCtrl', ['rpjYoutube', '$scope', '$state', '$log', '$window', function (rpjYoutube, $scope, $state, $log, $window) {
+    $scope.search = function () {
+      if (!(rpjYoutube.isEmptyQuery($scope.query)))
+        $state.go('search', {q: $scope.query});
+    }
+  }])
 ;
+

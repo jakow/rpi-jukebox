@@ -43,13 +43,13 @@
   <!-- title bar: Centered logo for mobile, left logo for desktop-->
   <div class="show-for-large">
     <div class="primary title-bar" id="title-bar-desktop">
-      <div class="center">
-        <label ng-controller="searchBarCtrl">
+      <div class="center" ng-controller="searchBarCtrl">
+        <form ng-submit="search()">
             <span class="inline-label button-group song-search">
           <input ng-model="query" type="search" placeholder="Search for songs">
-          <a class="button secondary"><i class="fa fa-search fa-lg"></i></a>
+          <a class="button secondary" ng-click="search()"><i class="fa fa-search fa-lg"></i></a>
           </span>
-        </label>
+        </form>
       </div>
       <span class="left title">
       <span id="logo"><a href="/"><span style="color: #BC1142">RPi</span>Jukebox</a></span>
