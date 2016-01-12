@@ -4,14 +4,11 @@ url: /search?q&pageToken
 controller: searchCtrl
 ---
 <div class="grid-block">
-  <div class="grid-block vertical">
-    <div class="grid-block">
-      <div class="grid-content">
+
+      <div ng-show="loading" class="grid-content auto-center loader-img">
         <img src="./assets/img/hourglass.gif">
       </div>
     </div>
-  </div>
-
   <!--<div ng-hide="loading" class="grid-block auto-center">
   <p class="placeholder-text">There are no results to be shown.</p>
 </div>-->

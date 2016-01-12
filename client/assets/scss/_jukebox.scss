@@ -7,9 +7,24 @@ body {
 #logo {
   font-family: 'Lobster';
   font-size: 3em;
-  color: white;
   padding: 0em 0em;
   font-weight: normal;
+
+  /*a {
+
+     text-shadow:
+   -2px -2px 0 $dark-color,
+    2px -2px 0 $dark-color,
+    -2px 2px 0 $dark-color,
+     2px 2px 0 $dark-color;
+     }*/
+
+  .rpi {
+    color: $raspberry-color
+  }
+  .jukebox {
+    color: white;
+  }
 }
 
 #logo-mobile {
@@ -18,7 +33,12 @@ body {
   color: white;
   padding: 0em 0em;
   font-weight: normal;
-
+  .rpi {
+    color: $raspberry-color
+  }
+  .jukebox {
+    color: $raspberry-color;
+  }
 }
 
 .rounded-right-button {
@@ -142,8 +162,9 @@ body {
 }
 
 .song-uploader {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
+
 .now-playing {
   overflow: hidden;
   white-space: nowrap;
@@ -470,4 +491,29 @@ $thumbnail-width: 6em;
   color: $gray-dark;
   font-style: italic;
   text-align: center;
+}
+
+.loader-img {
+  text-align: center;
+  &.ng-hide-add {
+    @include fade(
+      $dir: in, // Specify in or out
+      $from: 0, // Should be an opacity value between 0 and 1
+      $to: 1, // Same as above
+      $duration: 2s,
+      $timing: easeIn,
+      $delay: 0.25s
+    );
+  }
+  &.ng-hide-remove {
+
+    @include fade(
+      $dir: out, // Specify in or out
+      $from: 1, // Should be an opacity value between 0 and 1
+      $to: 0, // Same as above
+      $duration: 2s,
+      $timing: easeIn,
+      $delay: 0.25s
+    );
+  }
 }
