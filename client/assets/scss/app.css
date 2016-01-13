@@ -8086,9 +8086,6 @@ body {
   margin: 0.5em 0; }
   .yt-search-results .grid-content {
     padding: 0; }
-  .yt-search-results.ng-hide {
-    opacity: 0;
-    transition: all 1s linear; }
   .yt-search-results ol, .yt-search-results ul {
     margin: 0;
     padding: 0 1em;
@@ -8102,10 +8099,12 @@ body {
     .yt-search-results li:last-child {
       border-bottom: 0; }
   .yt-search-results p {
+    font-size: 0.6em;
+    margin: 0;
     font-size: 0.75em; }
   .yt-search-results .search-desc {
     margin: 0 0.5em; }
-  .yt-search-results .search-item {
+  .yt-search-results .search-item-wrapper {
     display: flex;
     height: 100vh;
     position: relative;
@@ -8121,6 +8120,26 @@ body {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar; }
+    .yt-search-results .search-item-wrapper h5 {
+      margin-top: 0; }
+  .yt-search-results .search-thumb {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    backface-visibility: hidden;
+    flex: 0 0 auto;
+    flex-flow: row wrap;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    order: 0;
+    height: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar; }
+    .yt-search-results .search-thumb img {
+      width: 8em; }
   .yt-search-results .search-desc {
     display: flex;
     height: 100vh;
@@ -8129,15 +8148,15 @@ body {
     backface-visibility: hidden;
     flex: 1 1 auto;
     flex-flow: row wrap;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-wrap: nowrap;
+    align-items: stretch;
     justify-content: flex-start;
     order: 0;
     height: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar; }
-  .yt-search-results .search-thumb, .yt-search-results .search-actions {
+  .yt-search-results .search-actions {
     display: flex;
     height: 100vh;
     position: relative;
@@ -8145,8 +8164,8 @@ body {
     backface-visibility: hidden;
     flex: 0 0 auto;
     flex-flow: row wrap;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-wrap: nowrap;
+    align-items: stretch;
     justify-content: flex-start;
     order: 0;
     height: auto;
