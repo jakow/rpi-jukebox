@@ -16,8 +16,7 @@ controller: searchCtrl
       <div class="grid-content">
         <ul>
         <li ng-repeat="item in result.items">
-          <span><a ng-click="playerService.addToQueue({{item.id.videoId}})">{{item.snippet.title}}</a></span>
-          <!-- <img ng-src="{{item.snippet.thumbnails.medium.url}}"> -->
+          <span><a ng-click="enqueue(item.id)">{{item.title}}</a></span>
         </li>
           </ul>
       </div>

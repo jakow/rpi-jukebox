@@ -65,7 +65,6 @@ var player = angular.module('player', ['ya.nouislider'])
     }
 
 
-
     /* the autoRefresh promise object uses interval service will update state of the player every 5 seconds.
      This should probably be reworked, so that state is updated on server-side events */
 
@@ -95,10 +94,17 @@ var player = angular.module('player', ['ya.nouislider'])
 
     p.addToQueue = function (songId) {
       console.log('Adding to queue');
-      return p.request('queue_add?videoId='+songId);
+      return p.request('queue_add?videoId=' + songId);
     };
 
+    p.removeFromQueue = function (index) {
+      console.log('Removing from queue');
+      return p.request('queue_remove?index=' + index);
+    }
 
+    p.forward = function () {
+      return p.request('forward');
+    }
 
 
     return p;
@@ -117,14 +123,15 @@ var search = angular.module('search', ['YtAPI'])
     rpjYt.search = function (query) {
       rpjYt.decorateQuery(query);
       return Youtube.search(query).then(function (response) {
-        rpjYt.lastResult = response; // save response to be used later
-        return response;
+        console.log(response);
+        rpjYt.lastResult = rpjYt.transformResult(response.result); // save response to be used later
+        return rpjYt.lastResult;
       });
     };
     rpjYt.isEmptyQuery = function (query) {
       for (var key in query) {
-        if (query.hasOwnProperty(key) && query[key] !==undefined)
-            return false;
+        if (query.hasOwnProperty(key) && query[key] !== undefined)
+          return false;
       }
       return true;
     };
@@ -144,6 +151,30 @@ var search = angular.module('search', ['YtAPI'])
       }
     };
 
+    /*
+      transforms the search result so that the object structure is consistent in the frontend and backend.
+      ie each queue item consists at least of following:
+      - title
+      - id
+      - uploader
+      - thumbnail
+     */
+    rpjYt.transformResult = function (result) {
+      var r = {};
+      if (result.nextPageToken) r.nextPageToken = result.nextPageToken;
+      if (result.prevPageToken) r.prevPageToken = result.prevPageToken;
+      r.items = [];
+      var items = result.items;
+      for (var i = 0; i < items.length - 1; ++i) {
+        r.items.push({
+          title: items[i].snippet.title,
+          id: items[i].id.videoId,
+          thumbnail: items[i].snippet.thumbnails.medium.url,
+          uploader: items[i].snippet.channelTitle
+        });
+      }
+      return r;
+    };
     return rpjYt;
   }])
   ;

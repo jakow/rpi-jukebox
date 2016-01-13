@@ -12,20 +12,25 @@ class RPJQueue:
         q = self.queue  # make a copy?
         return q
 
-    def pop_next(self):
+    def pop(self):
         return self.queue.pop(0)
 
     def pop(self, i):
         return self.queue.pop(i)
 
-    def remove(self, video_id):
+    def remove(self):
+        print 'Removed ', self.queue.pop(0).title, ' from queue'
+
+    def removeById(self, video_id):
+
         #if it exists, it will be removed. Otherwise nothing happens
         if isinstance(video_id, basestring):
-            self.queue = [song for song in self.queue if not (song.get('id') != video_id)]
+            self.queue = [song for song in self.queue if not (song.get('id') == video_id)]
 
 
     @property
     def empty(self):
+        print 'queue empty? ', not self.queue
         return not self.queue
 
     def jsonify(self):

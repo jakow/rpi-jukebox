@@ -46,22 +46,30 @@ def rewind():
     player.seek(0)
     return json_state()
 
+@app.route('/forward', methods=['GET'])
+def forward():
+    player.play_next()
+    return json_state()
+
 @app.route('/queue_add', methods=['GET'])
 def queue_add():
     # to avoid downloading an existing files, implement SQL database
     video_id = request.args['videoId']
     link = "http://www.youtube.com/watch?v=" + video_id
     # now decide if we're going to play or enqueue
-    callback = player.play if queue.empty else queue.add
-    downloader.background_download(link, callback=callback)
+    if not player.is_playing:
+        callback = player.play
+    else:
+        callback = queue.add
+    downloader.background_download(link, on_downloaded=callback)
     return json_state()
 
 
 
 @app.route('/queue_remove', methods=['GET'])
 def queue_remove():
-    video_id = request.args['videoId']
-    queue.remove(video_id)
+    index = request.args['index']
+    queue.pop(int(index))
     return json_state()
 
 

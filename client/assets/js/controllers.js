@@ -83,9 +83,13 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
       $scope.queue = newState.queue;
     },
     false);
-  $http.get('./assets/test/sampleData.json').then(function (response) {
-    $scope.queue = response.data.queue;
-  });
+
+  $scope.remove = function (index) {
+    //first remove from real queue
+    playerService.removeFromQueue(index);
+    //then remove from view
+    $scope.queue.splice(index, 1);
+  };
 
 
 }]);
@@ -95,17 +99,20 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
     $scope.search = function (query) {
       $scope.loading = true;
       console.log('Searching')
-      rpjYoutube.search(query).then(function (response) {
-        $scope.result = response.result;
+      rpjYoutube.search(query).then(function (result) {
+        $scope.result = result;
         $scope.loading = false;
         console.log('Search finished');
-        console.log($scope.result.items);
+        console.log($scope.result);
         $scope.$apply(); //lags if apply is not called
       });
     };
-    $scope.resultsEmpty = function() {
+    $scope.resultsEmpty = function () {
       return rpjYoutube.isEmptyQuery($scope.result);
     }
+    $scope.enqueue = function (videoId) {
+      playerService.addToQueue(videoId);
+    };
 
     //State enter behaviour
     var query = $stateParams;
@@ -121,7 +128,7 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
       }, 1000);
 
     }
-  else {
+    else {
       console.log('searching: ' + $stateParams);
       $scope.search($stateParams);
     }

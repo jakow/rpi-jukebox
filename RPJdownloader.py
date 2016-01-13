@@ -67,7 +67,7 @@ class RPJDownloader:
                 print 'on download ' + callback.__name__ + '(' + param.__name__ + ')'
                 return callback(file_info, param)
             else:
-                print 'on download ' + callback.__name__ + ' called with last downloaded file object'
+                print 'on download calling ' + callback.__name__ + ' with last downloaded file object'
                 return callback(file_info)
         else:
             return None

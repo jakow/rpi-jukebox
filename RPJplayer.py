@@ -226,7 +226,7 @@ class RPJPlayer(object):
 
     def play_next(self):
         if not self.queue.empty:
-            self.play(self.queue.pop())
+            self.play(self.queue.pop(0))
 
     def pause(self):
         if self.player.filename is not None:  # pausing when there is no file loaded is meagningless
