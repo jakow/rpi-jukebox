@@ -1,4 +1,11 @@
 $raspberry-color: #BC1142;
+
+$box-shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+$box-shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+$box-shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+$box-shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+$box-shadow-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+
 @import "settings";
 body {
   background-color: $dark-color;
@@ -73,6 +80,8 @@ body {
 
 #title-bar-desktop {
   border-bottom: 0px;
+  z-index: 99;
+  box-shadow: $box-shadow-2;
 }
 
 #title-bar-mobile {
@@ -510,4 +519,13 @@ $thumbnail-width: 6em;
   }
 }
 
+.yt-search-results {
+  margin: 1em 0;
+  background: white;
+  box-shadow: $box-shadow-1;
+  ol, ul {
+    margin: 0;
+    list-style: none;
+  }
+}
 

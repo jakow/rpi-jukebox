@@ -11,14 +11,15 @@ controller: searchCtrl
     <p class="placeholder-text">There are no results to be shown.</p>
   </div>
 
-  <div class="yt-search-results">
-    <div class="grid-block">
+    <div class="grid-block" ng-hide="loading || resultsEmpty()">
       <div class="grid-content">
+        <section class="yt-search-results">
         <ul>
         <li ng-repeat="item in result.items">
           <span><a ng-click="enqueue(item.id)">{{item.title}}</a></span>
         </li>
           </ul>
+        </section>
       </div>
     </div>
   </div>
