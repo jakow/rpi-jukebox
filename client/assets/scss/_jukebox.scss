@@ -1,6 +1,8 @@
 $raspberry-color: #BC1142;
 
 $box-shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+$box-shadow-right: 1px 0px 3px rgba(0,0,0,0.12), 1px 0px 2px rgba(0,0,0,0.24);
+$box-shadow-left: -1px 0px 3px rgba(0,0,0,0.12), -1px 0px 2px rgba(0,0,0,0.24);
 $box-shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 $box-shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 $box-shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -118,6 +120,8 @@ body {
 
 #menu-desktop {
   background-color: $dark-color;
+  //box-shadow: $box-shadow-right;
+  z-index: 90;
 }
 
 #main-view {
@@ -127,7 +131,12 @@ body {
 #queue-container-desktop {
   width: 25em;
   background-color: white;
+  // box-shadow: $box-shadow-left;
   border-left: 1px solid $gray-dark;
+}
+#queue-desktop {
+  width: 25em;
+  background-color: white;
 }
 
 #playback-control {
@@ -520,12 +529,26 @@ $thumbnail-width: 6em;
 }
 
 .yt-search-results {
+  opacity: 1;
   margin: 1em 0;
   background: white;
   box-shadow: $box-shadow-1;
+  &.ng-hide {
+    opacity: 0;
+    transition: all 1s linear;
+  }
   ol, ul {
     margin: 0;
+    padding: 1em;
     list-style: none;
+
+    }
+    li {
+      padding: 1em 0;
+      border-bottom: 1px solid $gray;
+      &:last-child {
+      border-bottom: 0;
+    }
   }
 }
 

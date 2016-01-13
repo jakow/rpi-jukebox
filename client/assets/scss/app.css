@@ -7667,7 +7667,8 @@ body {
   margin-bottom: auto; }
 
 #menu-desktop {
-  background-color: #232323; }
+  background-color: #232323;
+  z-index: 90; }
 
 #main-view {
   background-color: #d3d3d3; }
@@ -7676,6 +7677,10 @@ body {
   width: 25em;
   background-color: white;
   border-left: 1px solid #969696; }
+
+#queue-desktop {
+  width: 25em;
+  background-color: white; }
 
 #playback-control {
   width: 25em; }
@@ -8080,11 +8085,21 @@ body {
     transition: all linear 0.3s; }
 
 .yt-search-results {
+  opacity: 1;
   margin: 1em 0;
   background: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  .yt-search-results.ng-hide {
+    opacity: 0;
+    transition: all 1s linear; }
   .yt-search-results ol, .yt-search-results ul {
     margin: 0;
+    padding: 1em;
     list-style: none; }
+  .yt-search-results li {
+    padding: 1em 0;
+    border-bottom: 1px solid #d3d3d3; }
+    .yt-search-results li:last-child {
+      border-bottom: 0; }
 
 /*# sourceMappingURL=app.css.map */

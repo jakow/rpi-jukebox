@@ -11,16 +11,23 @@ controller: searchCtrl
     <p class="placeholder-text">There are no results to be shown.</p>
   </div>
 
-    <div class="grid-block" ng-hide="loading || resultsEmpty()">
-      <div class="grid-content">
-        <section class="yt-search-results">
+  <div class="grid-block" ng-hide="loading || resultsEmpty()">
+    <div class="grid-content">
+      <section class="yt-search-results">
         <ul>
-        <li ng-repeat="item in result.items">
-          <span><a ng-click="enqueue(item.id)">{{item.title}}</a></span>
-        </li>
-          </ul>
-        </section>
-      </div>
+          <li ng-repeat="song in result.items">
+             <div class="search-thumbnail">
+               <img ng-src="{{song.thumbnail}}">
+             </div>
+              <div class="search-desc">
+                <div class="song-title">{{song.title}}</div>
+                <div>{{song.description}}</div>
+              </div>
+              <div class="search-actions"><a ng-click="enqueue(song)"><i class="fa fa-2x fa-plus-circle"></i></a></div>
+          </li>
+        </ul>
+      </section>
     </div>
   </div>
+</div>
 </div>

@@ -29,13 +29,15 @@ class RPJDownloader:
     def report_progress(self):
         with self.progressLock:
           progress = {
-            "nowDonwloading": self.now_downloading,
+            "now_downloading": self.now_downloading,
             "progress": self.progress,
-            "inQueue": self.downloadList
+            "remaining_downloads": self.downloadList
           }
+        return progress
 
     def background_download(self, video, **kwargs):
         with self.progressLock:
+            video_info = self.ydl.extract_info(video, download=False) # prefetch data for visual feedback to user
             self.downloadList.append(video)
         if not self.backgroundThread.is_alive():
             self.backgroundThread = threading.Thread(target=self.background_download_daemon, kwargs=kwargs)
@@ -48,13 +50,14 @@ class RPJDownloader:
             video = self.downloadList.pop(0)
             with self.progressLock:  # update the currently downloaded file
                 self.now_downloading = video
-            result = self.ydl.extract_info(video, download=True)
+            result = self.ydl.extract_info(video, download=False)
             if 'entries' in result:
                 # Can be a playlist or a list of videos
-                file_info  = result['entries'][0]
+                file_info = result['entries'][0]
             else:
                 file_info = result
             print "Downloading " + file_info['title']
+            self.ydl.download([video])
             with self.progressLock:
                 self.now_downloading = file_info
             self.downloaded.append(file_info)

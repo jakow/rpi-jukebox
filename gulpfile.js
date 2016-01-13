@@ -50,6 +50,7 @@ var paths = {
     'bower_components/nouislider-angular/nouislider.js',
     'client/assets/js/angular-youtube-API.js',
     'client/assets/js/app.js',
+    'client/assets/js/services.js',
     'client/assets/js/controllers.js'
   ]
 }

@@ -24,7 +24,8 @@ def json_state():
          "isPlaying": player.is_playing,
          "volume": player.volume,
          "nowPlaying": player.now_playing,
-         "queue": queue.get_queue()
+         "queue": queue.get_queue(),
+         "downloads": downloader.report_progress()
          }
     return json.jsonify(state)
 

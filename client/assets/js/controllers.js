@@ -61,7 +61,7 @@ player.controller('PlaybackCtrl', ['$scope', 'playerService', '$interval', funct
 
     //$scope.playing = !$scope.playing;
     playerService.playPause().then(function (response) {
-      $scope.playing = response.playing;
+      $scope.playing = response.isPlaying;
       console.log('paused/unpaused successfully');
     })
   };
@@ -110,8 +110,9 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
     $scope.resultsEmpty = function () {
       return rpjYoutube.isEmptyQuery($scope.result);
     }
-    $scope.enqueue = function (videoId) {
-      playerService.addToQueue(videoId);
+    $scope.enqueue = function (song) {
+      playerService.addToQueue(song.id);
+      playerService.state.queue.push(song);
     };
 
     //State enter behaviour
