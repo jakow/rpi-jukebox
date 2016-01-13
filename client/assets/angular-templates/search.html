@@ -10,12 +10,11 @@ controller: searchCtrl
   <div ng-show="resultsEmpty() && !loading" class="grid-block auto-center">
     <p class="placeholder-text">There are no results to be shown.</p>
   </div>
-
   <div class="grid-block" ng-hide="loading || resultsEmpty()">
     <div class="grid-content">
       <section class="yt-search-results">
         <ul>
-          <li ng-repeat="song in result.items">
+          <li ng-repeat="song in result.items" class="search-item">
              <div class="search-thumbnail">
                <img ng-src="{{song.thumbnail}}">
              </div>
@@ -27,7 +26,7 @@ controller: searchCtrl
           </li>
         </ul>
       </section>
-    </div>
+      </div>
   </div>
 </div>
 </div>

@@ -87,7 +87,9 @@ var search = angular.module('search', ['YtAPI'])
         return rpjYt.lastResult;
       });
     };
-    rpjYt.isEmptyQuery = function (query) {
+
+    //helper function to determine if no results found
+    rpjYt.isEmptyObject = function (query) {
       for (var key in query) {
         if (query.hasOwnProperty(key) && query[key] !== undefined)
           return false;

@@ -96,6 +96,9 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
 
 search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stateParams', '$window', function (rpjYoutube, playerService, $scope, $stateParams, $window) {
     $scope.loading = false;
+    $scope.result = {};
+    $scope.result.items = [];
+
     $scope.search = function (query) {
       $scope.loading = true;
       console.log('Searching')
@@ -108,8 +111,8 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
       });
     };
     $scope.resultsEmpty = function () {
-      return rpjYoutube.isEmptyQuery($scope.result);
-    }
+      return !$scope.result.items.length;
+    };
     $scope.enqueue = function (song) {
       playerService.addToQueue(song.id);
       playerService.state.queue.push(song);
@@ -117,26 +120,24 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
 
     //State enter behaviour
     var query = $stateParams;
-    if (rpjYoutube.isEmptyQuery(query)) {
-      console.log('Query empty');
+    if (rpjYoutube.isEmptyObject(query)) {
       $scope.result = rpjYoutube.lastResult;
     }
     else if (!rpjYoutube.ready()) {
       console.log(query);
       $scope.loading = true;
-      setTimeout(function () { //wait for yt to be ready!
-        $scope.search($stateParams)
-      }, 1000);
-
+      //wait for gapi to be ready!
+      setTimeout(function () { $scope.search($stateParams)  }, 1000);
     }
     else {
       console.log('searching: ' + $stateParams);
       $scope.search($stateParams);
     }
+
   }])
   .controller('searchBarCtrl', ['rpjYoutube', '$scope', '$state', '$log', '$window', function (rpjYoutube, $scope, $state, $log, $window) {
     $scope.search = function () {
-      if (!(rpjYoutube.isEmptyQuery($scope.query)))
+      if (!(rpjYoutube.isEmptyObject($scope.query)))
         $state.go('search', {q: $scope.query});
     }
   }])
