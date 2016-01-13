@@ -80,17 +80,17 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
     },
     function (newState) {
       $scope.nowPlaying = newState.nowPlaying;
-      //$scope.queue = newState.queue;
+      $scope.queue = newState.queue;
     },
     false);
   $http.get('./assets/test/sampleData.json').then(function (response) {
-    $scope.queue = response.data.queue
+    $scope.queue = response.data.queue;
   });
 
 
 }]);
 
-search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$window', function (rpjYoutube, $scope, $stateParams, $window) {
+search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stateParams', '$window', function (rpjYoutube, playerService, $scope, $stateParams, $window) {
     $scope.loading = false;
     $scope.search = function (query) {
       $scope.loading = true;
@@ -99,7 +99,7 @@ search.controller('searchCtrl', ['rpjYoutube', '$scope', '$stateParams', '$windo
         $scope.result = response.result;
         $scope.loading = false;
         console.log('Search finished');
-        console.log($scope.result);
+        console.log($scope.result.items);
         $scope.$apply(); //lags if apply is not called
       });
     };

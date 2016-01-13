@@ -64,6 +64,8 @@ var player = angular.module('player', ['ya.nouislider'])
       $http.get('json_state').then(p.updateState, p.logError);
     }
 
+
+
     /* the autoRefresh promise object uses interval service will update state of the player every 5 seconds.
      This should probably be reworked, so that state is updated on server-side events */
 
@@ -76,24 +78,27 @@ var player = angular.module('player', ['ya.nouislider'])
       return $http.get(req).then(
         function (response) { //success callback
           /* if successfully fetched, transform the xhrResponse to just return data */
-          //p.updateState(response); //slows things down a bit
+          p.updateState(response); //slows things down a bit
           return response.data;
         });
-    }
+    };
 
     p.playPause = function () {
       console.log('Requesting play/pause');
-      return p.request('play_pause');
-    }
+      return $http.get('play_pause');
+    };
 
     p.rewind = function () {
       console.log('Requesting rewind');
       return p.request('rewind');
-    }
+    };
 
-    p.addToQueue = function (songData) {
+    p.addToQueue = function (songId) {
+      console.log('Adding to queue');
+      return p.request('queue_add?videoId='+songId);
+    };
 
-    }
+
 
 
     return p;

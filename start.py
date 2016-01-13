@@ -68,8 +68,8 @@ def queue_remove():
 @app.route('/play_pause')
 def play_pause():
     player.pause()  # pause/unpause
-    return json.jsonify({"playing": player.is_playing})
-
+    # return json.jsonify({"playing": player.is_playing})
+    return json_state()
 
 
 @app.route('/download_progress')

@@ -12,10 +12,15 @@ controller: searchCtrl
   </div>
 
   <div class="yt-search-results">
-    <!--<div class="grid-block"><li ng-repeat="item in result.items">-->
-      <!--<img ng-src="{{result.thumbnails.medium.url}}"> -->
-      {{result}}
-      <!-- </li> -->
+    <div class="grid-block">
+      <div class="grid-content">
+        <ul>
+        <li ng-repeat="item in result.items">
+          <span><a ng-click="playerService.addToQueue({{item.id.videoId}})">{{item.snippet.title}}</a></span>
+          <!-- <img ng-src="{{item.snippet.thumbnails.medium.url}}"> -->
+        </li>
+          </ul>
+      </div>
     </div>
   </div>
 </div>

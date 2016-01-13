@@ -35,7 +35,6 @@
   </div>
 </zf-offcanvas>
 <zf-offcanvas zf-swipe-close="" id="mobile-player" position="right" class="dark">
-
 </zf-offcanvas>
 
 <div class="grid-frame vertical">
@@ -50,19 +49,18 @@
         class="fa fa-play-circle fa-2x"></i></a></span>
     </div>
   </div>
-  <div>
-    <div class="primary title-bar" id="title-bar-desktop">
-      <div class="center" ng-controller="searchBarCtrl">
-        <form ng-submit="search()">
+
+  <div class="primary title-bar" id="title-bar-desktop">
+    <div class="center" ng-controller="searchBarCtrl">
+      <form ng-submit="search()">
             <span class="inline-label button-group auto-center">
           <input ng-model="query" type="search" placeholder="Search for songs">
           <a class="button secondary" ng-click="search()"><i class="fa fa-search fa-lg"></i></a>
           </span>
-        </form>
-      </div>
-      <div class="hide-for-small show-for-large left title">
-        <span id="logo"><a href="/"><span class="rpi">RPi</span><span class="jukebox">Jukebox</span></a></span>
-      </div>
+      </form>
+    </div>
+    <div class="hide-for-small show-for-large left title">
+      <span id="logo"><a href="/"><span class="rpi">RPi</span><span class="jukebox">Jukebox</span></a></span>
     </div>
   </div>
 
