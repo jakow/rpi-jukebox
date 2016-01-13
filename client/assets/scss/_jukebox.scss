@@ -1,20 +1,34 @@
 $raspberry-color: #BC1142;
 
-$box-shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-$box-shadow-right: 1px 0px 3px rgba(0,0,0,0.12), 1px 0px 2px rgba(0,0,0,0.24);
-$box-shadow-left: -1px 0px 3px rgba(0,0,0,0.12), -1px 0px 2px rgba(0,0,0,0.24);
-$box-shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-$box-shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-$box-shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-$box-shadow-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+$box-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$box-shadow-right: 1px 0px 3px rgba(0, 0, 0, 0.12), 1px 0px 2px rgba(0, 0, 0, 0.24);
+$box-shadow-left: -1px 0px 3px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.24);
+$box-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$box-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+$box-shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+$box-shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 
 @import "settings";
 body {
   background-color: $dark-color;
 }
 
+div {
+  //letter-spacing: -1px;
+}
+
+@include breakpoint(medium) {
+  #searchbox {
+    width: 100%;
+  }
+}
+
+#searchbox {
+  width: 80%;
+}
+
 #logo {
-  font-family: 'Lobster';
+  font-family: 'Lobster', Serif;
   font-size: 3em;
   padding: 0em 0em;
   font-weight: normal;
@@ -66,18 +80,6 @@ body {
     $style: solid // Can be solid or hollow
 
   );
-}
-
-.song-search {
-
-}
-
-#mobile-search {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0.25em;;
-  margin-bottom: 0.25em;
-  width: 80%;
 }
 
 #title-bar-desktop {
@@ -134,6 +136,7 @@ body {
   // box-shadow: $box-shadow-left;
   border-left: 1px solid $gray-dark;
 }
+
 #queue-desktop {
   width: 25em;
   background-color: white;
@@ -253,16 +256,15 @@ $thumbnail-width: 6em;
   }
   li {
     border-bottom: 1px solid $gray;
+    padding: 0.5em 0.5em;
     &:hover {
       background-color: $gray-light;
       .queue-optn {
         display: block;
       }
     }
-    > div {
-      padding: 0.5em 1em;
-    }
-    .queue-item, .queue-desc {
+
+    .queue-item-wrapper, .queue-desc {
       @include grid-block(
         $size: expand,
         $orientation: horizontal,
@@ -290,7 +292,7 @@ $thumbnail-width: 6em;
     }
 
     .queue-desc {
-      margin: 0em 0.5em;
+      margin: 0 0.5em;
       overflow: hidden;
       white-space: nowrap;
       > div {
@@ -405,7 +407,7 @@ $thumbnail-width: 6em;
     $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
   );
   margin-top: 1em;
-  marin-bottom: 1em;
+  margin-bottom: 1em;
   // This adds support for text fields, dropdowns, and radio/check inputs
   @include block-list-inputs(
     $color: #000, // Foreground color
@@ -516,7 +518,7 @@ $thumbnail-width: 6em;
 
 .loader-img {
   background: transparent;
-  width:100%;
+  width: 100%;
   text-align: center;
   opacity: 1;
   position: absolute;
@@ -529,26 +531,47 @@ $thumbnail-width: 6em;
 }
 
 .yt-search-results {
-  opacity: 1;
-  margin: 1em 0;
-  background: white;
-  box-shadow: $box-shadow-1;
+  .grid-content {
+    padding: 0;
+  }
+  margin: 0.5em 0;
   &.ng-hide {
     opacity: 0;
     transition: all 1s linear;
   }
   ol, ul {
     margin: 0;
-    padding: 1em;
-    list-style: none;
+    padding: 0 1em;
+    opacity: 1;
 
-    }
-    li {
-      padding: 1em 0;
-      border-bottom: 1px solid $gray;
-      &:last-child {
+    background: white;
+    box-shadow: $box-shadow-1;
+    list-style: none;
+  }
+
+  li {
+    border-bottom: 1px solid $gray;
+    padding: 1em 0;
+    &:last-child {
       border-bottom: 0;
     }
   }
-}
+  p {
+    font-size: 0.75em;
+  }
+  .search-desc {
+    margin: 0 0.5em;
+  }
+  .search-item {
+    @include grid-block($size: expand, $orientation: horizontal, $wrap: false, $align: left, $order: 0);
+  }
+  .search-desc {
+    @include grid-block($size: expand, $orientation: horizontal, $wrap: true, $align: left, $order: 0);
 
+  }
+
+  .search-thumb, .search-actions {
+    @include grid-block($size: shrink, $orientation: horizontal, $wrap: true, $align: left, $order: 0);
+  }
+
+}

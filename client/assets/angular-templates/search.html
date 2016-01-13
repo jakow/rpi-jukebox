@@ -12,21 +12,26 @@ controller: searchCtrl
   </div>
   <div class="grid-block" ng-hide="loading || resultsEmpty()">
     <div class="grid-content">
-      <section class="yt-search-results">
-        <ul>
-          <li ng-repeat="song in result.items" class="search-item">
-             <div class="search-thumbnail">
-               <img ng-src="{{song.thumbnail}}">
-             </div>
-              <div class="search-desc">
-                <div class="song-title">{{song.title}}</div>
-                <div>{{song.description}}</div>
+      <div class="yt-search-results">
+        <h4>Search results for: {{query}}</h4>
+        <ul class="results">
+          <li class="search-item" ng-repeat="song in result.items">
+            <div class="search-thumb">
+              <img ng-src="{{song.thumbnail}}">
+            </div>
+            <div class="search-desc">
+              <div class="grid-content">
+                <h5>{{song.title}}</h5>
+                <p>{{song.description}}</p>
               </div>
-              <div class="search-actions"><a ng-click="enqueue(song)"><i class="fa fa-2x fa-plus-circle"></i></a></div>
+            </div>
+            <div class="search-actions">
+              <div class="grid-content">
+              </div>
           </li>
         </ul>
-      </section>
       </div>
+    </div>
   </div>
 </div>
 </div>

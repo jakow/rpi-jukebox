@@ -7579,8 +7579,14 @@ blockquote p {
 body {
   background-color: #232323; }
 
+@media only screen and (min-width: 45em) {
+  #searchbox {
+    width: 100%; } }
+#searchbox {
+  width: 80%; }
+
 #logo {
-  font-family: 'Lobster';
+  font-family: 'Lobster', Serif;
   font-size: 3em;
   padding: 0em 0em;
   font-weight: normal;
@@ -7627,13 +7633,6 @@ body {
     .rounded-right-button .iconic *.iconic-property-accent {
       fill: #000;
       stroke: #000; }
-
-#mobile-search {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0.25em;
-  margin-bottom: 0.25em;
-  width: 80%; }
 
 #title-bar-desktop {
   border-bottom: 0px;
@@ -7767,14 +7766,13 @@ body {
   margin: 0 -1em;
   padding: 0; }
 .queue li {
-  border-bottom: 1px solid #d3d3d3; }
+  border-bottom: 1px solid #d3d3d3;
+  padding: 0.5em 0.5em; }
   .queue li:hover {
     background-color: #ededed; }
     .queue li:hover .queue-optn {
       display: block; }
-  .queue li > div {
-    padding: 0.5em 1em; }
-  .queue li .queue-item, .queue li .queue-desc {
+  .queue li .queue-item-wrapper, .queue li .queue-desc {
     display: flex;
     height: 100vh;
     position: relative;
@@ -7810,7 +7808,7 @@ body {
     width: 6em;
     height: 3.375em; }
   .queue li .queue-desc {
-    margin: 0em 0.5em;
+    margin: 0 0.5em;
     overflow: hidden;
     white-space: nowrap; }
     .queue li .queue-desc > div {
@@ -7916,7 +7914,7 @@ body {
   margin-left: -1rem;
   margin-right: -1rem;
   margin-top: 1em;
-  marin-bottom: 1em; }
+  margin-bottom: 1em; }
   .menu-list input[type="text"], .menu-list input[type="password"], .menu-list input[type="date"], .menu-list input[type="datetime"], .menu-list input[type="datetime-local"], .menu-list input[type="month"], .menu-list input[type="week"], .menu-list input[type="email"], .menu-list input[type="number"], .menu-list input[type="search"], .menu-list input[type="tel"], .menu-list input[type="time"], .menu-list input[type="url"], .menu-list input[type="color"], .menu-list textarea {
     margin: 0;
     border: 0;
@@ -8085,21 +8083,75 @@ body {
     transition: all linear 0.3s; }
 
 .yt-search-results {
-  opacity: 1;
-  margin: 1em 0;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  margin: 0.5em 0; }
+  .yt-search-results .grid-content {
+    padding: 0; }
   .yt-search-results.ng-hide {
     opacity: 0;
     transition: all 1s linear; }
   .yt-search-results ol, .yt-search-results ul {
     margin: 0;
-    padding: 1em;
+    padding: 0 1em;
+    opacity: 1;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     list-style: none; }
   .yt-search-results li {
-    padding: 1em 0;
-    border-bottom: 1px solid #d3d3d3; }
+    border-bottom: 1px solid #d3d3d3;
+    padding: 1em 0; }
     .yt-search-results li:last-child {
       border-bottom: 0; }
+  .yt-search-results p {
+    font-size: 0.75em; }
+  .yt-search-results .search-desc {
+    margin: 0 0.5em; }
+  .yt-search-results .search-item {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    backface-visibility: hidden;
+    flex: 1 1 auto;
+    flex-flow: row wrap;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    order: 0;
+    height: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar; }
+  .yt-search-results .search-desc {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    backface-visibility: hidden;
+    flex: 1 1 auto;
+    flex-flow: row wrap;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    order: 0;
+    height: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar; }
+  .yt-search-results .search-thumb, .yt-search-results .search-actions {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    backface-visibility: hidden;
+    flex: 0 0 auto;
+    flex-flow: row wrap;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    order: 0;
+    height: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar; }
 
 /*# sourceMappingURL=app.css.map */

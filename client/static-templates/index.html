@@ -52,7 +52,7 @@
 
   <div class="primary title-bar" id="title-bar-desktop">
     <div class="center" ng-controller="searchBarCtrl">
-      <form ng-submit="search()">
+      <form id="searchbox" ng-submit="search()">
             <span class="inline-label button-group auto-center">
           <input ng-model="query" type="search" placeholder="Search for songs">
           <a class="button secondary" ng-click="search()"><i class="fa fa-search fa-lg"></i></a>
@@ -94,8 +94,8 @@
           <div class="grid-content">
             <section class="queue">
               <ul>
-                <li ng-repeat="song in queue">
-                  <div class="queue-item">
+                <li ng-repeat="song in queue" class="queue-item">
+                  <div class="queue-item-wrapper">
                     <div class="queue-thumb">
                       <img ng-src="{{song.thumbnail}}">
                     </div>
@@ -107,7 +107,6 @@
                         <div class="song-uploader">{{song.uploader}}</div>
                       </div>
                     </div>
-
                     <div class="queue-optn">
                       <a ng-click="remove($index)"><i class="fa fa-times"></i></a>
                     </div>
@@ -153,7 +152,7 @@
         <div class="auto-center">
           <a class="playback-button button-backward" href="#" ng-click="rewind()"><i
             class="fa fa-fw fa-backward fa-2x"></i></a>
-          <a class="playback-button button-play" href="" ng-click="playPause()" ng-model-options="{ debounce: 500 }">
+          <a class="playback-button button-play" ng-click="playPause()">
             <i class="fa fa-fw fa-play fa-2x" ng-hide="playing"></i>
             <i class="fa fa-fw fa-pause fa-2x" ng-show="playing"></i>
           </a>

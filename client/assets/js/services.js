@@ -80,6 +80,7 @@ var search = angular.module('search', ['YtAPI'])
       return Youtube._gapiLoaded;
     }
     rpjYt.search = function (query) {
+      rpjYt.lastQuery = query;
       rpjYt.decorateQuery(query);
       return Youtube.search(query).then(function (response) {
         console.log(response);

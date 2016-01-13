@@ -58,7 +58,6 @@ player.controller('PlaybackCtrl', ['$scope', 'playerService', '$interval', funct
   });
   $scope.playPause = function () {
     $scope.playing = !$scope.playing;
-
     //$scope.playing = !$scope.playing;
     playerService.playPause().then(function (response) {
       $scope.playing = response.isPlaying;
@@ -76,10 +75,11 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
   $scope.queue = playerService.state.queue;
   $scope.$watch(
     function () {
-      return playerService.state
+      return playerService.state;
     },
     function (newState) {
       $scope.nowPlaying = newState.nowPlaying;
+      // if (!queuesEqual($scope.queue, newState.queue))
       $scope.queue = newState.queue;
     },
     false);
@@ -91,6 +91,16 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
     $scope.queue.splice(index, 1);
   };
 
+  function queuesEqual(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i].id !== b[i].id) return false;
+  }
+  return true;
+}
 
 }]);
 
@@ -111,16 +121,21 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
       });
     };
     $scope.resultsEmpty = function () {
-      return !$scope.result.items.length;
+      if ($scope.result.items == null ) return true;
+      if (!$scope.result.items.length) return true;
+      else return false;
     };
+
     $scope.enqueue = function (song) {
       playerService.addToQueue(song.id);
       playerService.state.queue.push(song);
     };
 
     //State enter behaviour
+    $scope.query = $stateParams.q;
     var query = $stateParams;
     if (rpjYoutube.isEmptyObject(query)) {
+      $scope.query = rpjYoutube.lastQuery.q;
       $scope.result = rpjYoutube.lastResult;
     }
     else if (!rpjYoutube.ready()) {
