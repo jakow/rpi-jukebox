@@ -8148,7 +8148,8 @@ body {
 .yt-search-results li:last-child {
   border: 0; }
 .yt-search-results li {
-  border-bottom: 1px solid #ededed; }
+  border-bottom: 1px solid #ededed;
+  overflow-x: hidden; }
 .yt-search-results .search-item {
   padding: 1em 0;
   display: flex; }
@@ -8184,9 +8185,24 @@ body {
       -webkit-transition: all 0.3s linear;
       transition: all 0.3s linear; }
       .yt-search-results .search-item .rounded-buttons .options.rotate {
-        -ms-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg); }
+        -ms-transform: rotate(-180deg);
+        -moz-transform: rotate(-180deg);
+        -webkit-transform: rotate(-180deg);
+        transform: rotate(-180deg); }
+  .yt-search-results .search-item .rounded-buttons {
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    right: -100px; }
+  .yt-search-results .search-item .rounded-buttons.horizontal {
+    display: inline; }
+    .yt-search-results .search-item .rounded-buttons.horizontal .last {
+      border-radius: 0 19px 19px 0; }
+    .yt-search-results .search-item .rounded-buttons.horizontal .firts {
+      border-radius: 19px 0 0 19px; }
+  .yt-search-results .search-item:hover {
+    background: #ededed; }
+    .yt-search-results .search-item:hover .rounded-buttons {
+      right: 0px; }
 
 /*# sourceMappingURL=app.css.map */

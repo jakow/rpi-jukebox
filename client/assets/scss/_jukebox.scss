@@ -601,6 +601,7 @@ $thumbnail-width: 6em;
   }
   li {
     border-bottom: 1px solid $gray-light;
+    overflow-x: hidden;
   }
   .search-item {
     padding: 1em 0;
@@ -652,11 +653,35 @@ $thumbnail-width: 6em;
         -webkit-transition: all 0.3s linear;
         transition: all 0.3s linear;
         &.rotate {
-          -ms-transform: rotate(180deg);
-          -moz-transform: rotate(180deg);
-          -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
+          -ms-transform: rotate(-180deg);
+          -moz-transform: rotate(-180deg);
+          -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
         }
+      }
+
+    }
+    .rounded-buttons {
+      -moz-transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      right: -100px;
+    }
+
+    .rounded-buttons.horizontal {
+      display: inline;
+      .last {
+        border-radius: 0 $button-radius $button-radius 0;
+      }
+      .firts {
+        border-radius: $button-radius 0 0 $button-radius;
+      }
+
+    }
+    &:hover {
+      background: $gray-light;
+      .rounded-buttons {
+        right: 0px;
       }
     }
   }
