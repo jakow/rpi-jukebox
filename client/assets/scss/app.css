@@ -5,7 +5,8 @@
  * 2. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
-@import url(https://fonts.googleapis.com/css?family=Lobster&subset=all);
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 html {
@@ -4867,7 +4868,7 @@ p {
 
 /* Default header styles */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-family: "Lato", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   color: #222;
@@ -7710,7 +7711,7 @@ body {
   color: #ededed; }
 
 .song-title {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
+  font-family: "Lato", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
 
 .song-uploader {
   font-size: 0.8em; }
@@ -7827,7 +7828,7 @@ body {
   font-size: 1rem;
   cursor: default;
   text-transform: uppercase;
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
+  font-family: "Lato", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
 .queue .block-list-label {
   display: inline-block;
   float: right;
@@ -8033,7 +8034,7 @@ body {
     font-size: 1rem;
     cursor: default;
     text-transform: uppercase;
-    font-family: "Raleway", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
+    font-family: "Lato", "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
   .menu-list .block-list-label {
     display: inline-block;
     float: right;
@@ -8082,95 +8083,83 @@ body {
     opacity: 0;
     transition: all linear 0.3s; }
 
-.yt-search-results {
-  margin: 0.5em 0; }
-  .yt-search-results .grid-content {
-    padding: 0; }
-  .yt-search-results ol, .yt-search-results ul {
+/*.yt-search-results {
+  .grid-content {
+    padding: 0;
+  }
+  margin: 0.5em 0;
+
+  ol, ul {
     margin: 0;
     padding: 0 1em;
     opacity: 1;
+
     background: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    list-style: none; }
-  .yt-search-results li {
-    border-bottom: 1px solid #d3d3d3;
-    padding: 1em 0; }
-    .yt-search-results li:last-child {
-      border-bottom: 0; }
-  .yt-search-results p {
+    box-shadow: $box-shadow-1;
+    list-style: none;
+  }
+
+  li {
+    border-bottom: 1px solid $gray;
+    padding: 1em 0;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+  p {
     font-size: 0.6em;
     margin: 0;
-    font-size: 0.75em; }
-  .yt-search-results .search-desc {
-    margin: 0 0.5em; }
-  .yt-search-results .search-item-wrapper {
-    display: flex;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    backface-visibility: hidden;
-    flex: 1 1 auto;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    justify-content: flex-start;
-    order: 0;
-    height: auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar; }
-    .yt-search-results .search-item-wrapper h5 {
-      margin-top: 0; }
-  .yt-search-results .search-thumb {
-    display: flex;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    backface-visibility: hidden;
-    flex: 0 0 auto;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    justify-content: flex-start;
-    order: 0;
-    height: auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar; }
-    .yt-search-results .search-thumb img {
-      width: 8em; }
-  .yt-search-results .search-desc {
-    display: flex;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    backface-visibility: hidden;
-    flex: 1 1 auto;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    justify-content: flex-start;
-    order: 0;
-    height: auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar; }
-  .yt-search-results .search-actions {
-    display: flex;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    backface-visibility: hidden;
-    flex: 0 0 auto;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    justify-content: flex-start;
-    order: 0;
-    height: auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar; }
+    @include breakpoint(small) {
+      font-size: 0.75em;
+    }
+  }
+  .search-desc {
+    margin: 0 0.5em;
+  }
+  .search-item-wrapper {
+    @include grid-block($orientation: horizontal, $align: left, $wrap: false, $size: expand, $order: 0);
+    h5 {
+      margin-top: 0;
+    }
+  }
+
+  .search-thumb {
+    @include grid-block($size: shrink, $orientation: horizontal, $wrap: false, $align: left, $order: 0);
+    img {
+      width: 8em;
+    }
+  }
+  .search-desc {
+    @include grid-block($size: expand, $orientation: horizontal, $wrap: false, $align: left, $order: 0);
+  }
+
+  .search-actions {
+    @include grid-block($size: shrink, $orientation: horizontal, $wrap: false, $align: left, $order: 0);
+  }
+
+}*/
+.yt-search-results ol, .yt-search-results ul {
+  margin: 0;
+  padding: 0 1em;
+  opacity: 1;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  list-style: none; }
+.yt-search-results .search-item {
+  display: flex; }
+  .yt-search-results .search-item img {
+    max-width: 33%;
+    height: auto; }
+  .yt-search-results .search-item .rounded-buttons {
+    margin-left: auto; }
+    .yt-search-results .search-item .rounded-buttons .button {
+      margin: 0;
+      border-radius: 0;
+      display: block;
+      width: 3em; }
+    .yt-search-results .search-item .rounded-buttons .button:first-child {
+      border-radius: 19px 19px 0 0; }
+    .yt-search-results .search-item .rounded-buttons .button:last-child {
+      border-radius: 0 0 19px 19px; }
 
 /*# sourceMappingURL=app.css.map */

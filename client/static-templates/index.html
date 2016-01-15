@@ -51,15 +51,15 @@
   </div>
 
   <div class="primary title-bar" id="title-bar-desktop">
-    <div class="center" ng-controller="searchBarCtrl">
+    <div class="center mobile-search-fix"  ng-controller="searchBarCtrl">
       <form id="searchbox" ng-submit="search()">
-            <span class="inline-label button-group auto-center">
+        <span class="inline-label button-group auto-center">
           <input ng-model="query" type="search" placeholder="Search for songs">
-          <a class="button secondary" ng-click="search()"><i class="fa fa-search fa-lg"></i></a>
-          </span>
+          <a class="button secondary" id="sfs-button" ng-click="search()"><i class="fa fa-search fa-lg"></i></a>
+        </span>
       </form>
     </div>
-    <div class="hide-for-small show-for-large left title">
+    <div class="left title hide-for-small show-for-large">
       <span id="logo"><a href="/"><span class="rpi">RPi</span><span class="jukebox">Jukebox</span></a></span>
     </div>
   </div>

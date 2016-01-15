@@ -16,25 +16,17 @@ controller: searchCtrl
         <h4>Search results for: {{query}}</h4>
         <ul class="results">
           <li class="search-item" ng-repeat="song in result.items">
-            <div class="search-item-wrapper">
-              <div class="search-thumb">
-                <div class="grid-content">
-                  <img ng-src="{{song.thumbnail}}">
-                </div>
-              </div>
-              <div class="search-desc">
-                <div class="grid-content">
-                  <h5>{{song.title}}</h5>
 
-                  <p>{{song.description}}</p>
-                </div>
-              </div>
-              <div class="search-actions">
-                <div class="grid-content">
-                  <a><i class="fa fa-2x fa-plus-circle"></i></a>
-                </div>
-              </div>
-            </div>
+            <img class=search-thumb ng-src="{{song.thumbnail}}">
+            <span>
+              <h5>{{song.title}}</h5>
+              <p>{{song.description}}</p>
+            </span>
+            <span class="rounded-buttons">
+              <a class="button secondary" ng-click="enqueue(song)"><i class="fa fa-plus"></i></a>
+              <a class="button secondary"><i class="fa fa-play"></i></a>
+              <a class="button secondary"><i class="fa fa-chevron-down"></i></a>
+            </span>
           </li>
         </ul>
       </div>

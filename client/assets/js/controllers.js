@@ -60,7 +60,7 @@ player.controller('PlaybackCtrl', ['$scope', 'playerService', '$interval', funct
     $scope.playing = !$scope.playing;
     //$scope.playing = !$scope.playing;
     playerService.playPause().then(function (response) {
-      $scope.playing = response.isPlaying;
+      //$scope.playing = response.isPlaying;
       console.log('paused/unpaused successfully');
     })
   };
