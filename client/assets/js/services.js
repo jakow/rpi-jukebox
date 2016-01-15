@@ -100,6 +100,7 @@ var search = angular.module('search', ['YtAPI'])
 
     //store default search settings to be reused. In the future they will be xhr'd from server-side config file
     rpjYt.searchSettings = {
+      type: 'video',
       part: 'snippet',
       maxResults: 10
     };

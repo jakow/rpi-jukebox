@@ -121,9 +121,7 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
       });
     };
     $scope.resultsEmpty = function () {
-      if ($scope.result.items == null ) return true;
-      if (!$scope.result.items.length) return true;
-      else return false;
+      return ($scope.result.items == null || !$scope.result.items.length);
     };
 
     $scope.enqueue = function (song) {

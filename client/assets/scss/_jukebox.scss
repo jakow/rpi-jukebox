@@ -596,15 +596,34 @@ $thumbnail-width: 6em;
     box-shadow: $box-shadow-1;
     list-style: none;
   }
-
+  li:last-child {
+    border: 0;
+  }
+  li {
+    border-bottom: 1px solid $gray-light;
+  }
   .search-item {
-
+    padding: 1em 0;
     display: flex;
-    img {
+    .thumbnail-container {
       max-width: 33%;
+    }
+    img {
+      max-width: 100%;
       height: auto;
     }
+    p {
+      font-size: 0.7em;
+    }
+
+    p, h5 {
+      margin: 0 0.5em;
+    }
+
     .rounded-buttons {
+
+      position: relative;
+      right: 0em;
       margin-left: auto;
       .button {
         margin: 0;
@@ -612,12 +631,34 @@ $thumbnail-width: 6em;
         display: block;
         width: 3em;
       }
-      .button:first-child {
+      .button.first {
         border-radius: $button-radius $button-radius 0 0;
       }
-      .button:last-child {
+      .button.last {
         border-radius: 0 0 $button-radius $button-radius;
+      }
+
+      @include breakpoint(medium) {
+        [id^=actionsheet-content] {
+          left: -246%; //magic number
+
+        }
+        .action-sheet.top::before, .action-sheet.top::after {
+          margin-left: 117px;
+        }
+      }
+      .options {
+        -moz-transition: all 0.3s linear;
+        -webkit-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        &.rotate {
+          -ms-transform: rotate(180deg);
+          -moz-transform: rotate(180deg);
+          -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+        }
       }
     }
   }
 }
+
