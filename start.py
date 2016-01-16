@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from gevent.wsgi import WSGIServer
 import flask
 import RPJdownloader
 import RPJplayer
@@ -12,39 +13,47 @@ downloader = RPJdownloader.RPJDownloader()
 app = Flask('RPJukebox', static_folder='build/assets', template_folder='build/static-templates')
 
 
-# set up some event handlers for player
-def notify_now_playing_changed():
-  sse_publish('nowPlayingChanged', player.now_playing)
-def notify_playback_end():
+def get_state():
+    return {
+        "isPlaying": player.is_playing,
+        "volume": player.volume,
+        "position": player.percent_pos,
+        "nowPlaying": player.now_playing,
+    }
+
+
+def notify_state_change():
   sse_publish('playbackStopped', get_state())  # queue changes and now playing changes
+
+
 def notify_queue_changed():
   sse_publish('queueChanged', queue.get_queue())
+
+
 def notify_downloads_changed():
   sse_publish('downloadsChanged', downloader.report_progress())
 
+
+# set up some event handlers for player
 player.on('playback_finish', player.load_next)
-player.on('playback_finish', notify_playback_end)
-player.on('playback_skip', notify_playback_end)
-player.on('playback_stop', notify_playback_end)
+player.on('playback_finish', notify_state_change)
+player.on('playback_skip', notify_state_change)
+player.on('playback_stop', notify_state_change)
 
-
-
-def get_state():
-  return {
-    "isPlaying": player.is_playing,
-    "volume": player.volume,
-    "nowPlaying": player.now_playing,
-    "queue": queue.get_queue(),
-    "downloads": downloader.report_progress()
-  }
 
 @app.route('/')
 def start_page():
   return render_template('index.html', files=None)
 
+
 @app.route('/json_state')
 def json_state():
   return flask.json.jsonify(get_state())
+
+
+@app.route('/json_queue')
+def json_queue():
+  return flask.json.jsonify(queue.get_queue())
 
 
 @app.route('/subscribe')
@@ -68,7 +77,7 @@ def rewind():
 
 @app.route('/forward', methods=['GET'])
 def forward():
-  player.play_next()
+  player.load_next()
   return json_state()
 
 
@@ -83,6 +92,7 @@ def queue_add():
   else:
     callback = queue.add
   downloader.background_download(link, on_downloaded=callback)
+  notify_queue_changed()
   return json_state()
 
 
@@ -90,6 +100,7 @@ def queue_add():
 def queue_remove():
   index = request.args['index']
   queue.pop(int(index))
+  notify_queue_changed()
   return json_state()
 
 
@@ -97,14 +108,16 @@ def queue_remove():
 def play_pause():
   player.pause()  # pause/unpause
   # return json.jsonify({"playing": player.is_playing})
+  notify_state_change()
   return json_state()
 
 
 @app.route('/download_progress')
 def download_progress():
-  return json.jsonify(downloader.report_progress())
+  return flask.json.jsonify(downloader.report_progress())
 
 
 if __name__ == '__main__':
   app.debug = True
-  app.run(host='0.0.0.0')
+  server = WSGIServer(("", 5000), app)
+  server.serve_forever()

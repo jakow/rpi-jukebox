@@ -8,7 +8,6 @@ import RPJplayer
 
 class RPJDownloader:
 
-
     def __init__(self):
         self.options = {
             'format': 'bestaudio/best', # choice of quality
@@ -18,27 +17,23 @@ class RPJDownloader:
             'noplaylist' : True,        # only download single song, not playlist
             }
         self.ydl = youtube_dl.YoutubeDL(self.options)
-        self.downloadList = []
+        self.downloadQueue = []
         self.backgroundThread = threading.Thread()
         self.downloaded = []
-        self.progressLock =threading.Lock()
+        self.progressLock = threading.Lock()
         self.ydl.add_progress_hook(self.update_progress)
-        self.progress = {}
         self.now_downloading = {}
 
     def report_progress(self):
         with self.progressLock:
-          progress = {
-            "now_downloading": self.now_downloading,
-            "progress": self.progress,
-            "remaining_downloads": self.downloadList
-          }
-        return progress
+            return {
+                "now_downloading": self.now_downloading,
+                "remaining_downloads": self.downloadQueue
+              }
 
     def background_download(self, video, **kwargs):
         with self.progressLock:
-            video_info = self.ydl.extract_info(video, download=False) # prefetch data for visual feedback to user
-            self.downloadList.append(video)
+            self.downloadQueue.append(video)
         if not self.backgroundThread.is_alive():
             self.backgroundThread = threading.Thread(target=self.background_download_daemon, kwargs=kwargs)
             self.backgroundThread.start()
@@ -46,8 +41,8 @@ class RPJDownloader:
     def background_download_daemon(self, **kwargs):
         print 'Background download launched'
         self.downloaded = []
-        while self.downloadList:
-            video = self.downloadList.pop(0)
+        while self.downloadQueue:
+            video = self.downloadQueue.pop(0)
             with self.progressLock:  # update the currently downloaded file
                 self.now_downloading = video
             result = self.ydl.extract_info(video, download=False)
@@ -83,12 +78,8 @@ class RPJDownloader:
 
     def update_progress(self, status):
         with self.progressLock: #lock to prevent concurrent access
-            self.progress = status  # copy the progress kwars
+            self.now_downloading = status  # copy the progress kwars
 
-    def now_downloading(self):
-        with self.progressLock: # copy with lock
-            p = self.progress
-        return p
 
 
 
