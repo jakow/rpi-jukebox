@@ -68,6 +68,10 @@ player.controller('PlaybackCtrl', ['$scope', 'playerService', '$interval', funct
   $scope.rewind = function () {
     playerService.rewind();
   }
+
+  $scope.forward = function() {
+    playerService.forward();
+  }
 }]);
 
 player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($scope, playerService, $http) {

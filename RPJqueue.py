@@ -1,9 +1,10 @@
 import flask
 
-
+# queue manager for JKBX
 class RPJQueue:
     def __init__(self):
         self.queue = []
+        self.history = []
 
     def add(self, song):
         self.queue.append(song)

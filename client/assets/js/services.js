@@ -51,6 +51,10 @@ var player = angular.module('player', ['ya.nouislider'])
       return $http.get('rewind');
     };
 
+    p.forward = function () {
+      return p.request('forward');
+    };
+
     p.addToQueue = function (songId) {
       console.log('Adding to queue');
       return p.request('queue_add?videoId=' + songId);

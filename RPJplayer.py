@@ -4,61 +4,6 @@ import mplayer, asyncore, time, threading
 from mplayer import CmdPrefix
 __author__ = 'Jakub'
 
-# class RPJPlayerPygame:
-#     def __init__(self, queue):
-#         self.queue = queue
-#         self.player = pygame.mixer.music
-#         self.playerThread = threading.Thread()
-#         self.nowPlaying = {}
-#         self.enabled = False
-#         self.autoplay = True
-#         pygame.mixer.pre_init(frequency=44100, size=-16, channels=2)
-#         pygame.mixer.init()
-#
-#
-#
-#     def play(self, song):
-#         self.player.load('songs/'+song['id']+'.mp3')
-#         self.nowPlaying = song
-#         self.player.play()
-#
-#     def play_next(self):
-#         if self.player.get_busy():
-#             self.player.pause()
-#         print "Playing next"
-#         song_data = self.queue.pop()
-#         # self.player =  # new player needed after previous ends playing...
-#         self.player.load("songs/" + song_data['id'] + ".mp3")
-#         self.player.play()
-#         if self.autoplay:
-#             # self.player.on_eos(self.play_next)
-#             pass
-#
-#     @property
-#     def volume(self):
-#         return self.player.get_volume()
-#
-#     @volume.setter
-#     def volume(self, value):
-#         self.player.set_volume()
-#
-#     def resume(self):
-#         if not self.is_playing:
-#             self.player.unpause()
-#
-#     def pause(self):
-#         if self.is_playing:
-#             self.player.pause()
-#
-#     @property
-#     def now_playing(self):
-#         return self.nowPlaying
-#
-#     @property
-#     def is_playing(self):
-#         return self.player.get_busy()
-
-
 class RPJPlayerMplayer:
     def __init__(self, queue):
         self.queue = queue
@@ -224,9 +169,12 @@ class RPJPlayer(object):
             self.pause()  # unpause
         self.nowPlaying = song
 
-    def play_next(self):
-        if not self.queue.empty:
+    def load_next(self):
+        if not self.queue.empty: #
             self.play(self.queue.pop(0))
+        else:
+            self.player.play(self.nowPlaying) # reload last file
+            self.pause() # pause immediately
 
     def pause(self):
         if self.player.filename is not None:  # pausing when there is no file loaded is meagningless
@@ -312,6 +260,7 @@ class RPJPlayer(object):
 
 
 if __name__ == '__main__':
+  # some test routines
     import RPJqueue
     queue = RPJqueue.RPJQueue()
     p = RPJPlayer(queue)

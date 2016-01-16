@@ -17,10 +17,10 @@ controller: searchCtrl
         <ul class="results">
           <li class="search-item" ng-repeat="song in result.items">
             <span class="thumbnail-container">
-            <img class=search-thumb ng-src="{{song.thumbnail}}">
+            <a ng-click="enqueue(song)"><img class=search-thumb ng-src="{{song.thumbnail}}"></a>
               </span>
-            <span>
-              <h5>{{song.title}}</h5>
+            <span class="description">
+              <a ng-click="enqueue(song)"><h5>{{song.title}}</h5></a>
               <p>{{song.description}}</p>
             </span>
             <span class="rounded-buttons">

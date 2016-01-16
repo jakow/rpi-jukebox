@@ -228,7 +228,7 @@ div {
     -webkit-transform: translateX(30%);
   }
   100% {
-    -webkit-transform: translateX(-70%);
+    -webkit-transform: translateX(-90%);
   }
 }
 
@@ -241,9 +241,9 @@ div {
   }
   100% {
     /* Browser bug fix */
-    -webkit-transform: translateX(-70%);
+    -webkit-transform: translateX(-90%);
     /* Browser bug fix */
-    transform: translateX(-70%);
+    transform: translateX(-90%);
   }
 }
 
@@ -613,6 +613,9 @@ $thumbnail-width: 6em;
       max-width: 100%;
       height: auto;
     }
+     h5:hover {
+      text-decoration: underline;
+    }
     p {
       font-size: 0.7em;
     }
@@ -666,6 +669,7 @@ $thumbnail-width: 6em;
       -webkit-transition: all 0.3s ease-in-out;
       transition: all 0.3s ease-in-out;
       right: -100px;
+      transition-delay: 0.3s;
     }
 
     .rounded-buttons.horizontal {
@@ -682,7 +686,14 @@ $thumbnail-width: 6em;
       background: $gray-light;
       .rounded-buttons {
         right: 0px;
+        -moz-transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        transition-delay: 0s;
       }
+    }
+    .description {
+      margin-right: -3em;
     }
   }
 }
