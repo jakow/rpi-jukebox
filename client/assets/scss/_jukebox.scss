@@ -10,322 +10,322 @@ $box-shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 
 @import "settings";
 body {
-  background-color: $dark-color;
+    background-color: $dark-color;
 }
 
 div {
-  //letter-spacing: -1px;
+    //letter-spacing: -1px;
 }
 
 @include breakpoint(medium) {
-  #searchbox {
-    width: 100%;
-  }
+    #searchbox {
+        width: 100%;
+    }
 }
 
 #searchbox {
-  width: 80%;
+    width: 80%;
 }
 
 #logo {
-  font-family: 'Lobster', Serif;
-  font-size: 3em;
-  padding: 0em 0em;
-  font-weight: normal;
+    font-family: 'Lobster', Serif;
+    font-size: 3em;
+    padding: 0em 0em;
+    font-weight: normal;
 
-  /*a {
+    /*a {
 
-     text-shadow:
-   -2px -2px 0 $dark-color,
-    2px -2px 0 $dark-color,
-    -2px 2px 0 $dark-color,
-     2px 2px 0 $dark-color;
-     }*/
+       text-shadow:
+     -2px -2px 0 $dark-color,
+      2px -2px 0 $dark-color,
+      -2px 2px 0 $dark-color,
+       2px 2px 0 $dark-color;
+       }*/
 
-  .rpi {
-    color: $raspberry-color
-  }
-  .jukebox {
-    color: white;
-  }
+    .rpi {
+        color: $raspberry-color
+    }
+    .jukebox {
+        color: white;
+    }
 }
 
 #logo-mobile {
-  font-family: 'Lobster';
-  font-size: 2em;
-  color: white;
-  padding: 0em 0em;
-  font-weight: normal;
-  .rpi {
-    color: $raspberry-color
-  }
-  .jukebox {
-    color: $raspberry-color;
-  }
+    font-family: 'Lobster';
+    font-size: 2em;
+    color: white;
+    padding: 0em 0em;
+    font-weight: normal;
+    .rpi {
+        color: $raspberry-color
+    }
+    .jukebox {
+        color: $raspberry-color;
+    }
 }
 
 .rounded-right-button {
-  // Extend the base selector to get core styles
-  @extend %button;
-  // Use the size mixin to set a size
-  @include button-size(
-    $size: medium, // tiny, small, medium, or large
-    $expand: false
-  );
-  // Use the style mixin to set visual styles
-  @include button-style(
-    $background: $raspberry-color, // Background color
-    $background-hover: auto, // Background color on hover. Use "auto" to generate automatically
-    $color: #000, // Text color
-    $style: solid // Can be solid or hollow
+    // Extend the base selector to get core styles
+    @extend %button;
+    // Use the size mixin to set a size
+    @include button-size(
+        $size: medium, // tiny, small, medium, or large
+        $expand: false
+    );
+    // Use the style mixin to set visual styles
+    @include button-style(
+        $background: $raspberry-color, // Background color
+        $background-hover: auto, // Background color on hover. Use "auto" to generate automatically
+        $color: #000, // Text color
+        $style: solid // Can be solid or hollow
 
-  );
+    );
 }
 
 #title-bar-desktop {
-  border-bottom: 0px;
-  z-index: 99;
-  box-shadow: $box-shadow-2;
+    border-bottom: 0px;
+    z-index: 99;
+    box-shadow: $box-shadow-2;
 }
 
 #title-bar-mobile {
-  border-bottom: 1px solid $dark-color;
-  padding: 0px;
+    border-bottom: 1px solid $dark-color;
+    padding: 0px;
 }
 
 .title-bar-button {
-  margin: 0px;
-  border-radius: 0px;
+    margin: 0px;
+    border-radius: 0px;
 }
 
 #playback-desktop {
-  background-color: $primary-color;
-  height: 64px;
+    background-color: $primary-color;
+    height: 64px;
 }
 
 .seekbar, .volume-slider {
-  display: inline-block;
-  width: 100%;
+    display: inline-block;
+    width: 100%;
 }
 
 .noui-center {
-  margin-top: auto;
-  margin-bottom: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .auto-center {
-  margin-top: auto;
-  margin-bottom: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 #menu-desktop {
-  background-color: $dark-color;
-  //box-shadow: $box-shadow-right;
-  z-index: 90;
+    background-color: $dark-color;
+    //box-shadow: $box-shadow-right;
+    z-index: 90;
 }
 
 #main-view {
-  background-color: $gray;
+    background-color: $gray;
 }
 
 #queue-container-desktop {
-  width: 25em;
-  background-color: white;
-  // box-shadow: $box-shadow-left;
-  border-left: 1px solid $gray-dark;
+    width: 25em;
+    background-color: white;
+    // box-shadow: $box-shadow-left;
+    border-left: 1px solid $gray-dark;
 }
 
 #queue-desktop {
-  width: 25em;
-  background-color: white;
+    width: 25em;
+    background-color: white;
 }
 
 #playback-control {
-  width: 25em;
+    width: 25em;
 }
 
 .playback-button {
-  // Extend the base selector to get core styles
-  @extend %button;
-  margin: 0px;
-  color: $gray;
-  &:hover, &:focus {
-    color: $gray-light;
-  }
+    // Extend the base selector to get core styles
+    @extend %button;
+    margin: 0px;
+    color: $gray;
+    &:hover, &:focus {
+        color: $gray-light;
+    }
 }
 
 .button-mute {
-  position: relative;
-  left: 1em;
+    position: relative;
+    left: 1em;
 }
 
 .music-symbol {
-  width: 5em;
-  height: 5em;
-  background-color: darken($dark-color, 5);
-  border-radius: 0;
-  line-height: 80px;
-  text-align: center;
-  vertical-align: middle;
-  display: inline-block;
-  color: $gray;
+    width: 5em;
+    height: 5em;
+    background-color: darken($dark-color, 5);
+    border-radius: 0;
+    line-height: 80px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    color: $gray;
 }
 
 .now-playing-wrapper {
-  background: $dark-color;
-  color: $gray-light;
+    background: $dark-color;
+    color: $gray-light;
 }
 
 .song-title {
-  font-family: $header-font-family;
+    font-family: $header-font-family;
 }
 
 .song-uploader {
-  font-size: 0.8em;
+    font-size: 0.8em;
 }
 
 .now-playing {
-  overflow: hidden;
-  white-space: nowrap;
-  margin: 0 1em;
-  display: block;
-  .song-title {
+    overflow: hidden;
     white-space: nowrap;
-    margin-top: 8px;
-    margin-bottom: 4px;
+    margin: 0 1em;
+    display: block;
+    .song-title {
+        white-space: nowrap;
+        margin-top: 8px;
+        margin-bottom: 4px;
 
-    font-size: 1.25em;
-    color: $gray;
-  }
-  .song-uploader {
-    margin-bottom: 8px;
-    margin-top: 4px;
-    font-size: 1em;
-    font-style: italic;
-    color: $gray-dark;
-  }
+        font-size: 1.25em;
+        color: $gray;
+    }
+    .song-uploader {
+        margin-bottom: 8px;
+        margin-top: 4px;
+        font-size: 1em;
+        font-style: italic;
+        color: $gray-dark;
+    }
 }
 
 .fa-center {
-  line-height: inherit;
+    line-height: inherit;
 }
 
 .marquee > * {
-  /* Starting position */
-  -webkit-transform: translateX(30%);
-  transform: translateX(30%);
-  /* Apply animation to this element */
-  -webkit-animation: horizontally 8s linear infinite alternate;
-  animation: horizontally 8s linear infinite alternate;
+    /* Starting position */
+    -webkit-transform: translateX(30%);
+    transform: translateX(30%);
+    /* Apply animation to this element */
+    -webkit-animation: horizontally 8s linear infinite alternate;
+    animation: horizontally 8s linear infinite alternate;
 }
 
 /* Move it (define the animation) */
 
 @-webkit-keyframes horizontally {
-  0% {
-    -webkit-transform: translateX(30%);
-  }
-  100% {
-    -webkit-transform: translateX(-90%);
-  }
+    0% {
+        -webkit-transform: translateX(30%);
+    }
+    100% {
+        -webkit-transform: translateX(-90%);
+    }
 }
 
 @keyframes horizontally {
-  0% {
-    /* Browser bug fix */
-    -webkit-transform: translateX(30%);
-    /* Browser bug fix */
-    transform: translateX(30%);
-  }
-  100% {
-    /* Browser bug fix */
-    -webkit-transform: translateX(-90%);
-    /* Browser bug fix */
-    transform: translateX(-90%);
-  }
+    0% {
+        /* Browser bug fix */
+        -webkit-transform: translateX(30%);
+        /* Browser bug fix */
+        transform: translateX(30%);
+    }
+    100% {
+        /* Browser bug fix */
+        -webkit-transform: translateX(-90%);
+        /* Browser bug fix */
+        transform: translateX(-90%);
+    }
 }
 
 $thumbnail-width: 6em;
 .queue {
-  ol, ul {
-    list-style: none;
-    margin: 0 -1em;
-    padding: 0;
-  }
-  li {
-    border-bottom: 1px solid $gray;
-    padding: 0.5em 0.5em;
-    &:hover {
-      background-color: $gray-light;
-      .queue-optn {
-        display: block;
-      }
+    ol, ul {
+        list-style: none;
+        margin: 0 -1em;
+        padding: 0;
     }
+    li {
+        border-bottom: 1px solid $gray;
+        padding: 0.5em 0.5em;
+        &:hover {
+            background-color: $gray-light;
+            .queue-optn {
+                display: block;
+            }
+        }
 
-    .queue-item-wrapper, .queue-desc {
-      @include grid-block(
-        $size: expand,
-        $orientation: horizontal,
-        $wrap: false,
-        $align: left,
-        $order: 0
-      );
-    }
+        .queue-item-wrapper, .queue-desc {
+            @include grid-block(
+                $size: expand,
+                $orientation: horizontal,
+                $wrap: false,
+                $align: left,
+                $order: 0
+            );
+        }
 
-    .queue-thumb, .queue-optn {
-      @include grid-block(
-        $size: shrink,
-        $orientation: horizontal,
-        $wrap: false,
-        $align: left,
-        $order: 0
-      );
-    }
+        .queue-thumb, .queue-optn {
+            @include grid-block(
+                $size: shrink,
+                $orientation: horizontal,
+                $wrap: false,
+                $align: left,
+                $order: 0
+            );
+        }
 
-    .queue-thumb {
-      img {
-        width: $thumbnail-width;
-        height: $thumbnail-width * 1080/1920;
-      }
-    }
+        .queue-thumb {
+            img {
+                width: $thumbnail-width;
+                height: $thumbnail-width * 1080/1920;
+            }
+        }
 
-    .queue-desc {
-      margin: 0 0.5em;
-      overflow: hidden;
-      white-space: nowrap;
-      > div {
-        display: block;
-      }
-    }
+        .queue-desc {
+            margin: 0 0.5em;
+            overflow: hidden;
+            white-space: nowrap;
+            > div {
+                display: block;
+            }
+        }
 
-    .queue-optn {
-      display: none;
-      margin: auto 0;
-      a {
-        display: block;
-      }
+        .queue-optn {
+            display: none;
+            margin: auto 0;
+            a {
+                display: block;
+            }
+        }
     }
-  }
-  // Define what tag or class your headers are with this mixin
-  header {
-    @include block-list-header(
-      $color: $gray, // Text color
-      $font-size: 1rem, // Font size
-      $uppercase: true, // If true, the text becomes all-caps
-      $offset: 1rem // Left-side offset for text
-    );
-    font-family: $header-font-family;
-  }
-  // Define the class for labels
-  .block-list-label {
-    @include block-list-label(
-      $color: #999, // Color of label
-      $left-class: 'left', // Define a modifier class for left-aligned labels
-      $left-padding: 1rem // Padding to add when a label is left-aligned
-    );
-  }
+    // Define what tag or class your headers are with this mixin
+    header {
+        @include block-list-header(
+            $color: $gray, // Text color
+            $font-size: 1rem, // Font size
+            $uppercase: true, // If true, the text becomes all-caps
+            $offset: 1rem // Left-side offset for text
+        );
+        font-family: $header-font-family;
+    }
+    // Define the class for labels
+    .block-list-label {
+        @include block-list-label(
+            $color: #999, // Color of label
+            $left-class: 'left', // Define a modifier class for left-aligned labels
+            $left-padding: 1rem // Padding to add when a label is left-aligned
+        );
+    }
 }
 
 /*
@@ -401,133 +401,130 @@ $thumbnail-width: 6em;
 */
 
 .menu-list {
-  // This gets you basic styles
-  @include block-list-container(
-    $font-size: 1rem, // Base font size for entire list
-    $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
-  );
-  margin-top: 1em;
-  margin-bottom: 1em;
-  // This adds support for text fields, dropdowns, and radio/check inputs
-  @include block-list-inputs(
-    $color: #000, // Foreground color
-    $background: $dark-color, // Background color
-    $background-hover: lighten($dark-color, 4), // Background color of elements on hover
-    $padding: 1rem //
-  );
-  // This adds support for icons
-  &.with-icons {
-    @include block-list-icons(
-      $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
-      $item-selector: 'li' // This should be whatever tag or class your block list uses for items
+    // This gets you basic styles
+    @include block-list-container(
+        $font-size: 1rem, // Base font size for entire list
+        $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
     );
-  }
-  // Define what tag or class your list items are with this mixin
-  li {
-    @include block-list-item(
-      $color: $gray, // Color of items
-      $color-hover: $gray-light, // Color of items on hover
-      $color-disabled: $gray-dark, // Color of items when disabled
-      $background: transparent, // Background color
-      $background-hover: lighten($dark-color, 4), // Background color on hover
-      $border: none, // Top and bottom border of items
-      $padding: 0.5em 1em 0.5em 1.5em
+    margin-top: 1em;
+    margin-bottom: 1em;
+    // This adds support for text fields, dropdowns, and radio/check inputs
+    @include block-list-inputs(
+        $color: #000, // Foreground color
+        $background: $dark-color, // Background color
+        $background-hover: lighten($dark-color, 4), // Background color of elements on hover
+        $padding: 1rem //
     );
-    a {
-      text-overflow: ellipsis;
-      max-width: inherit;
+    // This adds support for icons
+    &.with-icons {
+        @include block-list-icons(
+            $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
+            $item-selector: 'li' // This should be whatever tag or class your block list uses for items
+        );
     }
+    // Define what tag or class your list items are with this mixin
+    li {
+        @include block-list-item(
+            $color: $gray, // Color of items
+            $color-hover: $gray-light, // Color of items on hover
+            $color-disabled: $gray-dark, // Color of items when disabled
+            $background: transparent, // Background color
+            $background-hover: lighten($dark-color, 4), // Background color on hover
+            $border: none, // Top and bottom border of items
+            $padding: 0.5em 1em 0.5em 1.5em
+        );
+        a {
+            text-overflow: ellipsis;
+            max-width: inherit;
+        }
 
-    &.menu-active {
-      background-color: lighten($dark-color, 8);
-      &::before {
-        color: white;
-        content: ' ';
-        display: inline;
-        position: absolute;
-        left: 0;
-        background-color: $raspberry-color;
-        width: 3px;
-        height: 2em;
-      }
-    }
+        &.menu-active {
+            background-color: lighten($dark-color, 8);
+            &::before {
+                color: white;
+                content: ' ';
+                display: inline;
+                position: absolute;
+                left: 0;
+                background-color: $raspberry-color;
+                width: 3px;
+                height: 2em;
+            }
+        }
 
-    // Add styles for list items with chevrons
-    &.with-chevron {
-      @include block-list-chevron(
-        $color: #000, // Color of chevron
-        $padding: 1rem, // Insert the same padding as the block list item here
-        $label-class: 'block-list-label' // Insert the class you're using for labels
-      );
+        // Add styles for list items with chevrons
+        &.with-chevron {
+            @include block-list-chevron(
+                $color: #000, // Color of chevron
+                $padding: 1rem, // Insert the same padding as the block list item here
+                $label-class: 'block-list-label' // Insert the class you're using for labels
+            );
+        }
     }
-  }
-  // Define what tag or class your headers are with this mixin
-  header {
-    @include block-list-header(
-      $color: $gray, // Text color
-      $font-size: 1rem, // Font size
-      $uppercase: true, // If true, the text becomes all-caps
-      $offset: 1rem // Left-side offset for text
-    );
-    font-family: $header-font-family;
-  }
-  // Define the class for labels
-  .block-list-label {
-    @include block-list-label(
-      $color: #999, // Color of label
-      $left-class: 'left', // Define a modifier class for left-aligned labels
-      $left-padding: 1rem // Padding to add when a label is left-aligned
-    );
-  }
+    // Define what tag or class your headers are with this mixin
+    header {
+        @include block-list-header(
+            $color: $gray, // Text color
+            $font-size: 1rem, // Font size
+            $uppercase: true, // If true, the text becomes all-caps
+            $offset: 1rem // Left-side offset for text
+        );
+        font-family: $header-font-family;
+    }
+    // Define the class for labels
+    .block-list-label {
+        @include block-list-label(
+            $color: #999, // Color of label
+            $left-class: 'left', // Define a modifier class for left-aligned labels
+            $left-padding: 1rem // Padding to add when a label is left-aligned
+        );
+    }
 }
 
 .search-icon::before {
-  font-family: FontAwesome;
-  content: '\f002';
-  padding-right: 0.5em;
+    font-family: FontAwesome;
+    content: '\f002';
+    padding-right: 0.5em;
 
 }
 
 .settings-icon::before {
-  font-family: FontAwesome;
-  content: '\f013';
-  padding-right: 0.5em;
+    font-family: FontAwesome;
+    content: '\f013';
+    padding-right: 0.5em;
 
 }
 
 .note-icon::before {
-  font-family: FontAwesome;
-  content: '\f001';
-  padding-right: 0.5em;
+    font-family: FontAwesome;
+    content: '\f001';
+    padding-right: 0.5em;
 }
 
 .menu-mobile {
-  margin: 1em 0em;
+    margin: 1em 0em;
 }
 
 .placeholder-text {
-  margin-left: auto;
-  margin-right: auto;
-  color: $gray-dark;
-  font-style: italic;
-  text-align: center;
-  //position: absolute;
+    margin: 1em auto 1em auto;
+    color: $gray-dark;
+    font-style: italic;
+    text-align: center;
+    //position: absolute;
 
-  z-index: -1;
 }
 
 .loader-img {
-  background: transparent;
-  width: 100%;
-  text-align: center;
-  opacity: 1;
-  position: absolute;
-  top: 50%;
-  margin-top: -80px;
-  &.loader-img.ng-hide {
-    opacity: 0;
-    transition: all linear 0.3s;
-  }
+    width: 100%;
+    text-align: center;
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    &.loader-img.ng-hide {
+        opacity: 0;
+        transition: all linear 0.2s;
+    }
 }
 
 /*.yt-search-results {
@@ -587,114 +584,114 @@ $thumbnail-width: 6em;
 }*/
 
 .yt-search-results {
-  ol, ul {
-    margin: 0;
-    padding: 0 1em;
-    opacity: 1;
-
-    background: white;
-    box-shadow: $box-shadow-1;
-    list-style: none;
-  }
-  li:last-child {
-    border: 0;
-  }
-  li {
-    border-bottom: 1px solid $gray-light;
-    overflow-x: hidden;
-  }
-  .search-item {
-    padding: 1em 0;
-    display: flex;
-    .thumbnail-container {
-      max-width: 33%;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-     h5:hover {
-      text-decoration: underline;
-    }
-    p {
-      font-size: 0.7em;
-    }
-
-    p, h5 {
-      margin: 0 0.5em;
-    }
-
-    .rounded-buttons {
-
-      position: relative;
-      right: 0em;
-      margin-left: auto;
-      .button {
+    ol, ul {
         margin: 0;
-        border-radius: 0;
-        display: block;
-        width: 3em;
-      }
-      .button.first {
-        border-radius: $button-radius $button-radius 0 0;
-      }
-      .button.last {
-        border-radius: 0 0 $button-radius $button-radius;
-      }
+        padding: 0 1em;
+        opacity: 1;
 
-      @include breakpoint(medium) {
-        [id^=actionsheet-content] {
-          left: -246%; //magic number
+        background: white;
+        box-shadow: $box-shadow-1;
+        list-style: none;
+    }
+    li:last-child {
+        border: 0;
+    }
+    li {
+        border-bottom: 1px solid $gray-light;
+        overflow-x: hidden;
+    }
+    .search-item {
+        padding: 1em 0;
+        display: flex;
+        .thumbnail-container {
+            max-width: 33%;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        h5:hover {
+            text-decoration: underline;
+        }
+        p {
+            font-size: 0.7em;
+        }
+
+        p, h5 {
+            margin: 0 0.5em;
+        }
+
+        .rounded-buttons {
+
+            position: relative;
+            right: 0em;
+            margin-left: auto;
+            .button {
+                margin: 0;
+                border-radius: 0;
+                display: block;
+                width: 3em;
+            }
+            .button.first {
+                border-radius: $button-radius $button-radius 0 0;
+            }
+            .button.last {
+                border-radius: 0 0 $button-radius $button-radius;
+            }
+
+            @include breakpoint(medium) {
+                [id^=actionsheet-content] {
+                    left: -246%; //magic number
+
+                }
+                .action-sheet.top::before, .action-sheet.top::after {
+                    margin-left: 117px;
+                }
+            }
+            .options {
+                -moz-transition: all 0.3s linear;
+                -webkit-transition: all 0.3s linear;
+                transition: all 0.3s linear;
+                &.rotate {
+                    -ms-transform: rotate(-180deg);
+                    -moz-transform: rotate(-180deg);
+                    -webkit-transform: rotate(-180deg);
+                    transform: rotate(-180deg);
+                }
+            }
 
         }
-        .action-sheet.top::before, .action-sheet.top::after {
-          margin-left: 117px;
+        .rounded-buttons {
+            -moz-transition: all 0.3s ease-in-out;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            right: -100px;
+            transition-delay: 0.3s;
         }
-      }
-      .options {
-        -moz-transition: all 0.3s linear;
-        -webkit-transition: all 0.3s linear;
-        transition: all 0.3s linear;
-        &.rotate {
-          -ms-transform: rotate(-180deg);
-          -moz-transform: rotate(-180deg);
-          -webkit-transform: rotate(-180deg);
-          transform: rotate(-180deg);
+
+        .rounded-buttons.horizontal {
+            display: inline;
+            .last {
+                border-radius: 0 $button-radius $button-radius 0;
+            }
+            .firts {
+                border-radius: $button-radius 0 0 $button-radius;
+            }
+
         }
-      }
-
+        &:hover {
+            background: $gray-light;
+            .rounded-buttons {
+                right: 0px;
+                -moz-transition: all 0.3s ease-in-out;
+                -webkit-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
+                transition-delay: 0s;
+            }
+        }
+        .description {
+            margin-right: -3em;
+        }
     }
-    .rounded-buttons {
-      -moz-transition: all 0.3s ease-in-out;
-      -webkit-transition: all 0.3s ease-in-out;
-      transition: all 0.3s ease-in-out;
-      right: -100px;
-      transition-delay: 0.3s;
-    }
-
-    .rounded-buttons.horizontal {
-      display: inline;
-      .last {
-        border-radius: 0 $button-radius $button-radius 0;
-      }
-      .firts {
-        border-radius: $button-radius 0 0 $button-radius;
-      }
-
-    }
-    &:hover {
-      background: $gray-light;
-      .rounded-buttons {
-        right: 0px;
-        -moz-transition: all 0.3s ease-in-out;
-        -webkit-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-        transition-delay: 0s;
-      }
-    }
-    .description {
-      margin-right: -3em;
-    }
-  }
 }
 

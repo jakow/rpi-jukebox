@@ -4,18 +4,17 @@ url: /search?q&pageToken
 controller: searchCtrl
 ---
 <div class="grid-block search-view">
-  <div ng-show="loading" class="loader-img">
-    <img src="./assets/img/hourglass.gif">
-  </div>
-  <div ng-show="resultsEmpty() && !loading" class="grid-block auto-center">
-    <p class="placeholder-text">There are no results to be shown.</p>
-  </div>
-  <div class="grid-block" ng-hide="loading || resultsEmpty()">
-    <div class="grid-content">
-      <div class="yt-search-results">
-        <h4>Search results for: {{query}}</h4>
-        <ul class="results">
-          <li class="search-item" ng-repeat="song in result.items">
+    <div ng-show="loading" class="grid-content loader-img">
+        <img src="./assets/img/rolling.gif"/>
+    </div>
+    <div ng-show="resultsEmpty() && !loading" class="grid-content">
+        <p class="placeholder-text">There are no results to be shown.</p>
+    </div>
+    <div class="grid-content" ng-hide="loading || resultsEmpty()">
+        <div class="yt-search-results">
+            <h4>Search results for: {{query}}</h4>
+            <ul class="results">
+                <li class="search-item" ng-repeat="song in result.items">
             <span class="thumbnail-container">
             <a ng-click="enqueue(song)"><img class=search-thumb ng-src="{{song.thumbnail}}"></a>
               </span>
@@ -27,17 +26,16 @@ controller: searchCtrl
               <a class="first button secondary" ng-click="enqueue(song)"><i class="fa fa-plus"></i></a>
               <a class="button secondary"><i class="fa fa-play"></i></a>
               <zf-action-sheet id="actionsheet-{{song.id}}">
-                <zf-as-button class="last button secondary"><i class="fa options fa-chevron-down" ng-class="{'rotate': active}"></i></zf-as-button>
-                <zf-as-content id="actionsheet-content-{{song.id}}" position="top">
-                  <p>This is my fancy content!</p>
-                </zf-as-content>
+                  <zf-as-button class="last button secondary"><i class="fa options fa-chevron-down"
+                                                                 ng-class="{'rotate': active}"></i></zf-as-button>
+                  <zf-as-content id="actionsheet-content-{{song.id}}" position="top">
+                      <p>This is my fancy content!</p>
+                  </zf-as-content>
               </zf-action-sheet>
             </span>
-
-          </li>
-        </ul>
-      </div>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 </div>

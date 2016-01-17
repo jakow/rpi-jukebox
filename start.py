@@ -23,15 +23,15 @@ def get_state():
 
 
 def notify_state_change():
-  sse_publish('playbackStopped', get_state())  # queue changes and now playing changes
+    sse_publish('stateChanged', get_state())  # queue changes and now playing changes
 
 
 def notify_queue_changed():
-  sse_publish('queueChanged', queue.get_queue())
+    sse_publish('queueChanged', queue.get_queue())
 
 
 def notify_downloads_changed():
-  sse_publish('downloadsChanged', downloader.report_progress())
+    sse_publish('downloadsChanged', downloader.report_progress())
 
 
 # set up some event handlers for player
@@ -43,81 +43,82 @@ player.on('playback_stop', notify_state_change)
 
 @app.route('/')
 def start_page():
-  return render_template('index.html', files=None)
+    return render_template('index.html', files=None)
 
 
 @app.route('/json_state')
 def json_state():
-  return flask.json.jsonify(get_state())
+    return flask.json.jsonify(get_state())
 
 
 @app.route('/json_queue')
 def json_queue():
-  return flask.json.jsonify(queue.get_queue())
+    return flask.json.jsonify(queue.get_queue())
 
 
 @app.route('/subscribe')
 def subscribe():
-  sse_subscribe()
+    return sse_subscribe()
+
 
 
 @app.route('/play', methods=['GET'])
 def play():
-  link = "http://www.youtube.com/watch?v=" + request.args['videoId']
-  downloader.background_download(link, on_downloaded=player.play)
-  return json_state()
-  # return render_template('radio.html', msg="Your download has started. Music will be playing shortly.")
+    link = "http://www.youtube.com/watch?v=" + request.args['videoId']
+    downloader.background_download(link, on_downloaded=player.play)
+    return json_state()
+    # return render_template('radio.html', msg="Your download has started. Music will be playing shortly.")
 
 
 @app.route('/rewind', methods=['GET'])
 def rewind():
-  player.seek(0)
-  return json_state()
+    player.seek(0)
+    return json_state()
 
 
 @app.route('/forward', methods=['GET'])
 def forward():
-  player.load_next()
-  return json_state()
+    player.load_next()
+    return json_state()
 
 
 @app.route('/queue_add', methods=['GET'])
 def queue_add():
-  # to avoid downloading an existing files, implement SQL database
-  video_id = request.args['videoId']
-  link = "http://www.youtube.com/watch?v=" + video_id
-  # now decide if we're going to play or enqueue
-  if not player.is_playing:
-    callback = player.play
-  else:
-    callback = queue.add
-  downloader.background_download(link, on_downloaded=callback)
-  notify_queue_changed()
-  return json_state()
+    # to avoid downloading an existing files, implement SQL database
+    video_id = request.args['videoId']
+    link = "http://www.youtube.com/watch?v=" + video_id
+    # now decide if we're going to play or enqueue
+    if not player.is_playing:
+        callback = player.play
+    else:
+        callback = queue.add
+    downloader.background_download(link, on_downloaded=callback)
+    notify_queue_changed()
+    return json_state()
 
 
 @app.route('/queue_remove', methods=['GET'])
 def queue_remove():
-  index = request.args['index']
-  queue.pop(int(index))
-  notify_queue_changed()
-  return json_state()
+    index = request.args['index']
+    queue.pop(int(index))
+    notify_queue_changed()
+    return json_state()
 
 
 @app.route('/play_pause')
 def play_pause():
-  player.pause()  # pause/unpause
-  # return json.jsonify({"playing": player.is_playing})
-  notify_state_change()
-  return json_state()
+    player.pause()  # pause/unpause
+    # return json.jsonify({"playing": player.is_playing})
+    notify_state_change()
+    return json_state()
 
 
 @app.route('/download_progress')
 def download_progress():
-  return flask.json.jsonify(downloader.report_progress())
+    return flask.json.jsonify(downloader.report_progress())
 
 
 if __name__ == '__main__':
-  app.debug = True
-  server = WSGIServer(("", 5000), app)
-  server.serve_forever()
+    app.debug = True
+    server = WSGIServer(("", 5000), app)
+    server.serve_forever()
