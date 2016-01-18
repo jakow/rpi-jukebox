@@ -4,7 +4,7 @@ import threading
 import youtube_dl
 import os
 import RPJplayer
-
+import gevent
 
 class RPJDownloader:
 
@@ -63,12 +63,13 @@ class RPJDownloader:
             if 'param' in kwargs:
                 param = kwargs['param']
                 print 'on download ' + callback.__name__ + '(' + param.__name__ + ')'
-                return callback(file_info, param)
+                callback(file_info, param)
             else:
                 print 'on download calling ' + callback.__name__ + ' with last downloaded file object'
-                return callback(file_info)
-        else:
-            return None
+                callback(file_info)
+
+
+        print 'thread died'
 
     def last_downloaded(self):
         return self.downloaded

@@ -1,5 +1,4 @@
 {% raw %}
-<!doctype html>
 <html lang="en" ng-app="application">
 <head>
   <meta charset="utf-8"/>
@@ -152,9 +151,9 @@
         <div class="auto-center">
           <a class="playback-button button-backward" href="#" ng-click="rewind()"><i
             class="fa fa-fw fa-backward fa-2x"></i></a>
-          <a class="playback-button button-play" ng-click="playPause()">
-            <i class="fa fa-fw fa-play fa-2x" ng-hide="playing"></i>
-            <i class="fa fa-fw fa-pause fa-2x" ng-show="playing"></i>
+          <a class="playback-button button-play" ng-click="pauseResume()">
+            <i class="fa fa-fw fa-play fa-2x" ng-hide="isPlaying"></i>
+            <i class="fa fa-fw fa-pause fa-2x" ng-show="isPlaying"></i>
           </a>
           <a class="playback-button button-forward" ng-click="forward()"><i class="fa fa-fw fa-forward fa-2x"></i></a>
         </div>

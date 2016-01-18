@@ -29,7 +29,7 @@ class ServerSentEvent(object):
 
         return "%s\n\n" % "\n".join(lines)
 
-app = Flask(__name__)
+
 subscriptions = []
 
 def debug():
@@ -37,10 +37,12 @@ def debug():
 
 def sse_publish(event, message):
     def notify():
+        print 'notifying'
         msg = json.dumps(message)
         for sub in subscriptions[:]:
             sub.put((event, msg))  # tuple containing event name and serialised data
-    gevent.spawn(notify)
+    #gevent.spawn(notify)
+    notify()
     # return "OK"
 
 
@@ -59,6 +61,7 @@ def sse_subscribe():
 
 
 if __name__ == "__main__":
+    app = Flask(__name__)
     app.debug = True
     server = WSGIServer(("", 5000), app)
     server.serve_forever()

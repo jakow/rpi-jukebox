@@ -162,18 +162,18 @@ class RPJPlayer(object):
     def play(self, song):
         if isinstance(song, dict): # check if a song dict is given
             path = 'songs/' + song['id'] + '.mp3'
-        else:
-            path = 'songs/' + song + '.mp3'
+        else: # otherwise load from path
+            path = song
         self.player.loadfile(path)
         if self._paused:
             self.pause()  # unpause
         self.nowPlaying = song
 
-    def load_next(self):
+    def play_next(self):
         if not self.queue.empty: #
             self.play(self.queue.pop(0))
         else:
-            self.player.play(self.nowPlaying) # reload last file
+            self.play(self.nowPlaying) # reload last file
             self.pause() # pause immediately
 
     def pause(self):
@@ -190,6 +190,14 @@ class RPJPlayer(object):
 
     @percent_pos.setter
     def percent_pos(self, value):
+        self.player.percent_pos = value
+
+    @property
+    def time_pos(self):
+        return self.player.time_pos
+
+    @time_pos.setter
+    def time_pos(self, value):
         self.player.percent_pos = value
 
     @property

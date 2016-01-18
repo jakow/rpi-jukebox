@@ -7,61 +7,41 @@ var player = angular.module('player', ['ya.nouislider'])
         /*create the player service object*/
         var p = {};
         p.eventSource = new EventSource('/subscribe');
-
-        /* helpers */
-        p.state = {};
+        p.state = {nowPlaying: "", volume: 100, isPlaying: false, position: 0};
         p.queue = [];
 
         p.getState = function () {
             return $http.get('json_state').then(function (response) {
-                console.log(response.data);
-                p.state = response.data;
+                //console.log(response.data);
                 return response.data;
             });
         };
         p.getQueue = function () {
             return $http.get('json_queue').then(function (response) {
-                console.log(response.data);
-                p.queue = response.data;
-                return response.data;
+                //console.log(response.data);
+                return response.data.queue;
             })
         };
-
-        p.playPause = function () {
-
+        p.play = function (songId) {
+            return $http.get("play", {videoId: songId});
         };
-
-        p.rewind = function () {
-
-        };
-
-        p.forward = function () {
-
-        };
-
         p.addToQueue = function (songId) {
-
+            return $http.get("queue_add?videoId=" + songId);
         };
 
         p.removeFromQueue = function (index) {
+            $http.get("queue_remove?index=" + index);
         };
 
-        p.forward = function () {
-        };
-        //finally when all functions are set up, add event listeners
-        p.eventSource.addEventListener('stateChanged', function (response) {
-            p.state = response.data;
-            console.log(response);
-        });
         p.eventSource.addEventListener('queueChanged', function (response) {
-            p.queue = response.data;
-            console.log(response);
+            p.queue = JSON.parse(response.data);
+            console.log('Queue change event');
         });
         return p;
     }]);
 
 var search = angular.module('search', ['YtAPI'])
-    .factory('rpjYoutube', ['Youtube', '$window', function (Youtube, $window) {
+    .factory('rpjYoutube', ['Youtube', function (Youtube) {
         var rpjYt = {};
         //persistent storage of last fetched result
         rpjYt.lastResult = {};

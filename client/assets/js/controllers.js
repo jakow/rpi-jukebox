@@ -29,58 +29,111 @@ app.controller('menuCtrl', ['$scope', function ($scope) {
 }]);
 
 /*Player Controller for desktop seekbar, backward/play/forward buttons and volume control */
-player.controller('PlaybackCtrl', ['$scope', 'playerService', function ($scope, playerService) {
+player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerService', function ($http, $scope, $interval, playerService) {
 
     /* register watcher for service state */
-    $scope.state = {
-        playing: false,
-        volume: 100,
-        position: 0
-    };
-    playerService.getState().then(function(state) {
-        $scope.state = state;
-    });
-    //this.autoRefresh = $interval(playerService.refresh, 5000, 0);
-    $scope.$watch( function () { return playerService.state }, function (newState) { $scope.state = newState; }, false);
+
+    $scope.isPlaying = false;
+    $scope.volume = 100;
+    $scope.position = 0;
+    $scope.nowPlaying = {};
+    $scope.duration = 100;
     $scope.seekbarOptions = {
-        start: [$scope.state.position],
-        range: {min: 0, max: 100}
+        start: [0],
+        range: {min: 0, max: $scope.duration}
     };
     $scope.volumeControlOptions = {
-        start: [$scope.state.volume],
+        start: [100],
         range: {min: 0, max: 100}
     };
 
+    var incrementSeekbar = function () {
+        $scope.seekbarOptions.start[0]++;
+        $scope.position += seekbarAutoincrement.stepsize;
+    };
+    var seekbarAutoincrement = {
+        stepsize: 0.5, //in seconds
+        incrementer: incrementSeekbar,
+        start: function () {
+            this.stop();  //cancel previous one
+            this._autoincr = $interval(this.incrementer, 1000 * this.stepsize)
+        },
+        stop: function () {
+            $interval.cancel(this._autoincr);
+        },
+        _autoincr: {}
+    };
+    var updateState = function (state) {
+        //update play state
+        $scope.isPlaying = state.isPlaying;
+        $scope.nowPlaying = state.nowPlaying;
 
-    $scope.playPause = function () {
-        $scope.playing = !$scope.playing;
-        //$scope.playing = !$scope.playing;
-        playerService.playPause().then(function (response) {
-            //$scope.playing = response.isPlaying;
-            console.log('paused/unpaused successfully');
-        })
+        /*update seekbar options*/
+        //start auto-increment if required
+        $scope.isPlaying ? seekbarAutoincrement.start() : seekbarAutoincrement.stop();
+        // synchronise position with server
+        $scope.seekbarOptions.start = [$scope.position];
+
+
+        if (!isNaN(state.nowPlaying.duration)) {
+            $scope.seekbarOptions.range = {min: 0, max: state.nowPlaying.duration / seekbarAutoincrement.stepsize};
+        }
+        $scope.position = (state.position == null) ? 0 : state.position / seekbarAutoincrement.stepsize;
+        // synchronise position with server
+        $scope.seekbarOptions.start = [$scope.position];
+
+        if ($scope.volume != state.volume) {
+            $scope.volume = state.volume;
+            $scope.volumeControlOptions.start = [state.volume];
+        }
+
+
     };
 
-    $scope.rewind = function () {
-        playerService.rewind();
-    }
+    $scope.pauseResume = function () {
+        return $http.get('pause').then(function (resp) {
+            //updateState(resp.data); //not needed, event handler takes care of the rest
+             resp.data.isPlaying ? seekbarAutoincrement.start() : seekbarAutoincrement.stop();
 
+        });
+    };
+    $scope.rewind = function () {
+        return $http.get('rewind');
+    };
     $scope.forward = function () {
-        playerService.forward();
-    }
+
+    };
+
+    playerService.eventSource.addEventListener('stateChanged', function (response) {
+        console.log('state change event');
+        updateState(JSON.parse(response.data));
+        $scope.$apply();
+    });
+
+    $http.get('json_state').then(function (response) {
+        updateState(response.data)
+    });
 }]);
 
 player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($scope, playerService, $http) {
-    $scope.nowPlaying = playerService.state.nowPlaying;
-    $scope.queue = playerService.state.queue;
+    $scope.nowPlaying = {}
+    $scope.queue = [];
     $scope.$watch(
         function () {
             return playerService.state;
         },
         function (newState) {
             $scope.nowPlaying = newState.nowPlaying;
-            // if (!queuesEqual($scope.queue, newState.queue))
-            $scope.queue = newState.queue;
+        },
+        false);
+
+    $scope.$watch(
+        function () {
+            return playerService.queue;
+        },
+        function (newQueue) {
+            if (!queuesEqual($scope.queue, newQueue))
+                $scope.queue = newQueue;
         },
         false);
 
@@ -102,6 +155,12 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
         return true;
     }
 
+    /*playerService.getState().then(function(state) {
+     $scope.nowPlaying = state.nowPlaying;
+     })*/
+    playerService.getQueue().then(function (queue) {
+        $scope.queue = queue;
+    })
 }]);
 
 search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stateParams', function (rpjYoutube, playerService, $scope, $stateParams) {
@@ -127,7 +186,10 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
 
         $scope.enqueue = function (song) {
             playerService.addToQueue(song.id);
-            playerService.state.queue.push(song);
+        };
+
+        $scope.playImmediately = function (song) {
+            playerService.play(song.id);
         };
 
         var ytSearch = function (query) {
@@ -150,8 +212,8 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
             }
         };
 
-        var localSearch = function() {
-          // TODO: LOCAL search
+        var localSearch = function () {
+            // TODO: LOCAL search
         };
 
         //State enter behaviour

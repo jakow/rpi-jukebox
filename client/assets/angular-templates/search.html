@@ -24,7 +24,7 @@ controller: searchCtrl
             </span>
             <span class="rounded-buttons">
               <a class="first button secondary" ng-click="enqueue(song)"><i class="fa fa-plus"></i></a>
-              <a class="button secondary"><i class="fa fa-play"></i></a>
+              <a class="button secondary" ng-click="playImmediately(song)"><i class="fa fa-play"></i></a>
               <zf-action-sheet id="actionsheet-{{song.id}}">
                   <zf-as-button class="last button secondary"><i class="fa options fa-chevron-down"
                                                                  ng-class="{'rotate': active}"></i></zf-as-button>
