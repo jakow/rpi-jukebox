@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+
 __author__ = 'jakub'
 import threading
 import youtube_dl
@@ -6,16 +7,16 @@ import os
 import RPJplayer
 import gevent
 
-class RPJDownloader:
 
+class RPJDownloader:
     def __init__(self):
         self.options = {
-            'format': 'bestaudio/best', # choice of quality
-            'extractaudio' : True,      # only keep the audio
-            'audioformat' : 'mp3',      # convert to ogg
-            'outtmpl': 'songs/%(id)s'+'.mp3',     # name the file the id of the video
-            'noplaylist' : True,        # only download single song, not playlist
-            }
+            'format': 'bestaudio/best',  # choice of quality
+            'extractaudio': True,  # only keep the audio
+            'audioformat': 'mp3',  # convert to ogg
+            'outtmpl': 'songs/%(id)s' + '.mp3',  # name the file the id of the video
+            'noplaylist': True,  # only download single song, not playlist
+        }
         self.ydl = youtube_dl.YoutubeDL(self.options)
         self.downloadQueue = []
         self.backgroundThread = threading.Thread()
@@ -29,7 +30,7 @@ class RPJDownloader:
             return {
                 "now_downloading": self.now_downloading,
                 "remaining_downloads": self.downloadQueue
-              }
+            }
 
     def background_download(self, video, **kwargs):
         with self.progressLock:
@@ -52,35 +53,30 @@ class RPJDownloader:
             else:
                 file_info = result
             print "Downloading " + file_info['title']
-            self.ydl.download([video])
             with self.progressLock:
                 self.now_downloading = file_info
+            self.ydl.download([video])
             self.downloaded.append(file_info)
+    # f exists, call a callback function, which will execute after the download has completed
+            if 'on_downloaded' in kwargs:  # check if we are doing anything
+                callback = kwargs['on_downloaded']
+                if 'param' in kwargs:
+                    param = kwargs['param']
+                    print 'on download ' + callback.__name__ + '(' + param.__name__ + ')'
+                    callback(file_info, param)
+                else:
+                    print 'on download calling ' + callback.__name__ + ' with last downloaded file object'
+                    callback(file_info)
 
-        # f exists, call a callback function, which will execute after the download has completed
-        if 'on_downloaded' in kwargs:  # check if we are doing anything
-            callback = kwargs['on_downloaded']
-            if 'param' in kwargs:
-                param = kwargs['param']
-                print 'on download ' + callback.__name__ + '(' + param.__name__ + ')'
-                callback(file_info, param)
-            else:
-                print 'on download calling ' + callback.__name__ + ' with last downloaded file object'
-                callback(file_info)
-
-
-        print 'thread died'
 
     def last_downloaded(self):
         return self.downloaded
 
+
     def is_downloading(self):
         return self.backgroundThread.is_alive()
 
+
     def update_progress(self, status):
-        with self.progressLock: #lock to prevent concurrent access
+        with self.progressLock:  # lock to prevent concurrent access
             self.now_downloading = status  # copy the progress kwars
-
-
-
-

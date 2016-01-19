@@ -2,9 +2,10 @@
 #
 # Make sure your gevent version is >= 1.0
 import gevent
-from gevent.wsgi import WSGIServer
-from gevent.queue import Queue
-
+#from gevent.wsgi import WSGIServer
+#from gevent.queue import Queue
+import eventlet
+from eventlet import wsgi
 from flask import Flask, Response
 
 import json
@@ -41,14 +42,14 @@ def sse_publish(event, message):
         msg = json.dumps(message)
         for sub in subscriptions[:]:
             sub.put((event, msg))  # tuple containing event name and serialised data
-    #gevent.spawn(notify)
-    notify()
+    eventlet.spawn(notify)
+    #notify()
     # return "OK"
 
 
 def sse_subscribe():
     def gen():
-        q = Queue()
+        q = eventlet.queue.Queue()
         subscriptions.append(q)
         try:
             while True:
@@ -59,11 +60,5 @@ def sse_subscribe():
             subscriptions.remove(q)
     return Response(gen(), mimetype="text/event-stream")
 
-
-if __name__ == "__main__":
-    app = Flask(__name__)
-    app.debug = True
-    server = WSGIServer(("", 5000), app)
-    server.serve_forever()
     # Then visit http://localhost:5000 to subscribe
     # and send messages by visiting http://localhost:5000/publish

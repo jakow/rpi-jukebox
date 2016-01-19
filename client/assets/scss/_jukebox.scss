@@ -585,10 +585,9 @@ $thumbnail-width: 6em;
 
 .yt-search-results {
     ol, ul {
-        margin: 0;
-        padding: 0 1em;
+        margin: 1em 0;
+        padding: 1em 1em;
         opacity: 1;
-
         background: white;
         box-shadow: $box-shadow-1;
         list-style: none;
@@ -600,8 +599,12 @@ $thumbnail-width: 6em;
         border-bottom: 1px solid $gray-light;
         overflow-x: hidden;
     }
+    .results {
+        background-color: white;
+    }
     .search-item {
-        padding: 1em 0;
+        //padding: 1em 0;
+        margin: 1em 0;
         display: flex;
         .thumbnail-container {
             max-width: 33%;
@@ -621,7 +624,7 @@ $thumbnail-width: 6em;
             margin: 0 0.5em;
         }
 
-        .rounded-buttons {
+        .grouped-actions {
 
             position: relative;
             right: 0em;
@@ -633,10 +636,10 @@ $thumbnail-width: 6em;
                 width: 3em;
             }
             .button.first {
-                border-radius: $button-radius $button-radius 0 0;
+                //border-radius: $button-radius $button-radius 0 0;
             }
             .button.last {
-                border-radius: 0 0 $button-radius $button-radius;
+                //border-radius: 0 0 $button-radius $button-radius;
             }
 
             @include breakpoint(medium) {
@@ -661,7 +664,7 @@ $thumbnail-width: 6em;
             }
 
         }
-        .rounded-buttons {
+        .grouped-actions {
             -moz-transition: all 0.3s ease-in-out;
             -webkit-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
@@ -669,7 +672,7 @@ $thumbnail-width: 6em;
             transition-delay: 0.3s;
         }
 
-        .rounded-buttons.horizontal {
+        .grouped-actions.horizontal {
             display: inline;
             .last {
                 border-radius: 0 $button-radius $button-radius 0;
@@ -681,7 +684,7 @@ $thumbnail-width: 6em;
         }
         &:hover {
             background: $gray-light;
-            .rounded-buttons {
+            .grouped-actions {
                 right: 0px;
                 -moz-transition: all 0.3s ease-in-out;
                 -webkit-transition: all 0.3s ease-in-out;

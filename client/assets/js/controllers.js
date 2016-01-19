@@ -39,6 +39,7 @@ player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerServic
     $scope.nowPlaying = {};
     $scope.duration = 100;
     $scope.seekbarOptions = {
+        animate: false,
         start: [0],
         range: {min: 0, max: $scope.duration}
     };
@@ -52,10 +53,11 @@ player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerServic
         $scope.position += seekbarAutoincrement.stepsize;
     };
     var seekbarAutoincrement = {
-        stepsize: 0.5, //in seconds
+        stepsize: 0.25, //in seconds
         incrementer: incrementSeekbar,
         start: function () {
             this.stop();  //cancel previous one
+            incrementSeekbar();
             this._autoincr = $interval(this.incrementer, 1000 * this.stepsize)
         },
         stop: function () {
@@ -63,6 +65,7 @@ player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerServic
         },
         _autoincr: {}
     };
+
     var updateState = function (state) {
         //update play state
         $scope.isPlaying = state.isPlaying;
@@ -70,17 +73,18 @@ player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerServic
 
         /*update seekbar options*/
         //start auto-increment if required
-        $scope.isPlaying ? seekbarAutoincrement.start() : seekbarAutoincrement.stop();
+        if($scope.isPlaying)
+            seekbarAutoincrement.start()
+        else
+            seekbarAutoincrement.stop();
         // synchronise position with server
-        $scope.seekbarOptions.start = [$scope.position];
-
-
         if (!isNaN(state.nowPlaying.duration)) {
             $scope.seekbarOptions.range = {min: 0, max: state.nowPlaying.duration / seekbarAutoincrement.stepsize};
         }
-        $scope.position = (state.position == null) ? 0 : state.position / seekbarAutoincrement.stepsize;
+
+        $scope.position = (state.position == null) ? 0 : state.position;
         // synchronise position with server
-        $scope.seekbarOptions.start = [$scope.position];
+        $scope.seekbarOptions.start = [$scope.position / seekbarAutoincrement.stepsize];
 
         if ($scope.volume != state.volume) {
             $scope.volume = state.volume;
@@ -93,7 +97,7 @@ player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerServic
     $scope.pauseResume = function () {
         return $http.get('pause').then(function (resp) {
             //updateState(resp.data); //not needed, event handler takes care of the rest
-             resp.data.isPlaying ? seekbarAutoincrement.start() : seekbarAutoincrement.stop();
+            resp.data.isPlaying ? seekbarAutoincrement.start() : seekbarAutoincrement.stop();
 
         });
     };
@@ -101,7 +105,7 @@ player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerServic
         return $http.get('rewind');
     };
     $scope.forward = function () {
-
+        return $http.get('forward');
     };
 
     playerService.eventSource.addEventListener('stateChanged', function (response) {
@@ -116,26 +120,8 @@ player.controller('PlaybackCtrl', ['$http', '$scope', '$interval', 'playerServic
 }]);
 
 player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($scope, playerService, $http) {
-    $scope.nowPlaying = {}
+    $scope.nowPlaying = {};
     $scope.queue = [];
-    $scope.$watch(
-        function () {
-            return playerService.state;
-        },
-        function (newState) {
-            $scope.nowPlaying = newState.nowPlaying;
-        },
-        false);
-
-    $scope.$watch(
-        function () {
-            return playerService.queue;
-        },
-        function (newQueue) {
-            if (!queuesEqual($scope.queue, newQueue))
-                $scope.queue = newQueue;
-        },
-        false);
 
     $scope.remove = function (index) {
         //first remove from real queue
@@ -160,7 +146,21 @@ player.controller('QueueCtrl', ['$scope', 'playerService', '$http', function ($s
      })*/
     playerService.getQueue().then(function (queue) {
         $scope.queue = queue;
-    })
+    });
+    playerService.getState().then(function(state) {
+        $scope.nowPlaying = state.nowPlaying;
+    });
+
+    playerService.eventSource.addEventListener('queueChanged', function (response) {
+        console.log(response);
+        $scope.queue = JSON.parse(response.data).queue;
+        console.log($scope.queue);
+    });
+    playerService.eventSource.addEventListener('stateChanged', function (response) {
+        console.log(response);
+        $scope.nowPlaying = JSON.parse(response.data).nowPlaying;
+        console.log($scope.nowPlaying);
+    });
 }]);
 
 search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stateParams', function (rpjYoutube, playerService, $scope, $stateParams) {
@@ -192,6 +192,7 @@ search.controller('searchCtrl', ['rpjYoutube', 'playerService', '$scope', '$stat
             playerService.play(song.id);
         };
 
+        // TODO: rework the retries thing into a promise object and success/error
         var ytSearch = function (query) {
             if (rpjYoutube.ready()) {
                 rpjYoutube.search(query).then(function (result) {

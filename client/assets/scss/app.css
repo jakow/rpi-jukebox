@@ -8319,8 +8319,8 @@ body {
 
 }*/
 .yt-search-results ol, .yt-search-results ul {
-  margin: 0;
-  padding: 0 1em;
+  margin: 1em 0;
+  padding: 1em 1em;
   opacity: 1;
   background: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -8330,8 +8330,10 @@ body {
 .yt-search-results li {
   border-bottom: 1px solid #ededed;
   overflow-x: hidden; }
+.yt-search-results .results {
+  background-color: white; }
 .yt-search-results .search-item {
-  padding: 1em 0;
+  margin: 1em 0;
   display: flex; }
   .yt-search-results .search-item .thumbnail-container {
     max-width: 33%; }
@@ -8344,48 +8346,44 @@ body {
     font-size: 0.7em; }
   .yt-search-results .search-item p, .yt-search-results .search-item h5 {
     margin: 0 0.5em; }
-  .yt-search-results .search-item .rounded-buttons {
+  .yt-search-results .search-item .grouped-actions {
     position: relative;
     right: 0em;
     margin-left: auto; }
-    .yt-search-results .search-item .rounded-buttons .button {
+    .yt-search-results .search-item .grouped-actions .button {
       margin: 0;
       border-radius: 0;
       display: block;
       width: 3em; }
-    .yt-search-results .search-item .rounded-buttons .button.first {
-      border-radius: 19px 19px 0 0; }
-    .yt-search-results .search-item .rounded-buttons .button.last {
-      border-radius: 0 0 19px 19px; }
     @media only screen and (min-width: 45em) {
-      .yt-search-results .search-item .rounded-buttons [id^=actionsheet-content] {
+      .yt-search-results .search-item .grouped-actions [id^=actionsheet-content] {
         left: -246%; }
-      .yt-search-results .search-item .rounded-buttons .action-sheet.top::before, .yt-search-results .search-item .rounded-buttons .action-sheet.top::after {
+      .yt-search-results .search-item .grouped-actions .action-sheet.top::before, .yt-search-results .search-item .grouped-actions .action-sheet.top::after {
         margin-left: 117px; } }
-    .yt-search-results .search-item .rounded-buttons .options {
+    .yt-search-results .search-item .grouped-actions .options {
       -moz-transition: all 0.3s linear;
       -webkit-transition: all 0.3s linear;
       transition: all 0.3s linear; }
-      .yt-search-results .search-item .rounded-buttons .options.rotate {
+      .yt-search-results .search-item .grouped-actions .options.rotate {
         -ms-transform: rotate(-180deg);
         -moz-transform: rotate(-180deg);
         -webkit-transform: rotate(-180deg);
         transform: rotate(-180deg); }
-  .yt-search-results .search-item .rounded-buttons {
+  .yt-search-results .search-item .grouped-actions {
     -moz-transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     right: -100px;
     transition-delay: 0.3s; }
-  .yt-search-results .search-item .rounded-buttons.horizontal {
+  .yt-search-results .search-item .grouped-actions.horizontal {
     display: inline; }
-    .yt-search-results .search-item .rounded-buttons.horizontal .last {
+    .yt-search-results .search-item .grouped-actions.horizontal .last {
       border-radius: 0 19px 19px 0; }
-    .yt-search-results .search-item .rounded-buttons.horizontal .firts {
+    .yt-search-results .search-item .grouped-actions.horizontal .firts {
       border-radius: 19px 0 0 19px; }
   .yt-search-results .search-item:hover {
     background: #ededed; }
-    .yt-search-results .search-item:hover .rounded-buttons {
+    .yt-search-results .search-item:hover .grouped-actions {
       right: 0px;
       -moz-transition: all 0.3s ease-in-out;
       -webkit-transition: all 0.3s ease-in-out;

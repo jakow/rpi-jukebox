@@ -18,7 +18,7 @@ var player = angular.module('player', ['ya.nouislider'])
         };
         p.getQueue = function () {
             return $http.get('json_queue').then(function (response) {
-                //console.log(response.data);
+                console.log(response.data);
                 return response.data.queue;
             })
         };

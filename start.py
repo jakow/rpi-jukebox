@@ -7,7 +7,10 @@ import RPJqueue
 import signal
 from serverSideEvent import *
 from gevent import monkey
+import eventlet
+from eventlet import wsgi
 
+eventlet.monkey_patch(all=True)
 queue = RPJqueue.RPJQueue()
 player = RPJplayer.RPJPlayer(queue)
 downloader = RPJdownloader.RPJDownloader()
@@ -31,18 +34,21 @@ def notify_state_changed():
 
 def notify_queue_changed():
     print 'publishing queue change'
-    sse_publish('queueChanged', queue.get_queue())
+    sse_publish('queueChanged', {"queue": queue.get_queue()})
 
 
 def notify_downloads_changed():
     sse_publish('downloadsChanged', downloader.report_progress())
 
+
 def reload_last():
     if queue.empty:
-        player.play(player.nowPlaying) # play last played song
-        player.pause() # and pause immediately
+        # player.reload() # TODO: write reload() method
+        player.play(player.now_playing)
+        player.pause()
+
 # set up some event handlers for player
-player.on('playback_finish', reload_last)
+# player.on('playback_finish', reload_last)
 player.on('playback_finish', notify_state_changed)
 player.on('playback_skip', notify_state_changed)
 player.on('playback_stop', notify_state_changed)
@@ -50,7 +56,7 @@ player.on('playback_stop', notify_state_changed)
 
 @app.route('/')
 def start_page():
-    return render_template('index.html', files=None)
+    return render_template('index.html')
 
 
 @app.route('/json_state')
@@ -73,18 +79,23 @@ def play():
     link = "http://www.youtube.com/watch?v=" + request.args['videoId']
 
     def callback(song):
+        print 'download finished'
         player.play(song)
         notify_state_changed()
 
     downloader.background_download(link, on_downloaded=callback)
-
     return json_state()
     # return render_template('radio.html', msg="Your download has started. Music will be playing shortly.")
 
 
 @app.route('/rewind', methods=['GET'])
 def rewind():
-    player.seek(0)
+    if not player.is_playing:
+        player.pause()
+        player.seek(0)
+        player.pause()
+    else:
+        player.seek(0)
     notify_state_changed()
     return json_state()
 
@@ -104,15 +115,16 @@ def queue_add():
     link = "http://www.youtube.com/watch?v=" + video_id
 
     # now decide if we're going to play or enqueue
-    def callback(song):
-        if player.is_playing:
+    def cb(song):
+        if player.loaded_file is not None:
             queue.add(song)
             notify_queue_changed()
+
         else:
             player.play(song)
             notify_state_changed()
 
-    downloader.background_download(link, on_downloaded=callback)
+    downloader.background_download(link, on_downloaded=cb)
     # notify_queue_changed()
 
     return json_state()
@@ -142,8 +154,10 @@ def download_progress():
     return flask.json.jsonify(downloader.report_progress())
 
 
-if __name__ == '__main__':
-    gevent.signal(signal.SIGQUIT, gevent.kill)
-    app.debug = True
-    server = WSGIServer(("", 5000), app)
-    server.serve_forever()
+#if __name__ == '__main__':
+    # gevent.signal(signal.SIGQUIT, gevent.kill)
+app.debug = True
+    # server = WSGIServer(("", 5000), app)
+    # server.serve_forever()
+wsgi.server(eventlet.listen(('', 5000)), app)
+

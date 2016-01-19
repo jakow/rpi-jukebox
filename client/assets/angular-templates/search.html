@@ -22,7 +22,7 @@ controller: searchCtrl
               <a ng-click="enqueue(song)"><h5>{{song.title}}</h5></a>
               <p>{{song.description}}</p>
             </span>
-            <span class="rounded-buttons">
+            <span class="grouped-actions">
               <a class="first button secondary" ng-click="enqueue(song)"><i class="fa fa-plus"></i></a>
               <a class="button secondary" ng-click="playImmediately(song)"><i class="fa fa-play"></i></a>
               <zf-action-sheet id="actionsheet-{{song.id}}">
