@@ -240,7 +240,6 @@ class RPJPlayerV2(object):
         self._queue.remove(index)
 
     # ---------------- PROPERTIES ----------------
-    # TODO: also need to be notifying
     @property
     def is_playing(self):
         return self._is_playing
